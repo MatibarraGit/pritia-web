@@ -1,0 +1,1 @@
+export { fansData } from './fans';

@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from '@/libs/utils';
 
+// TODO: Adaptar el contenido del carousel
 const carouselItems = [
   {
     id: 1,
@@ -47,6 +48,18 @@ export const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Auto scroll
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        const newIndex = (prevIndex + 1) % carouselItems.length;
+        return newIndex;
+      });
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   const nextSlide = () => {
     if (isAnimating) return;
     setIsAnimating(true);
@@ -70,15 +83,6 @@ export const Carousel = () => {
     
     setTimeout(() => setIsAnimating(false), 500);
   };
-
-  // Auto scroll
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [currentIndex]);
 
   return (
     <div className="relative overflow-hidden w-full h-[400px] md:h-[500px]">
