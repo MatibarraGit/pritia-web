@@ -1,0 +1,22 @@
+---
+globs: *.tsx,*.ts,*.jsx,*.js
+alwaysApply: true
+---
+
+# Reglas del Proyecto
+
+## Tecnologías y Estándares
+
+1. **Usar TypeScript**: Todo el código debe estar escrito en TypeScript, no en JavaScript.
+
+2. **TailwindCSS sobre archivos CSS**: Reemplazar los archivos CSS por TailwindCSS. Solo usar archivos CSS cuando sea necesario para animaciones o atributos especiales que no puedan ser implementados con Tailwind.
+
+3. **Shadcn UI sobre MantineUI**: Reemplazar los componentes de MantineUI por los componentes de Shadcn UI.
+
+## Organización de Código
+
+4. **Sistema de Barriles (Barrel Files)**: 
+   - Cuando crees archivos, añádelos al archivo de barril de la carpeta correspondiente (`index.ts`)
+   - Ordena las exportaciones por orden alfabético
+   - Al importar componentes/funciones en otro archivo, agrupa las importaciones a través del archivo de barril
+   - Ejemplo: `import { ComponentOne, ComponentTwo } from "@/components"`

@@ -34,7 +34,7 @@ export default function CartPage() {
   const total = subtotal + shipping;
 
   return (
-    <div className="w-11/12 max-width-screen py-8 mx-auto">
+    <div className="w-11/12 max-w-content py-8 mx-auto">
       {cartItems.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart items */}

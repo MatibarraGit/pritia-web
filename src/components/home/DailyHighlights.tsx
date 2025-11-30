@@ -18,7 +18,7 @@ export const DailyHighlights = () => {
   });
 
   return (
-    <section className="w-11/12 max-width-screen mx-auto py-8 md:py-12">
+    <section className="w-11/12 max-w-content mx-auto py-8 md:py-12">
       <div className="grid grid-cols-1 gap-6 xs:grid-cols-2 lg:grid-cols-4">
         <div
           className="rounded-xl overflow-hidden relative"

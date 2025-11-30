@@ -27,9 +27,7 @@ export function ProductActions({ product }: ProductActionsProps) {
   }
 
   const increaseQuantity = () => {
-    if (quantity < product.stock) {
-      setQuantity(quantity + 1);
-    }
+    setQuantity(quantity + 1);
   };
 
   const decreaseQuantity = () => {
@@ -58,7 +56,6 @@ export function ProductActions({ product }: ProductActionsProps) {
           <span className="px-4 py-2 text-center w-12">{quantity}</span>
           <button
             onClick={increaseQuantity}
-            disabled={quantity >= product.stock}
             className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
           >
             <Plus className="h-4 w-4" />

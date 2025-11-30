@@ -8,51 +8,59 @@ import Link from "next/link";
 import Image from "next/image";
 import { X } from "lucide-react";
 
+import { menuMobileContext } from "@/contexts";
 import { CategoriesAccordion } from "./CategoriesAccordion";
+import { cn } from "@/libs/utils";
 
 export const MenuMobile = () => {
+  const { isOpen, closeMenu } = menuMobileContext();
+
   return (
     <>
       {/* Overlay */}
-      <label
-        htmlFor="header__open-menu"
-        className="hidden peer-checked:block fixed inset-0 bg-black/50 z-40 md:hidden"
+      <div
+        className={cn(
+          "fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300",
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
         aria-label="Cerrar menú"
+        onClick={closeMenu}
       />
 
       {/* Menu Sidebar */}
-      <aside className="hidden peer-checked:block fixed right-0 top-0 h-full w-[80%] max-w-[320px] bg-white shadow-xl z-50 md:hidden overflow-y-auto">
+      <aside className={cn(
+        "h-full fixed top-0 bg-white shadow-xl z-50 md:hidden overflow-y-auto sidebar-transition",
+        "w-4/5 max-w-80",
+        isOpen ? "left-0" : "-left-full"
+      )}>
         {/* Close Button */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-end z-10">
-          <label
-            htmlFor="header__open-menu"
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-10">
+
+          {/* Header */}
+          <h3 className="text-lg font-semibold text-gray-900">
+            Bienvenidos a Mi Proyecto!
+          </h3>
+
+          <button
+            type="button"
+            onClick={closeMenu}
             className="cursor-pointer p-2 hover:bg-gray-100 rounded-full transition-colors"
             aria-label="Cerrar menú"
           >
             <X className="size-5" />
-          </label>
+          </button>
         </div>
 
         {/* Menu Content */}
-        <div className="p-4">
-          {/* Header */}
-          <div className="mb-6 pb-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Bienvenidos a MD Directo!
-            </h3>
-          </div>
+        <div className="px-4 py-1">
 
           {/* Navigation */}
           <ul className="flex flex-col gap-2">
             <li>
               <Link
                 href="/"
-                className="block py-3 px-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
-                onClick={() => {
-                  const checkbox = document.getElementById("header__open-menu") as HTMLInputElement;
-                  if (checkbox) checkbox.checked = false;
-                  document.body.classList.remove("overflow-hidden");
-                }}
+                className="block py-3 px-1 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                onClick={closeMenu}
               >
                 Inicio
               </Link>
@@ -60,12 +68,8 @@ export const MenuMobile = () => {
             <li>
               <Link
                 href="/products"
-                className="block py-3 px-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
-                onClick={() => {
-                  const checkbox = document.getElementById("header__open-menu") as HTMLInputElement;
-                  if (checkbox) checkbox.checked = false;
-                  document.body.classList.remove("overflow-hidden");
-                }}
+                className="block py-3 px-1 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                onClick={closeMenu}
               >
                 Todos los productos
               </Link>
@@ -129,4 +133,3 @@ export const MenuMobile = () => {
     </>
   );
 };
-

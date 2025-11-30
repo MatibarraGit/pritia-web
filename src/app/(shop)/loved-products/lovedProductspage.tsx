@@ -1,20 +1,60 @@
 "use client";
 
-import { NavigationMenu } from "@/layout/NavigationMenu";
 import { NoLovedProducts } from "./noLovedProducts";
-// TODO: Importar LovedProductList y MultipleSelectionMenu cuando estén disponibles
-// import { LovedProductList, MultipleSelectionMenu } from "@/components";
+import { NavigationMenu } from "@/layout";
+import {
+  cartContext,
+  lovedProductsContext,
+  selectItemsContext,
+  toastContext,
+} from "@/contexts";
+import { LovedProductList, MultipleSelectionMenu } from "@/components";
+import { LovedProductType } from "@/contexts";
 
 export default function LovedProductsPage() {
-  // TODO: Implementar lógica de productos favoritos cuando esté disponible el contexto
-  const lovedProducts: any[] = []; // Placeholder
+  const { lovedProducts, removeLovedProduct } = lovedProductsContext();
   const hasLovedProducts = lovedProducts.length > 0;
+  const { deleteSelectedItems } = selectItemsContext();
+  const { addToCart } = cartContext();
+  const { showToast } = toastContext();
 
-  // TODO: Implementar cuando estén disponibles los contextos
-  // const { lovedProducts, removeLovedProduct } = lovedProductsContext();
-  // const { addToCart } = cartContext();
-  // const { showToast } = toastContext();
-  // const { deleteSelectedItems } = selectItemsContext();
+  // Eliminar productos seleccionados de favoritos
+  const handleDelete = () => {
+    deleteSelectedItems(removeLovedProduct);
+    showToast("Producto(s) eliminado(s) de favoritos", "success");
+  };
+
+  // Agregar un producto al carrito
+  const handleAddToCart = (product: LovedProductType) => {
+    const cartItem = {
+      id: product.id,
+      image: product.images[0] || "/img/image-icon.png",
+      name: product.name,
+      price: product.price,
+      originalPrice: product.originalPrice,
+      quantity: 1,
+      slug: product.slug,
+    };
+    addToCart(cartItem);
+    showToast("Producto añadido al carrito", "success");
+  };
+
+  // Agregar todos los productos al carrito
+  const handleAddAllToCart = () => {
+    lovedProducts.forEach((product) => {
+      const cartItem = {
+        id: product.id,
+        image: product.images[0] || "/img/image-icon.png",
+        name: product.name,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        quantity: 1,
+        slug: product.slug,
+      };
+      addToCart(cartItem);
+    });
+    showToast("Productos añadidos al carrito", "success");
+  };
 
   return (
     <>
@@ -26,15 +66,11 @@ export default function LovedProductsPage() {
 
         {hasLovedProducts ? (
           <>
-            {/* TODO: Agregar MultipleSelectionMenu cuando esté disponible */}
-            {/* <MultipleSelectionMenu handleDelete={handleDelete} /> */}
-            {/* TODO: Agregar LovedProductList cuando esté disponible */}
-            {/* <LovedProductList handleAddToCart={handleAddToCart} handleAddAllToCart={handleAddAllToCart} /> */}
-            <div className="w-11/12 max-w-[1200px] mx-auto py-8">
-              <p className="text-center text-gray-500">
-                Los componentes de productos favoritos se implementarán próximamente.
-              </p>
-            </div>
+            <MultipleSelectionMenu handleDelete={handleDelete} />
+            <LovedProductList
+              handleAddToCart={handleAddToCart}
+              handleAddAllToCart={handleAddAllToCart}
+            />
           </>
         ) : (
           <NoLovedProducts />

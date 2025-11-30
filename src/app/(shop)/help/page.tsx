@@ -1,4 +1,5 @@
 // TODO: Agregar los datos reales del negocio
+// TODO: Adaptar estilos e íconos
 "use client";
 
 import { useState } from "react";
@@ -55,13 +56,13 @@ export default function Help() {
       <div className="w-full min-h-[calc(100vh-92.5px)] bg-background">
         {/* Header */}
         <div className="w-full bg-primary text-white">
-          <div className="w-11/12 max-w-[1200px] mx-auto py-12 text-center">
+          <div className="w-11/12 max-w-content mx-auto py-12 text-center">
             <h1 className="text-3xl font-heading mb-2">Centro de Ayuda</h1>
             <p className="text-lg">Encuentra respuestas a las preguntas más frecuentes</p>
           </div>
         </div>
 
-        <div className="w-11/12 max-w-[1200px] mx-auto py-8">
+        <div className="w-11/12 max-w-content mx-auto py-8">
           {/* Contact Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <a

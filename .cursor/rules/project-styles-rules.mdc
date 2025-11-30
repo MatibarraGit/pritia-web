@@ -1,0 +1,13 @@
+---
+globs: *.tsx,*.jsx,*.css,*.html
+alwaysApply: false
+---
+# Reglas de estilos en el Proyecto
+
+## Diseño y Estilos
+
+1. **Mobile First**: Siempre que diseñes un componente, diseñalo desde un enfoque mobile first. Asegúrate que se adapte a dispositivos móviles y en lo posible usa una sola media query en 768px (o su equivalente en Tailwind como `md:`).
+
+2. **Evitar Valores Arbitrarios en TailwindCSS**: Cuando diseñes o clones/adaptes un componente en TailwindCSS, no uses valores arbitrarios, utiliza propiedades equivalentes de Tailwind. Por ejemplo, si en el componente a clonar está la propiedad `width: 85%`, no uses `w-[85%]`, en su lugar usa `w-5/6`. Aunque no sea 100% exacto, usa el más parecido.
+
+3. **Adaptar los componentes de páginas anteriores a el estilo más moderno que uso actualmente**: Principalmente en la página de /admin, hice modificaciones en la UI, me gustaría que todos los componentes que clones, los adaptes al nuevo diseño de la página y evites copiar código o componentes que ya no uso en este proyecto.

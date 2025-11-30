@@ -1,5 +1,5 @@
 import { normalizeText } from "@/utils";
-import { filtersContext, Filters, AdminFilters } from "@/contexts/filters-context";
+import { filtersContext } from "@/contexts/filters-context";
 import { ProductType } from "@/types";
 
 export const useFiltersContext = () => {

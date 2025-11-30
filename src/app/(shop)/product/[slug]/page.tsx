@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { ChevronRight, Truck, CreditCard } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { ProductImages } from "@/components/product/ProductImages";
-import { ProductActions } from "@/components/product/ProductActions";
-import { formatPrice } from "@/utils";
+import { ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs } from "@/components";
 import { ProductType } from "@/types";
 
 import type { Metadata } from "next";
@@ -85,7 +81,7 @@ export default async function ProductPage({ params }: Props) {
     <div className="w-full min-h-screen bg-gray-50">
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
-        <div className="w-11/12 max-width-screen mx-auto container py-3">
+        <div className="w-11/12 max-w-content mx-auto container py-3">
           <div className="flex items-center text-sm text-gray-500">
             <Link href="/" className="hover:text-primary">
               Inicio
@@ -119,127 +115,32 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {/* Product Details */}
-      <div className="w-11/12 max-width-screen mx-auto container py-8">
+      <div className="w-11/12 max-w-content mx-auto container py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <ProductImages images={images} name={name} />
 
           {/* Product Info */}
           <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-subheading text-gray-900">
-                {name}
-              </h1>
-            </div>
+            <ProductHeader name={name} />
 
-            <div className="space-y-2">
-              {discountPercent > 0 && (
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-primary text-white">
-                    {discountPercent}% OFF
-                  </Badge>
-                </div>
-              )}
-
-              {originalPrice && (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm line-through text-gray-500">
-                    {formatPrice(originalPrice)}
-                  </span>
-                </div>
-              )}
-
-              <div className="text-3xl font-subheading" style={{ color: "#000" }}>
-                {formatPrice(price)}
-              </div>
-
-              {inStock ? (
-                <div className="mt-4 text-sm text-green-600">
-                  <span className="font-medium">✓ En stock</span>
-                  {stock > 0 && (
-                    <span className="ml-2 text-gray-600">
-                      ({stock} disponibles)
-                    </span>
-                  )}
-                </div>
-              ) : (
-                <div className="text-sm text-red-600">
-                  <span className="font-medium">✗ Sin stock</span>
-                </div>
-              )}
-            </div>
+            <ProductPricing
+              price={price}
+              originalPrice={originalPrice}
+              discountPercent={discountPercent}
+              inStock={inStock}
+              stock={stock}
+            />
 
             <ProductActions product={product} />
 
-            <div className="flex flex-col gap-4 pt-4 md:flex-row">
-              <div className="flex items-center space-x-2 text-sm">
-                <Truck className="h-5 w-5 text-primary" />
-                <span>Envío todo el país</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm">
-                <CreditCard className="h-5 w-5 text-primary" />
-                <span>Aceptamos tarjetas de crédito</span>
-              </div>
-            </div>
+            <ProductShippingInfo />
           </div>
         </div>
 
         {/* Product Details Tabs */}
         <div className="mt-12">
-          <Tabs defaultValue="description">
-            <TabsList className="w-full justify-start border-b rounded-none bg-transparent h-auto p-0">
-              <TabsTrigger
-                value="description"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary px-4 py-2"
-              >
-                Descripción
-              </TabsTrigger>
-              <TabsTrigger
-                value="specifications"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary px-4 py-2"
-              >
-                Especificaciones
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="description" className="pt-6">
-              <div className="bg-white p-6 rounded-lg border">
-                <p className="text-gray-700 mb-6">
-                  {description || "No hay descripción disponible para este producto."}
-                </p>
-                {/* {features && (
-                  <>
-                    <h3 className="font-subheading text-lg mb-4">
-                      Características principales
-                    </h3>
-                    <ul className="space-y-2">
-                      {features.split('\n').map((feature, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
-                          <span>{feature.trim()}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )} */}
-              </div>
-            </TabsContent>
-            <TabsContent value="specifications" className="pt-6">
-              <div className="bg-white p-6 rounded-lg border">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* {specifications.map((spec, index) => (
-                    <div key={index} className="py-3 border-b last:border-b-0">
-                      <div className="flex justify-between">
-                        <span className="font-medium text-gray-700">
-                          {spec.name}
-                        </span>
-                        <span className="text-gray-900">{spec.value}</span>
-                      </div>
-                    </div>
-                  ))} */}
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+          <ProductTabs description={description} />
         </div>
 
         {/* Related Products */}

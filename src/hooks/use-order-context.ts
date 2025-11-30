@@ -5,6 +5,8 @@ import { ProductType } from "@/types";
 export interface SortConfig {
   [key: string]: {
     type: 'number' | 'date' | 'string';
+    enabled?: boolean;
+    default?: boolean;
   };
 }
 

@@ -17,11 +17,15 @@ export async function GET(request: Request) {
     const products = await prisma.$queryRaw<Array<ProductResponseType>>`
       SELECT *
       FROM products p
+      LEFT JOIN providers pr ON pr.provider_id = p.provider_id
       LEFT JOIN categories c ON p.category_id = c.category_id
       LEFT JOIN subcategories sc on sc.subcategory_id = p.subcategory_id
-      WHERE p.product_name ILIKE ${pattern} OR
-      p.product_id::TEXT LIKE ${pattern}
+      WHERE 
+        p.deleted_at IS NULL AND
+        (p.product_name ILIKE ${pattern} OR
+        p.product_id::TEXT LIKE ${pattern})
       ORDER BY 
+        p.product_id DESC,
         CASE
           WHEN p.product_id::TEXT LIKE ${search} THEN 1
           WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2
@@ -185,6 +189,7 @@ export async function POST(req: Request) {
       slug: product.product_slug,
     });
   } catch (error) {
+    console.log(error);
     if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
       return NextResponse.json(
         { message: 'El nombre del producto ya existe, los nombres deben ser únicos' },

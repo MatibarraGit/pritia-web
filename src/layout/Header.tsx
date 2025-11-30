@@ -1,4 +1,3 @@
-// TODO: Implementar animación de entrada y salida del menú. Y que este aparezca de la izquierda hacia la derecha
 "use client";
 
 import Link from "next/link";
@@ -6,17 +5,14 @@ import Image from "next/image";
 import { Menu } from "lucide-react";
 
 import { CartSidebar } from "@/components"; 
-import { SearchComponent } from "./header/searchComponent"; 
-import { CartButton } from "./header/cartButton";
-import { CheckboxMenu } from "@/components/layout/header/CheckboxMenu";
-import { MenuMobile } from "@/components/layout/header/MenuMobile";
+import { CartButton, CheckboxMenu, FavouritesMenu, MenuMobile, SearchComponent } from "@/layout"
 
 export const Header = () => {
   return (
     <>
       <CheckboxMenu />
       <header className="w-full max-w-screen h-16 fixed top-0 left-0 z-40 bg-background">
-        <div className="w-11/12 max-width-screen h-full mx-auto flex items-center justify-between gap-12 relative">
+        <div className="w-11/12 max-w-content h-full mx-auto flex items-center justify-between gap-12 relative">
           {/* Mobile menu button */}
           <label
             htmlFor="header__open-menu"
@@ -34,7 +30,8 @@ export const Header = () => {
           <SearchComponent />
 
           {/* Cart */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <FavouritesMenu />
             <CartButton />
             
             <CartSidebar />

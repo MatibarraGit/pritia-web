@@ -56,11 +56,20 @@ export const toastContext = create<ToastState>((set, get) => ({
   },
 
   toggleCart: () => {
-    set({ isCartOpen: !get().isCartOpen })
+    set((state) => {
+      const newState = !state.isCartOpen
+      if (newState) {
+        document.body.classList.add("overflow-hidden")
+      } else {
+        document.body.classList.remove("overflow-hidden")
+      }
+      return { isCartOpen: newState }
+    })
   },
 
   // Cerrar el carrito
   closeCart: () => {
     set({ isCartOpen: false })
+    document.body.classList.remove("overflow-hidden")
   }
 }))

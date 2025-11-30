@@ -49,14 +49,15 @@ export const ShowProducts = ({
     <>
       <NavigationMenu />
       {/* Tools Buttons */}
-      <div className="w-full max-w-[1200px] h-fit mt-[92.5px] mb-5 mx-auto relative">
+      <div className="w-full max-w-content h-fit mt-[92.5px] mb-5 mx-auto relative">
         <div className="flex flex-col md:w-full md:flex-row-reverse md:items-start md:justify-start">
-          <div className="grid grid-cols-3 grid-rows-[40px] place-items-center bg-white shadow-[0px_2px_4px_rgba(0,0,0,0.25)] md:w-[calc(100%-270px)] md:flex md:flex-row-reverse md:items-center md:justify-between md:bg-transparent md:shadow-none">
-            <OrderComponent />
-
-            <span className="w-fit h-full flex items-center text-sm md:text-base md:whitespace-nowrap">
-              {results}
-            </span>
+          <div className="flex items-center justify-between gap-4 bg-white shadow-[0px_2px_4px_rgba(0,0,0,0.25)] md:w-[calc(100%-270px)] md:bg-transparent md:shadow-none">
+            <div className="flex items-center gap-4 flex-1">
+              <OrderComponent />
+              <span className="w-fit h-full flex items-center text-sm md:text-base md:whitespace-nowrap">
+                {results}
+              </span>
+            </div>
 
             <label
               htmlFor="open-filters-menu"
@@ -93,7 +94,7 @@ export const ShowProducts = ({
       </div>
 
       {/* Main */}
-      <main className="w-[96%] max-w-[1200px] h-full min-h-[calc(100vh-92.5px)] mx-auto flex flex-col relative md:min-h-[calc(100vh-70px)] md:flex-row">
+      <main className="w-[96%] max-w-content h-full min-h-[calc(100vh-92.5px)] mx-auto flex flex-col relative md:min-h-[calc(100vh-70px)] md:flex-row">
         <input
           type="checkbox"
           id="open-filters-menu"
@@ -110,7 +111,7 @@ export const ShowProducts = ({
             aria-label="Cerrar filtros"
           />
           <div
-            className="absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-white p-4 overflow-y-auto shadow-xl"
+            className="absolute right-0 top-0 h-full w-[80%] max-w-75 bg-white p-4 overflow-y-auto shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <FiltersComponent />

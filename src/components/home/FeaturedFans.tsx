@@ -6,7 +6,7 @@ import { fansData } from "@/mocks/fans";
 
 export const FeaturedFans = () => {
   return (
-    <section className="container w-11/12 max-width-screen mx-auto py-8">
+    <section className="container w-11/12 max-w-content mx-auto py-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {fansData.map((fan) => (
           <Card key={fan.id} className="bg-white border-gray-200">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect } from "react";
 
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -12,20 +12,15 @@ import {
 } from "@/components/ui"
 
 import { ProductCard } from "@/components";
-import { useMediaQuery, useFetchData } from '@/hooks';
+import { useMediaQuery } from '@/hooks';
 import { ProductType } from "@/types";
 
 interface ProductsCarouselProps {
   title?: string;
   isAutoplay?: boolean;
-  products?: ProductType[];
+  isLoading?: boolean;
+  products: ProductType[];
 }
-
-// TODO: Poner este fetch en la home y dejar el componente limpio para que se pueda usar en otros lugares
-const fetchHomeProducts = async (): Promise<{ bestSellersProducts: ProductType[]; productsOnOffer: ProductType[]; newEntriesProducts: ProductType[] }> => {
-  const response = await fetch("/api/products/home");
-  return await response.json();
-};
 
 export const ProductsCarousel = ({
   title,
@@ -33,29 +28,10 @@ export const ProductsCarousel = ({
   isAutoplay = true,
   // withIndicators = false,
   // isProductPage = false,
-  products: productsProp,
+  isLoading,
+  products = [],
   // loop = false
 }: ProductsCarouselProps) => {
-  const { data: homeData, isLoading } = useFetchData<ProductType[]>({ 
-    fetchFunction: async () => {
-      const data = await fetchHomeProducts();
-      // Determinar qué productos mostrar según el título
-      if (title === "Más Vendidos") {
-        return data.bestSellersProducts || [];
-      } else if (title === "Mejores Ofertas") {
-        return data.productsOnOffer || [];
-      } else {
-        return data.newEntriesProducts || [];
-      }
-    }
-  });
-
-  const products = useMemo(() => {
-    // Si se pasan productos como prop, usarlos; si no, usar los obtenidos internamente
-    return productsProp || homeData || [];
-  }, [productsProp, homeData]);
-
-  const shouldShowLoading = isLoading && !productsProp;
 
   const isMobile = useMediaQuery("(max-width: 575px)");
   const isTablet = useMediaQuery("(min-width: 576px) and (max-width: 768px)");
@@ -79,9 +55,13 @@ export const ProductsCarousel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, isTablet, isAutoplay]);
 
-  if (shouldShowLoading) {
+  if (products.length === 0) {
+    return null;
+  }
+
+  if (isLoading) {
     return (
-      <section className="w-11/12 max-width-screen mx-auto py-8">
+      <section className="w-11/12 max-w-content mx-auto py-8">
         {title && <h2 className="font-heading text-2xl text-center mb-4">{title}</h2>}
         <div className="flex items-center justify-center py-8">
           <p className="text-gray-500">Cargando productos...</p>
@@ -90,12 +70,8 @@ export const ProductsCarousel = ({
     );
   }
 
-  if (products.length === 0) {
-    return null;
-  }
-
   return (
-    <section className="w-11/12 max-width-screen mx-auto py-8">
+    <section className="w-11/12 max-w-content mx-auto py-8">
       {title && (
         <div>
           <h2 className="font-heading text-2xl text-center mb-4">{title}</h2>

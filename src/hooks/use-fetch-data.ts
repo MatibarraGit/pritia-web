@@ -4,17 +4,20 @@
 import { useEffect, useState } from "react"
 // import { getProductsBySearch } from "@/services"
 
-export function useFetchData<T>({ fetchFunction }: { fetchFunction: () => Promise<T | null> }) {
+export function useFetchData<T, P = unknown>({ 
+  fetchFunction 
+}: { 
+  fetchFunction: (args?: P) => Promise<T | null> 
+}) {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function fetchData() {
+  async function fetchData(args?: P) {
     setIsLoading(true);
     try {
-      const initialData = await fetchFunction();
+      const initialData = await fetchFunction(args);
       setData(initialData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch {
       setData(null);
     } finally {
       setIsLoading(false);

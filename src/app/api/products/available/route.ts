@@ -25,8 +25,9 @@ export async function GET(request: Request) {
       AND (p.product_name ILIKE ${pattern} OR
       p.product_id::TEXT LIKE ${pattern})
       ORDER BY 
+        p.product_id DESC,
         CASE
-        WHEN p.product_id::TEXT LIKE ${search} THEN 1
+          WHEN p.product_id::TEXT LIKE ${search} THEN 1
           WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2
           WHEN p.product_id::TEXT LIKE ${pattern} THEN 3
           WHEN p.product_name ILIKE ${pattern} THEN 4

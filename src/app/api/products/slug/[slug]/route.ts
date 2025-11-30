@@ -13,6 +13,7 @@ export async function GET(
     const product = await prisma.products.findFirst({
       where: {
         product_slug: slug,
+        deleted_at: null,
       },
       include: {
         categories: {

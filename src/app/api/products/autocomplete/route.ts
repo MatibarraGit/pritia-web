@@ -20,6 +20,7 @@ export async function GET(request: Request) {
           contains: search,
           mode: 'insensitive',
         },
+        deleted_at: null,
       },
       select: {
         product_name: true,

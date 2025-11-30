@@ -6,8 +6,11 @@ export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 export { Checkbox } from "./checkbox"
 export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from './dialog' 
 export { Input } from "./input"
+export { Popover, PopoverTrigger, PopoverContent } from "./popover"
+export { RadioGroup, RadioGroupItem } from "./radio-group"
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
 export { Separator } from "./separator"
 export { Slider } from "./slider"
 export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
+export { Textarea } from "./textarea"

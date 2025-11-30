@@ -1,72 +1,45 @@
-// TODO: Solucionar el warning de setState dentro de un effect
-// TODO: Agregar fondo, bordes y sombras a los elementos del accordion
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { menuMobileContext } from "@/contexts";
 import { useFetchData } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
-
-const fetchCategories = async (): Promise<CategoryType[] | null> => {
-  const response = await fetch("/api/categories");
-  const data = await response.json();
-  return data || [];
-};
+import { fetchAllCategories } from "@/services";
 
 interface CategoriesAccordionProps {
   closeMenuOnClick?: boolean;
 }
 
 export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccordionProps) => {
-  const [currentCategory, setCurrentCategory] = useState("");
-  const [currentSubcategory, setCurrentSubcategory] = useState("");
-
   const router = useRouter();
   const params = useSearchParams();
-  const category = params.get("category");
-  const subcategory = params.get("subcategory");
+  const category = params.get("category") || "";
+  const subcategory = params.get("subcategory") || "";
+  const { closeMenu } = menuMobileContext();
 
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({
-    fetchFunction: fetchCategories,
+    fetchFunction: fetchAllCategories,
   });
-
-  useEffect(() => {
-    setCurrentCategory("");
-    setCurrentSubcategory("");
-    if (!category) return;
-    setCurrentCategory(category);
-
-    if (!subcategory) return;
-    setCurrentSubcategory(subcategory);
-  }, [category, subcategory]);
 
   const categoriesList = categories || [];
 
   const handleCategoryClick = (categoryName: string) => {
-    router.push(`/products?category=${encodeURIComponent(categoryName)}`);
     if (closeMenuOnClick) {
-      const checkbox = document.getElementById("header__open-menu") as HTMLInputElement;
-      if (checkbox) {
-        checkbox.checked = false;
-        document.body.classList.remove("overflow-hidden");
-      }
+      closeMenu();
     }
+    router.push(`/products?category=${encodeURIComponent(categoryName)}`);
   };
 
   const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
+    if (closeMenuOnClick) {
+      closeMenu();
+    }
     router.push(
       `/products?category=${encodeURIComponent(categoryName)}&subcategory=${encodeURIComponent(subcategoryName)}`
     );
-    if (closeMenuOnClick) {
-      const checkbox = document.getElementById("header__open-menu") as HTMLInputElement;
-      if (checkbox) {
-        checkbox.checked = false;
-        document.body.classList.remove("overflow-hidden");
-      }
-    }
   };
 
   if (isLoading) {
@@ -87,36 +60,38 @@ export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccor
 
   return (
     <Accordion type="single" collapsible className="w-full">
-      <AccordionItem value="categories">
-        <AccordionTrigger className="text-base font-medium hover:no-underline">
+      <AccordionItem value="categories" className="border border-gray-200 rounded-md bg-white shadow-sm">
+        <AccordionTrigger 
+          className="flex py-3 px-3 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+        >
           Categorías
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="px-3 pb-3">
           <Accordion type="multiple" className="w-full">
             {categoriesList.map((categoryItem) => (
               <AccordionItem
                 key={categoryItem.category_id}
                 value={categoryItem.category_name}
-                className="border-b border-gray-200"
+                className="border border-gray-200 rounded-md bg-gray-50 shadow-sm mb-2 last:mb-0"
               >
                 <AccordionTrigger
                   className={cn(
-                    "text-sm font-medium hover:no-underline py-2",
-                    currentCategory === categoryItem.category_name && "text-primary font-semibold"
+                    "text-sm font-medium hover:no-underline py-2.5 px-3 rounded-md",
+                    category === categoryItem.category_name && "text-primary font-semibold bg-white"
                   )}
                 >
                   {categoryItem.category_name}
                 </AccordionTrigger>
-                <AccordionContent className="pb-2">
-                  <div className="flex flex-col gap-1 pl-4">
+                <AccordionContent className="pb-3 px-3">
+                  <div className="flex flex-col gap-1 bg-white rounded-md border border-gray-100 p-2">
                     {categoryItem.subcategories?.map((subcategoryItem) => (
                       <button
                         key={subcategoryItem.id}
                         type="button"
                         onClick={() => handleSubcategoryClick(categoryItem.category_name, subcategoryItem.name)}
                         className={cn(
-                          "w-full text-left text-sm py-2 px-2 rounded cursor-pointer transition-colors hover:bg-gray-100",
-                          currentSubcategory === subcategoryItem.name && "text-primary font-semibold bg-gray-50"
+                          "w-full text-left text-sm py-2 px-3 rounded-md cursor-pointer transition-colors hover:bg-gray-100",
+                          subcategory === subcategoryItem.name && "text-primary font-semibold bg-gray-50"
                         )}
                       >
                         {subcategoryItem.name}
@@ -125,7 +100,7 @@ export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccor
                     <button
                       type="button"
                       onClick={() => handleCategoryClick(categoryItem.category_name)}
-                      className="w-full text-left text-sm py-2 px-2 rounded cursor-pointer transition-colors hover:bg-gray-100 text-primary font-medium"
+                      className="w-full text-left text-sm py-2 px-3 rounded-md cursor-pointer transition-colors hover:bg-gray-100 text-primary font-semibold border-t border-gray-200 mt-1 pt-2"
                     >
                       Ver todo
                     </button>

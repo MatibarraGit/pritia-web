@@ -15,6 +15,7 @@ export async function GET(
     const product = await prisma.products.findUnique({
       where: {
         product_id: parseInt(id),
+        deleted_at: null,
       },
       include: {
         categories: {
@@ -246,6 +247,32 @@ export async function PUT(
   }
 }
 
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  try {
+    await prisma.products.update({
+      where: {
+        product_id: parseInt(id),
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+
+    return NextResponse.json({ message: "Producto deshabilitado con éxito", success: true });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: 'Error interno del servidor al deshabilitar producto' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -278,7 +305,8 @@ export async function DELETE(
     }
 
     return NextResponse.json({ message: "Producto eliminado con éxito", success: true });
-  } catch {
+  } catch (error) {
+    console.log(error); // Error por foreing key en purchase-order-items
     return NextResponse.json(
       { message: 'Error interno del servidor al eliminar producto' },
       { status: 500 }

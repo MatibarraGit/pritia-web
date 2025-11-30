@@ -7,6 +7,9 @@ export async function GET() {
       select: {
         product_slug: true,
       },
+      where: {
+        deleted_at: null,
+      }
     });
 
     if (products.length === 0) {

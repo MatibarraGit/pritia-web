@@ -24,16 +24,16 @@ export function CartSidebar() {
     <>
       <div
         className={cn(
-          "fixed inset-0 bg-black/50 z-50",
-          !isCartOpen && "hidden"
+          "fixed inset-0 bg-black/50 z-50 transition-opacity duration-300",
+          isCartOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
         onClick={closeCart}
       />
 
       <aside
         className={cn(
-          "w-72 h-full px-4 flex flex-col fixed top-0 right-0 z-50 shadow-xl bg-white sidebar-transition sm:w-96",
-          !isCartOpen && "-right-72 sm:-right-96"
+          "w-76 h-full px-4 flex flex-col fixed top-0 right-0 z-50 shadow-xl bg-white sidebar-transition sm:w-96",
+          !isCartOpen && "-right-76 sm:-right-96"
         )}
       >
         {/* Title */}

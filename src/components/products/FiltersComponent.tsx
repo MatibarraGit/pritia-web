@@ -3,7 +3,7 @@
 import { useFiltersContext } from "@/hooks";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
-import { CategoriesAccordion } from "@/components/layout/header/CategoriesAccordion";
+import { CategoriesAccordion } from "@/layout/header/CategoriesAccordion";
 
 export const FiltersComponent = () => {
   const { filters, setPriceRange, setVisualPriceRange, resetFilters } = useFiltersContext();

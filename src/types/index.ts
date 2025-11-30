@@ -88,6 +88,11 @@ export type UserType = {
   created_at: Date;
 }
 
+export type Provider = {
+  provider_id: number;
+  provider_name: string;
+}
+
 export type VisitorEmailType = {
   id: number;
   email: string;
@@ -108,3 +113,8 @@ export type ServiceType = {
   title: string;
   description: string;
 };
+
+export type ActionResponse = {
+  successMessage?: string | undefined;
+  errorMessage?: string | undefined;
+}

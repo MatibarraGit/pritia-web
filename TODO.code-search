@@ -1,8 +1,7 @@
 # Query: // TODO:
 # Flags: CaseSensitive WordMatch
 
-// TODO: Obtener el total de productos desde el servidor y configurar la paginación con PRODUCTS_PER_PAGE
-// TODO: Agregar el ícono de productos favoritos antes que el carrito. Agregar el menú y verificar la página.
+50 results - 40 files
 
 mi-proyecto • (finish - user)\route.ts:
    5: // TODO: Implementar autenticación cuando esté disponible
@@ -11,16 +10,17 @@ mi-proyecto • (finish - user)\route.ts:
 mi-proyecto • (finish - user)\[id]\route.ts:
   5: // TODO: Implementar autenticación cuando esté disponible
 
+mi-proyecto • src\app\robots.ts:
+  1: // TODO: Adaptar la url base para mi proyecto
+
+mi-proyecto • src\app\sitemap.ts:
+  1: // TODO: Adaptar el sitemap para mi proyecto
+
 mi-proyecto • src\app\(shop)\cart\cartPage.tsx:
   1: // TODO: Poner las tarjetas aceptadas
 
 mi-proyecto • src\app\(shop)\help\page.tsx:
   1: // TODO: Agregar los datos reales del negocio
-
-mi-proyecto • src\app\(shop)\loved-products\lovedProductspage.tsx:
-   5: // TODO: Importar LovedProductList y MultipleSelectionMenu cuando estén disponibles
-   9:   // TODO: Implementar lógica de productos favoritos cuando esté disponible el contexto
-  13:   // TODO: Implementar cuando estén disponibles los contextos
 
 mi-proyecto • src\app\(shop)\products\productsPage.tsx:
   44:           // TODO: Obtener total de productos desde el backend
@@ -29,7 +29,7 @@ mi-proyecto • src\app\(shop)\products\productsPage.tsx:
   85:     // TODO: Devolver desde el backend únicamente los productos que pertenecen a la subcategoría para no tener que usar los filtros del frontend para filtrar
 
 mi-proyecto • src\app\api\products\count\route.ts:
-  41:       // TODO: Cambiar este total arbitrario
+  42:       // TODO: Cambiar este total arbitrario
 
 mi-proyecto • src\components\buttons\CheckoutButton.tsx:
   1: // TODO: Asegurar que se cree la orden correctamente + Integrar Mercado Pago
@@ -37,41 +37,19 @@ mi-proyecto • src\components\buttons\CheckoutButton.tsx:
 mi-proyecto • src\components\carousels\Carousel.tsx:
   10: // TODO: Adaptar el contenido del carousel
 
-mi-proyecto • src\components\carousels\ProductsCarousel.tsx:
-  24: // TODO: Poner este fetch en la home y dejar el componente limpio para que se pueda usar en otros lugares
-
 mi-proyecto • src\components\cart\CartSidebar.tsx:
   20:   const shipping = 0; // TODO: Implementar cálculo de envío
-
-mi-proyecto • src\components\home\PaymentMethods.tsx:
-  1: // TODO: Adaptar el nombre del componente y el contenido
-
-mi-proyecto • src\components\home\ProductCategories.tsx:
-  34:   // TODO: Hacerlo un Carousel
 
 mi-proyecto • src\components\home\ServicesHighlight.tsx:
   5: // TODO: Cambiar los servicios por los reales
 
-mi-proyecto • src\components\layout\header\CategoriesAccordion.tsx:
-  1: // TODO: Solucionar el warning de setState dentro de un effect
-  2: // TODO: Agregar fondo, bordes y sombras a los elementos del accordion
+mi-proyecto • src\layout\NavigationMenu.tsx:
+  5: // TODO: Agregar todos los links de navegación
 
-mi-proyecto • src\components\layout\header\CategoriesDropdown.tsx:
-  1: // TODO: Arreglar los colores de las categorías y subcategorías
-
-mi-proyecto • src\components\layout\header\CheckboxMenu.tsx:
-  1: // TODO: Solucionar el warning de setState dentro de un effect
-
-mi-proyecto • src\components\layout\header\MenuMobile.tsx:
+mi-proyecto • src\layout\header\MenuMobile.tsx:
   1: // TODO: Agregar el logo y el nombre del negocio
   2: // TODO: Agregar los íconos de las redes sociales
   3: // TODO: Agregar los enlaces del NavigationMenu
-
-mi-proyecto • src\layout\Header.tsx:
-  1: // TODO: Implementar animación de entrada y salida del menú. Y que este aparezca de la izquierda hacia la derecha
-
-mi-proyecto • src\layout\NavigationMenu.tsx:
-  4: // TODO: Agregar todos los links de navegación
 
 mi-proyecto • src\mocks\fans.ts:
   3: // TODO: Cambiar los servicios por los reales

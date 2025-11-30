@@ -29,7 +29,7 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
         />
       </div>
       <div className="p-4 border-t h-52 flex flex-col">
-        <h3 className="font-medium text-lg mb-1">{product.name}</h3>
+        <h3 className="font-medium text-lg mb-1 line-clamp-2 overflow-hidden">{product.name}</h3>
         <p className="text-sm text-gray-600 mb-3">{product.category}</p>
 
         {/* TODO: Implementar cuotas */}

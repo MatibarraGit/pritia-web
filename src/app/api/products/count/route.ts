@@ -17,6 +17,7 @@ export async function GET(request: Request) {
       count = await prisma.products.count({
         where: {
           AND: [
+            { deleted_at: null },
             { in_stock: true },
             { sell_price: { gt: 0 } },
             {

@@ -1,7 +1,8 @@
 export const enum ACTION_TYPES {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
-  DELETE = 'DELETE'
+  DELETE = 'DELETE',
+  DISABLE = 'DISABLE'
 };
 
 export const enum PURCHASE_ORDER_STATUS {

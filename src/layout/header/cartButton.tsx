@@ -9,7 +9,7 @@ export const CartButton = () => {
 
   return (
     <div 
-      className="p-2 relative left-2 cursor-pointer hover:bg-black/5 rounded-full"
+      className="p-2 relative left-2 cursor-pointer hover:bg-background-hover rounded-full"
       onClick={toggleCart}
     >
       <div className="relative">
