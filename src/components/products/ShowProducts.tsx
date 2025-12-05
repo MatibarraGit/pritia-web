@@ -6,7 +6,6 @@ import Link from "next/link";
 import { FilterIcon } from "lucide-react";
 
 import { ListProducts } from "./ListProducts";
-import { NavigationMenu } from "@/layout/NavigationMenu";
 import { FiltersComponent, OrderComponent } from "@/components";
 import { useFiltersContext, useOrderContext } from "@/hooks";
 import { PRODUCTS_PER_PAGE } from "@/utils";
@@ -47,63 +46,68 @@ export const ShowProducts = ({
 
   return (
     <>
-      <NavigationMenu />
-      {/* Tools Buttons */}
-      <div className="w-full max-w-content h-fit mt-[92.5px] mb-5 mx-auto relative">
-        <div className="flex flex-col md:w-full md:flex-row-reverse md:items-start md:justify-start">
-          <div className="flex items-center justify-between gap-4 bg-white shadow-[0px_2px_4px_rgba(0,0,0,0.25)] md:w-[calc(100%-270px)] md:bg-transparent md:shadow-none">
-            <div className="flex items-center gap-4 flex-1">
-              <OrderComponent />
-              <span className="w-fit h-full flex items-center text-sm md:text-base md:whitespace-nowrap">
-                {results}
-              </span>
-            </div>
-
-            <label
-              htmlFor="open-filters-menu"
-              className="center-flex gap-[10px] cursor-pointer p-2 md:hidden"
-            >
-              <FilterIcon size={20} />
-              Filtrar
-            </label>
-          </div>
-
-          <div className="w-[96%] mt-5 mx-auto self-center md:w-[270px] md:pr-[30px] md:m-0">
+      {/* Encabezado */}
+      <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-36">
+        <div className="grid gap-4 md:w-full md:grid-cols-[230px_1fr] md:items-start">
+          {/* Buscador / breadcrumbs */}
+          <div className="order-2 w-full md:order-1">
             {breadcumbs ? (
               <div className="h-fit text-wrap">
-                <Link href="/products" className="w-fit inline text-wrap text-base md:text-[15px] pr-[10px] underline md:no-underline hover:underline">Todos los productos</Link>
+                <Link href="/products" className="w-fit ml-[4%] pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
                 {!!subcategory ? (
                   <>
-                    <div className="w-fit inline text-wrap text-base md:text-[15px] pr-[10px]">/</div>
-                    <Link href={`/products?category=${search}`} className="w-fit inline text-wrap text-base md:text-[15px] pr-[10px] underline md:no-underline hover:underline">{search}</Link>
-                    <div className="w-fit inline text-wrap text-base md:text-[15px] pr-[10px]">/</div>
-                    <h2 className="relative top-0 capitalize w-fit inline text-wrap text-base md:text-[15px]">{subcategory}</h2>
+                    <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
+                    <Link href={`/products?category=${search}`} className="w-fit pr-2.5 inline text-wrap text-[15px] underline md:no-underline hover:underline">{search}</Link>
+                    <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
+                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{subcategory}</h2>
                   </>
                 ) : (
                   <>
-                    <div className="w-fit inline text-wrap text-base md:text-[15px] pr-[10px]">/</div>
-                    <h2 className="relative top-0 capitalize w-fit inline text-wrap text-base md:text-[15px]">{search}</h2>
+                    <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
+                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{search}</h2>
                   </>
                 )}
               </div>
             ) : (
-              <h2 className="relative top-0 capitalize w-fit inline text-wrap text-xl">{decodeURIComponent(search)}</h2>
+              <h2 className="w-fit ml-[4%] inline relative top-0 capitalize font-semibold text-wrap text-xl md:ml-0">{decodeURIComponent(search)}</h2>
             )}
+          </div>
+
+          {/* Herramientas */}
+          <div className="order-1 w-full bg-white shadow-[0px_2px_4px_rgba(0,0,0,0.25)] md:order-2 md:bg-transparent md:shadow-none">
+            <div className="w-11/12 mx-auto flex items-center justify-between gap-4 text-sm sm:text-base md:w-full md:flex-row-reverse">
+              <OrderComponent />
+
+              <span className="w-fit h-full flex items-center md:text-base md:whitespace-nowrap">
+                {results}
+              </span>
+
+              <label
+                htmlFor="open-filters-menu"
+                className="flex items-center gap-2 cursor-pointer p-2 md:hidden"
+              >
+                <FilterIcon size={14} />
+                Filtrar
+              </label>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="w-[96%] max-w-content h-full min-h-[calc(100vh-92.5px)] mx-auto flex flex-col relative md:min-h-[calc(100vh-70px)] md:flex-row">
+      {/* Contenido */}
+      <div className="w-11/12 max-w-content h-full min-h-[calc(100vh-92.5px)] mx-auto grid grid-rows-[auto_1fr] gap-6 relative md:min-h-[calc(100vh-70px)] md:grid-cols-[220px_1fr] md:grid-rows-1">
         <input
           type="checkbox"
           id="open-filters-menu"
           className="hidden peer"
         />
-        {/* TODO: Usar un solo componente para los filtros. Y que se muestre distinto en el mobile que en el desktop */}
+
+        {/* Filtros desktop */}
         <div className="hidden md:block">
           <FiltersComponent />
         </div>
+
+        {/* Filtros mobile (offcanvas) */}
         <div className="md:hidden peer-checked:block hidden fixed inset-0 bg-black/50 z-40">
           <label
             htmlFor="open-filters-menu"
@@ -111,17 +115,21 @@ export const ShowProducts = ({
             aria-label="Cerrar filtros"
           />
           <div
-            className="absolute right-0 top-0 h-full w-[80%] max-w-75 bg-white p-4 overflow-y-auto shadow-xl"
+            className="absolute right-0 top-0 h-full w-4/5 max-w-md bg-white p-4 overflow-y-auto shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <FiltersComponent />
           </div>
         </div>
-        <ListProducts 
-          products={processedProducts} 
-          totalPages={totalPages}
-        />
-      </main>
+
+        {/* Resultados */}
+        <div className="md:col-start-2">
+          <ListProducts
+            products={processedProducts}
+            totalPages={totalPages}
+          />
+        </div>
+      </div>
     </>
   );
 };

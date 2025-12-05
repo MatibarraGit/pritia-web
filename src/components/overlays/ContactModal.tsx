@@ -1,15 +1,16 @@
+// TODO: Agregar el email y redes sociales del negocio
 "use client";
 
 import { useState } from "react";
 import { Phone } from "lucide-react";
-import Image from "next/image";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui";
+import { FacebookButton, InstagramButton, WhatsappButton } from "@/components";
 
 interface ContactModalProps {
   trigger?: React.ReactNode;
@@ -18,30 +19,30 @@ interface ContactModalProps {
 const contactMethods = [
   {
     name: "WhatsApp",
-    icon: "/icons/whatsapp.svg",
+    component: <WhatsappButton />,
     description: "Chateá con nosotros",
-    action: "https://wa.me/+5491140226227",
+    action: "https://wa.me/+5491131738925",
     color: "#25D366",
   },
   {
     name: "Facebook",
-    icon: "/icons/facebook.svg",
+    component: <FacebookButton />,
     description: "Seguinos en Facebook",
-    action: "https://www.facebook.com/md.directo/",
+    action: "https://www.facebook.com",
     color: "#1877F2",
   },
   {
     name: "Instagram",
-    icon: "/icons/instagram.svg",
+    component: <InstagramButton />,
     description: "Mirá nuestras novedades",
-    action: "https://www.instagram.com/mddirectoarg/",
-    color: "#E4405F",
+    action: "https://www.instagram.com",
+    color: "#BB33A0",
   },
   {
     name: "Email",
     icon: "/icons/gmail.svg",
     description: "Escribinos un correo",
-    action: "mailto:mddirecto@gmail.com",
+    action: "mailto:",
     color: "#EA4335",
   },
 ];
@@ -61,7 +62,7 @@ export const ContactModal = ({ trigger }: ContactModalProps) => {
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-11/12 max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
@@ -81,18 +82,7 @@ export const ContactModal = ({ trigger }: ContactModalProps) => {
               className="flex items-center gap-3 p-3 rounded-lg border-2 transition-colors hover:bg-gray-50"
               style={{ borderColor: contact.color }}
             >
-              <div
-                className="flex items-center justify-center w-10 h-10 rounded-full shrink-0"
-                style={{ backgroundColor: contact.color }}
-              >
-                <Image
-                  src={contact.icon}
-                  alt={contact.name}
-                  width={20}
-                  height={20}
-                  className="object-contain"
-                />
-              </div>
+              {contact.component}
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-subheading text-gray-900">
                   {contact.name}

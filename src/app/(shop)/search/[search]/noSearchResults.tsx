@@ -29,7 +29,7 @@ export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {
         Volver al Inicio
       </Button>
 
-      <div className="w-[96%] max-w-content mx-auto">
+      <div className="w-11/12 max-w-content mx-auto">
         <h3 className="text-center">También podría interesarte</h3>
 
         <div className="my-[15px] mx-auto">

@@ -2,6 +2,7 @@
 
 import type { CategoryType } from "@/types";
 
+// GET - Obtener todas las categorías
 export async function fetchAllCategories(): Promise<CategoryType[] | null> {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {

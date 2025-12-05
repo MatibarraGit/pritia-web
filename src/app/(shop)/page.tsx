@@ -33,9 +33,8 @@ export default async function Page() {
     <>
       <Carousel />
       <FeaturedFans />
-      <DailyHighlights />
+      <DailyHighlights products={ProductsOnOffer.slice(0, 3)} />
       <ProductsCarousel title="Nuevos Productos" products={NewEntriesProducts} isLoading={isLoading} />
-      {/* TODO: EN DONDE ESTÁ? */}
       <ProductsCarousel title="Más Vendidos" products={BestSellersProducts} isLoading={isLoading} />
       <ProductCategories />
       <ProductsCarousel title="Mejores Ofertas" products={ProductsOnOffer} isLoading={isLoading} />

@@ -14,16 +14,12 @@ import {
 
 import { cn } from '@/libs/utils';
 import { useFetchData, useMediaQuery } from '@/hooks';
+import { fetchAllCategories } from "@/services";
 import { CategoryType } from "@/types";
-
-const fetchCategories = async (): Promise<CategoryType[] | null> => {
-  const response = await fetch("/api/categories");
-  const data = await response.json();
-  return data || [];
-}
+import Image from "next/image";
 
 export const ProductCategories = () => {
-  const { data: categories, isLoading } = useFetchData<CategoryType[]>({ fetchFunction: fetchCategories });
+  const { data: categories, isLoading } = useFetchData<CategoryType[]>({ fetchFunction: fetchAllCategories });
 
   const isMobile = useMediaQuery("(max-width: 575px)");
   const isTablet = useMediaQuery("(min-width: 576px) and (max-width: 768px)");
@@ -61,17 +57,15 @@ export const ProductCategories = () => {
   
   return (
     <section className="w-11/12 max-w-content py-8 mx-auto">
-      <div className="container mx-auto">
+      <h2 className="font-heading text-2xl text-center mb-4">Comprá por Categoría</h2>
+      <div className="mx-auto">
         <Carousel
           className="w-full"
           opts={{
             loop: true,
             align: "start",
-            slidesToScroll: 1,
+            slidesToScroll: 2,
             breakpoints: {
-              '(min-width: 425px)': {
-                slidesToScroll: 2
-              },
               '(min-width: 640px)': {
                 slidesToScroll: 3
               },
@@ -94,15 +88,22 @@ export const ProductCategories = () => {
         >
           <CarouselContent>
             {categories.map((category) => (
-              <CarouselItem key={category.category_id} className="basis-full xs:basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
+              <CarouselItem key={category.category_id} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
                 <Link
                   href={`/products?category=${category.category_name}`}
                   className={cn(
                     "group relative overflow-hidden rounded-lg shadow-md transition-transform hover:transform hover:scale-105 bg-linear-to-br from-primary/20 to-secondary/20 block"
                   )}
                 >
+                  <Image
+                    src={`/img/categories/${category.category_name}.jpg`}
+                    alt={category.category_name}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    width={200}
+                    height={200}
+                  />
                   <div className="aspect-square w-full flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
                     <div className="relative z-10 text-center">
                       <p className="font-medium text-white text-lg">{category.category_name}</p>
                       {category.subcategories && category.subcategories.length > 0 && (

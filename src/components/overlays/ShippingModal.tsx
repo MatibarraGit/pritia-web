@@ -29,7 +29,7 @@ export const ShippingModal = ({ trigger }: ShippingModalProps) => {
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-11/12 max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="sr-only">Información de Envíos</DialogTitle>
         </DialogHeader>

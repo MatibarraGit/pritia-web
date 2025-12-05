@@ -2,7 +2,6 @@ import Link from "next/link";
 import { CategoriesDropdown } from "@/layout/header/CategoriesDropdown";
 import { ShippingModal, SchedulesModal, ContactModal } from "@/components";
 
-// TODO: Agregar todos los links de navegación
 export const NavigationMenu = () => {
   return (
     <nav className="hidden h-14 fixed top-16 left-0 right-0 z-30 bg-primary text-white shadow-md md:flex">
@@ -12,11 +11,11 @@ export const NavigationMenu = () => {
             <NavigationItem href="/" label="Inicio" />
             <NavigationItem href="/products" label="Todos los productos" />
             <CategoriesDropdown />
+            {/* <NavigationItem href="/" label="Promociones"  */}
           </ul>
           
           {/* Additional links */}
           <div className="hidden md:flex items-center gap-5">
-            <NavigationItem href="/" label="Promociones" />
             <li className="list-none">
               <ShippingModal />
             </li>

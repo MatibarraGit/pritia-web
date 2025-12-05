@@ -1,7 +1,6 @@
 "use client";
 
 import { NoLovedProducts } from "./noLovedProducts";
-import { NavigationMenu } from "@/layout";
 import {
   cartContext,
   lovedProductsContext,
@@ -57,26 +56,23 @@ export default function LovedProductsPage() {
   };
 
   return (
-    <>
-      <NavigationMenu />
-      <main className="min-h-[calc(100vh-92.5px)] bg-background relative">
-        <div className="w-full pb-10 relative top-0 bg-primary">
-          <h1 className="p-6 text-2xl text-center text-white">Productos Favoritos</h1>
-        </div>
+    <div className="min-h-[calc(100vh-92.5px)] bg-background relative">
+      <div className="w-full pb-10 relative top-0 bg-primary">
+        <h1 className="p-6 text-2xl text-center text-white">Productos Favoritos</h1>
+      </div>
 
-        {hasLovedProducts ? (
-          <>
-            <MultipleSelectionMenu handleDelete={handleDelete} />
-            <LovedProductList
-              handleAddToCart={handleAddToCart}
-              handleAddAllToCart={handleAddAllToCart}
-            />
-          </>
-        ) : (
-          <NoLovedProducts />
-        )}
-      </main>
-    </>
+      {hasLovedProducts ? (
+        <>
+          <MultipleSelectionMenu handleDelete={handleDelete} />
+          <LovedProductList
+            handleAddToCart={handleAddToCart}
+            handleAddAllToCart={handleAddAllToCart}
+          />
+        </>
+      ) : (
+        <NoLovedProducts />
+      )}
+    </div>
   );
 }
 

@@ -5,11 +5,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { X } from "lucide-react";
 
 import { menuMobileContext } from "@/contexts";
 import { CategoriesAccordion } from "./CategoriesAccordion";
+import { FacebookButton, InstagramButton, WhatsappButton } from "@/components";
 import { cn } from "@/libs/utils";
 
 export const MenuMobile = () => {
@@ -75,56 +75,15 @@ export const MenuMobile = () => {
               </Link>
             </li>
             <li>
-              <CategoriesAccordion />
+              <CategoriesAccordion isMenuMobile={true} />
             </li>
 
             {/* Social Icons */}
             <li className="mt-4 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-4 justify-center">
-                <a
-                  href="https://wa.me/+5491140226227"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="WhatsApp"
-                >
-                  <Image
-                    src="/icons/whatsapp.svg"
-                    alt="WhatsApp"
-                    width={25}
-                    height={25}
-                  />
-                </a>
-
-                <a
-                  href="https://web.facebook.com/md.directo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="Facebook"
-                >
-                  <Image
-                    src="/icons/facebook.svg"
-                    alt="Facebook"
-                    width={25}
-                    height={25}
-                  />
-                </a>
-
-                <a
-                  href="https://www.instagram.com/mddirectoarg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Image
-                    src="/icons/instagram.svg"
-                    alt="Instagram"
-                    width={25}
-                    height={25}
-                  />
-                </a>
+                <WhatsappButton size="8"/>
+                <FacebookButton size="8" />
+                <InstagramButton size="8" />
               </div>
             </li>
           </ul>

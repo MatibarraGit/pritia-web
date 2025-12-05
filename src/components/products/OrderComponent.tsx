@@ -47,7 +47,7 @@ export function OrderComponent() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between gap-2 w-[140px] h-8 px-3 py-2 text-sm rounded-md border bg-transparent shadow-xs transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary ${
+        className={`w-full max-w-28 overflow-hidden flex items-center justify-between gap-2 h-8 px-3 py-2 text-sm rounded-md border bg-transparent shadow-xs transition-colors sm:max-w-36 md:text-base hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary ${
           selectedParameter ? 'border-primary' : 'border-gray-300'
         }`}
       >
@@ -80,7 +80,7 @@ export function OrderComponent() {
                   <button
                     type="button"
                     onClick={() => handleSubmit(val)}
-                    className={`w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-100 transition-colors ${
+                    className={`w-full flex items-center justify-between px-3 py-2 md:text-base hover:bg-gray-100 transition-colors ${
                       isSelected ? 'bg-gray-50' : ''
                     }`}
                   >

@@ -1,34 +1,38 @@
 "use client";
 
+import { X } from "lucide-react";
+import { Button, Input, Slider } from "@/components/ui";
 import { useFiltersContext } from "@/hooks";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/ui/input";
 import { CategoriesAccordion } from "@/layout/header/CategoriesAccordion";
 
 export const FiltersComponent = () => {
   const { filters, setPriceRange, setVisualPriceRange, resetFilters } = useFiltersContext();
 
   return (
-    <aside className="w-full md:w-[250px] md:pr-[30px] md:sticky md:top-[92.5px] md:h-fit">
-      <div className="flex flex-col gap-4 mb-6">
-        <h2 className="text-lg font-semibold">Filtrar por:</h2>
-        <button 
-          onClick={resetFilters} 
-          className="w-fit px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-        >
-          Limpiar filtros
-        </button>
+    <aside 
+      className="w-full bg-white md:w-56 md:h-fit md:px-4 md:py-4 md:sticky md:top-36 md:shadow-md md:rounded-md"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <span className="text-lg text-gray-500">Filtros</span>
+
+        <label
+          htmlFor="open-filters-menu"
+          className="p-2 flex items-center gap-2 cursor-pointer rounded-md md:hidden hover:bg-accent/50"
+        > 
+          <X size={18}/>
+        </label>
       </div>
 
       {/* CATEGORÍA - Accordion */}
-      <section className="mb-6">
+      <section className="md:px-1 mb-6 overflow-hidden">
         <CategoriesAccordion closeMenuOnClick={false} />
       </section>
 
       {/* PRECIO */}
-      <section>
-        <h3 className="text-base font-medium mb-4">Precio</h3>
-        <div className="space-y-4">
+      <section className="md:px-1">
+        <span className="text-base text-black font-semibold">Precio</span> 
+        <div className="mt-2 space-y-4">
           <Slider
             min={0}
             max={1200000}
@@ -40,16 +44,15 @@ export const FiltersComponent = () => {
             onValueCommit={(values) => {
               setPriceRange(values[0], values[1]);
             }}
-            className="w-full"
+            className="w-full py-2"
           />
 
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div className="flex justify-between text-sm text-muted-foreground">
             <span>Desde</span>
             <span>Hasta</span>
           </div>
 
-          <div className="flex gap-2">
-            {/* TODO: Hacer un separador de miles para el input */}
+          <div className="flex gap-3">
             <div className="flex-1">
               <Input
                 type="number"
@@ -62,8 +65,8 @@ export const FiltersComponent = () => {
                   setVisualPriceRange(value, filters.visualPriceRange.max);
                   setPriceRange(value, filters.priceRange.max);
                 }}
-                className="w-full"
-                placeholder="Mínimo"
+                className="w-full h-10 border-border focus:border-primary focus:ring-primary"
+                placeholder="0"
               />
             </div>
             <div className="flex-1">
@@ -78,15 +81,21 @@ export const FiltersComponent = () => {
                   setVisualPriceRange(filters.visualPriceRange.min, value);
                   setPriceRange(filters.priceRange.min, value);
                 }}
-                className="w-full"
-                placeholder="Máximo"
+                className="w-full h-10 border-border focus:border-primary focus:ring-primary"
+                placeholder="1200000"
               />
             </div>
           </div>
-
         </div>
+
+        <Button 
+          variant="secondary"
+          className="mt-4 text-center"
+          onClick={resetFilters}
+        >
+          Limpiar Filtros
+        </Button>
       </section>
     </aside>
   );
 };
-

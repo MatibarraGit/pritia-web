@@ -12,6 +12,4 @@
 
 ### UI
 [] Adaptar estilos de lovedProductsList
-[] Eliminar el ícono de filtros duplicado en desktop
-[] Arreglar el scroll de slides de ProductCategories.
 [] Entender el infinito del carousel principal de imágenes.

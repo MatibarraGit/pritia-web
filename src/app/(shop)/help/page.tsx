@@ -1,12 +1,9 @@
-// TODO: Agregar los datos reales del negocio
-// TODO: Adaptar estilos e íconos
+// TODO: Agregar el email del negocio
 "use client";
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Clock } from "lucide-react";
 import Image from "next/image";
-
-import { NavigationMenu } from "@/layout/NavigationMenu";
 
 export default function Help() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -51,132 +48,129 @@ export default function Help() {
   };
 
   return (
-    <>
-      <NavigationMenu />
-      <div className="w-full min-h-[calc(100vh-92.5px)] bg-background">
-        {/* Header */}
-        <div className="w-full bg-primary text-white">
-          <div className="w-11/12 max-w-content mx-auto py-12 text-center">
-            <h1 className="text-3xl font-heading mb-2">Centro de Ayuda</h1>
-            <p className="text-lg">Encuentra respuestas a las preguntas más frecuentes</p>
+    <div className="w-full min-h-[calc(100vh-92.5px)] bg-background">
+      {/* Header */}
+      <div className="w-full bg-primary text-white">
+        <div className="w-11/12 max-w-content mx-auto py-12 text-center">
+          <h1 className="text-3xl font-heading mb-2">Centro de Ayuda</h1>
+          <p className="text-lg">Encuentra respuestas a las preguntas más frecuentes</p>
+        </div>
+      </div>
+
+      <div className="w-11/12 max-w-content mx-auto py-8">
+        {/* Contact Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <a
+            href="https://wa.me/+5491131738925"
+            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center shrink-0">
+                <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1">WhatsApp</h3>
+                <p className="text-sm text-gray-600 mb-1">Atención inmediata</p>
+                <p className="text-gray-800 font-medium">+54 9 11 3173-8925</p>
+                <p className="text-sm text-green-600 mt-2">Respuesta rápida garantizada</p>
+              </div>
+            </div>
+          </a>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+                <Clock className="w-6 h-6 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1">Horarios</h3>
+                <p className="text-sm text-gray-600 mb-1">Atención al Cliente</p>
+                <p className="text-gray-800 font-medium">Lunes a Sábados</p>
+                <p className="text-sm text-blue-600 mt-2">09:00hs a 18:00hs</p>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="#"
+            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
+                <Image src="/icons/gmail.svg" alt="Email" width={20} height={20} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1">Email</h3>
+                <p className="text-sm text-gray-600 mb-1">Consultas generales</p>
+                <p className="text-gray-800 font-medium break-all">[Email de contacto]</p>
+                <p className="text-sm text-orange-600 mt-2">Respondemos en 24hs</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-heading mb-2">Preguntas Frecuentes</h2>
+            <p className="text-gray-600">Las respuestas a las consultas más comunes</p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <h3 className="text-left font-medium text-lg pr-4">{faq.pregunta}</h3>
+                  {openFaq === index ? (
+                    <ChevronUp className="w-5 h-5 shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 shrink-0" />
+                  )}
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 py-4 border-t bg-gray-50">
+                    <p className="text-gray-700">{faq.respuesta}</p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="w-11/12 max-w-content mx-auto py-8">
-          {/* Contact Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {/* Still Need Help Section */}
+        <div className="bg-primary text-white rounded-lg p-8 text-center">
+          <h3 className="text-2xl font-heading mb-2">¿No encontraste lo que buscabas?</h3>
+          <p className="mb-6 opacity-90">
+            Estamos para ayudarte en lo que necesites.
+            Contáctanos y te responderemos lo antes posible.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://wa.me/+5491131738925"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-md transition-colors"
+            >
+              <Image src="/icons/whatsapp-white.svg" alt="WhatsApp" width={24} height={24} />
+              Escribir por WhatsApp
+            </a>
             <a
               href="#"
-              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary hover:bg-gray-100 rounded-md transition-colors"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center shrink-0">
-                  <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1">WhatsApp</h3>
-                  <p className="text-sm text-gray-600 mb-1">Atención inmediata</p>
-                  <p className="text-gray-800 font-medium">[Número de WhatsApp]</p>
-                  <p className="text-sm text-green-600 mt-2">Respuesta rápida garantizada</p>
-                </div>
-              </div>
+              <Image src="/icons/gmail.svg" alt="Email" width={20} height={20} />
+              Enviar Email
             </a>
-
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-                  <Clock className="w-6 h-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1">Horarios</h3>
-                  <p className="text-sm text-gray-600 mb-1">Atención al Cliente</p>
-                  <p className="text-gray-800 font-medium">[Días de atención]</p>
-                  <p className="text-sm text-blue-600 mt-2">[Horario de atención]</p>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="#"
-              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
-                  <Image src="/icons/gmail.svg" alt="Email" width={20} height={20} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1">Email</h3>
-                  <p className="text-sm text-gray-600 mb-1">Consultas generales</p>
-                  <p className="text-gray-800 font-medium break-all">[Email de contacto]</p>
-                  <p className="text-sm text-orange-600 mt-2">Respondemos en 24hs</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          {/* FAQ Section */}
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-heading mb-2">Preguntas Frecuentes</h2>
-              <p className="text-gray-600">Las respuestas a las consultas más comunes</p>
-            </div>
-
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <button
-                    onClick={() => toggleFaq(index)}
-                    className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  >
-                    <h3 className="text-left font-medium text-lg pr-4">{faq.pregunta}</h3>
-                    {openFaq === index ? (
-                      <ChevronUp className="w-5 h-5 shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 shrink-0" />
-                    )}
-                  </button>
-                  {openFaq === index && (
-                    <div className="px-6 py-4 border-t bg-gray-50">
-                      <p className="text-gray-700">{faq.respuesta}</p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Still Need Help Section */}
-          <div className="bg-primary text-white rounded-lg p-8 text-center">
-            <h3 className="text-2xl font-heading mb-2">¿No encontraste lo que buscabas?</h3>
-            <p className="mb-6 opacity-90">
-              Estamos para ayudarte en lo que necesites.
-              Contáctanos y te responderemos lo antes posible.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-md transition-colors"
-              >
-                <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
-                Escribir por WhatsApp
-              </a>
-              <a
-                href="#"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary hover:bg-gray-100 rounded-md transition-colors"
-              >
-                <Image src="/icons/gmail.svg" alt="Email" width={20} height={20} />
-                Enviar Email
-              </a>
-            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

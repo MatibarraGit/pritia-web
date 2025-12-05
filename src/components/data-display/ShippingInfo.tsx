@@ -5,11 +5,9 @@ export const ShippingInfo = () => {
     "Cañuelas",
     "Virrey del Pino",
     "G. Catán",
-    "San Justo",
     "G. Laferrere",
+    "San Justo",
     "Morón",
-    "Ituzaingó",
-    "Merlo",
   ];
 
   return (
@@ -34,9 +32,9 @@ export const ShippingInfo = () => {
           zonas:
         </p>
 
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
           {localShippingZones.map((zone) => (
-            <div key={zone} className="flex items-center gap-2 p-2 rounded-md bg-gray-50">
+            <div key={zone} className="flex items-center gap-2 p-2 rounded-md bg-green-500/10">
               <MapPin className="w-4 h-4 text-green-600 shrink-0" />
               <span className="text-sm text-gray-700">{zone}</span>
             </div>

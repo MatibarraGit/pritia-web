@@ -11,7 +11,7 @@ export default function NotFound() {
 
   return (
     <main className="min-h-screen p-4 pt-[100px] grid items-start justify-items-center bg-background">
-      <div className="w-[96%] max-w-content mx-auto grid gap-8 md:flex md:justify-center md:items-center md:gap-5">
+      <div className="w-11/12 max-w-content mx-auto grid gap-8 md:flex md:justify-center md:items-center md:gap-5">
         <div className="grid place-items-center">
           <img
             src="/img/productNotFound.png"

@@ -36,7 +36,7 @@ export const EmailForm = () => {
         } else {
           showToast(data.message || "Error al procesar la solicitud", "danger");
         }
-      } catch (error) {
+      } catch {
         showToast("Error al procesar la solicitud", "danger");
       }
     });

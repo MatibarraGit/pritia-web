@@ -1,24 +1,26 @@
+// TODO: Manejar los filtros ¿En backend o en frontend?
+// ? Utilizar handleFilterChange cuando hay una búsqueda o una categoría, y utilizar un Link cuando es todos los productos
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { menuMobileContext } from "@/contexts";
-import { useFetchData } from "@/hooks";
+import { useFetchData, useFiltersContext } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
 import { fetchAllCategories } from "@/services";
 
 interface CategoriesAccordionProps {
+  isMenuMobile?: boolean;
   closeMenuOnClick?: boolean;
 }
 
-export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccordionProps) => {
-  const router = useRouter();
+export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = true }: CategoriesAccordionProps) => {
   const params = useSearchParams();
-  const category = params.get("category") || "";
   const subcategory = params.get("subcategory") || "";
   const { closeMenu } = menuMobileContext();
+  // const { handleFilterChange } = useFiltersContext()
 
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({
     fetchFunction: fetchAllCategories,
@@ -26,12 +28,7 @@ export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccor
 
   const categoriesList = categories || [];
 
-  const handleCategoryClick = (categoryName: string) => {
-    if (closeMenuOnClick) {
-      closeMenu();
-    }
-    router.push(`/products?category=${encodeURIComponent(categoryName)}`);
-  };
+  const router = useRouter();
 
   const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
     if (closeMenuOnClick) {
@@ -41,6 +38,11 @@ export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccor
       `/products?category=${encodeURIComponent(categoryName)}&subcategory=${encodeURIComponent(subcategoryName)}`
     );
   };
+
+  // function onClickFunction(subcategoryName: string, categoryName: string) {
+  //   if (!!isMenuMobile) return handleSubcategoryClick(categoryName, subcategoryName)
+  //   else return handleFilterChange("subcategory", subcategoryName)
+  // }
 
   if (isLoading) {
     return (
@@ -60,53 +62,40 @@ export const CategoriesAccordion = ({ closeMenuOnClick = true }: CategoriesAccor
 
   return (
     <Accordion type="single" collapsible className="w-full">
-      <AccordionItem value="categories" className="border border-gray-200 rounded-md bg-white shadow-sm">
+      <AccordionItem value="categories">
         <AccordionTrigger 
-          className="flex py-3 px-3 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+          className={cn(
+            "flex text-base hover:text-primary rounded-md transition-colors hover:no-underline",
+            isMenuMobile 
+              ? "py-3 px-1 font-subheading text-gray-700 hover:bg-gray-50" 
+              : "p-0 font-semibold text-black"
+          )}
         >
           Categorías
         </AccordionTrigger>
-        <AccordionContent className="px-3 pb-3">
+        <AccordionContent className="pb-3 max-h-80 overflow-y-scroll personalized-scrollbar">
           <Accordion type="multiple" className="w-full">
             {categoriesList.map((categoryItem) => (
-              <AccordionItem
+              <div 
                 key={categoryItem.category_id}
-                value={categoryItem.category_name}
-                className="border border-gray-200 rounded-md bg-gray-50 shadow-sm mb-2 last:mb-0"
+                className={cn(
+                  "flex flex-col",
+                  isMenuMobile ? "px-3" : "px-2"
+                )}
               >
-                <AccordionTrigger
-                  className={cn(
-                    "text-sm font-medium hover:no-underline py-2.5 px-3 rounded-md",
-                    category === categoryItem.category_name && "text-primary font-semibold bg-white"
-                  )}
-                >
-                  {categoryItem.category_name}
-                </AccordionTrigger>
-                <AccordionContent className="pb-3 px-3">
-                  <div className="flex flex-col gap-1 bg-white rounded-md border border-gray-100 p-2">
-                    {categoryItem.subcategories?.map((subcategoryItem) => (
-                      <button
-                        key={subcategoryItem.id}
-                        type="button"
-                        onClick={() => handleSubcategoryClick(categoryItem.category_name, subcategoryItem.name)}
-                        className={cn(
-                          "w-full text-left text-sm py-2 px-3 rounded-md cursor-pointer transition-colors hover:bg-gray-100",
-                          subcategory === subcategoryItem.name && "text-primary font-semibold bg-gray-50"
-                        )}
-                      >
-                        {subcategoryItem.name}
-                      </button>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => handleCategoryClick(categoryItem.category_name)}
-                      className="w-full text-left text-sm py-2 px-3 rounded-md cursor-pointer transition-colors hover:bg-gray-100 text-primary font-semibold border-t border-gray-200 mt-1 pt-2"
-                    >
-                      Ver todo
-                    </button>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+                {categoryItem.subcategories?.map((subcategoryItem) => (
+                  <button 
+                    key={subcategoryItem.id}
+                    className={cn(
+                      "w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start",
+                      subcategory === subcategoryItem.name && "text-primary font-semibold"
+                    )}
+                    onClick={() => handleSubcategoryClick(categoryItem.category_name, subcategoryItem.name)}
+                  >
+                    {subcategoryItem.name}
+                  </button>
+                ))}
+              </div>
             ))}
           </Accordion>
         </AccordionContent>

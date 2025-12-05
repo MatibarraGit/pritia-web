@@ -33,6 +33,23 @@
   /* Breakpoints */
 }
 
+/* ============================================
+   CONFIGURACIÓN DE SHADCN UI
+   ============================================ */
+@theme inline { 
+  --color-background: #fafafa; 
+  --color-background-hover: color-mix(in oklab, var(--color-black) 5%, transparent);
+  --color-foreground: var(--foreground); 
+  --color-accent: #0002;
+
+  --color-border-color: color-mix(in oklab, var(--color-black) 10%, transparent);
+
+
+  --border-1: 1px;
+
+  --max-width-content: 1280px;
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -68,21 +85,6 @@ button {
 
 .body-no-scroll {
   @apply overflow-hidden;
-}
-
-/* ============================================
-   CONFIGURACIÓN DE SHADCN UI
-   ============================================ */
-@theme inline { 
-  --color-background: #fafafa; 
-  --color-background-hover: color-mix(in oklab, var(--color-black) 5%, transparent);
-  --color-foreground: var(--foreground); 
-
-  --color-border-color: color-mix(in oklab, var(--color-black) 10%, transparent);
-
-  --border-1: 1px;
-
-  --max-width-content: 1280px;
 }
 
 /* ============================================
@@ -150,19 +152,19 @@ button {
 /* ============================================
    SCROLLBAR PERSONALIZADO
    ============================================ */
-.favourites-menu-scroll::-webkit-scrollbar {
+.personalized-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
 
-.favourites-menu-scroll::-webkit-scrollbar-track {
+.personalized-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.favourites-menu-scroll::-webkit-scrollbar-thumb {
+.personalized-scrollbar::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }
 
-.favourites-menu-scroll::-webkit-scrollbar-thumb:hover {
+.personalized-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

@@ -43,7 +43,7 @@ export const FavouritesMenu = () => {
           </div>
         ) : (
           <>
-            <div className="max-h-[250px] overflow-y-auto favourites-menu-scroll bg-background">
+            <div className="max-h-[250px] overflow-y-auto personalized-scrollbar bg-background">
               {sortedProducts.map((product) => (
                 <Link
                   key={product.id}

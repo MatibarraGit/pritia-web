@@ -75,7 +75,7 @@ export const SchedulesModal = ({ trigger }: SchedulesModalProps) => {
 
         <div className="space-y-2 pt-4 border-t border-gray-200">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+            <div className="w-2 h-2 rounded-full bg-primary"></div>
             <span className="text-sm text-gray-600">
               Lunes a Sábado de 09:00 a 18:00hs
             </span>
