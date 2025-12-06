@@ -1,4 +1,3 @@
-// TODO: Enlazar con Facebook e Instagram
 import Image from "next/image";
 
 export const FacebookButton = ({ size = "6" }: { size?: string }) => {

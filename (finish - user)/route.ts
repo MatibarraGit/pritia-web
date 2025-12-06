@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 // import { auth } from "@/auth";
 
-// TODO: Implementar autenticación cuando esté disponible
 export async function GET() {
   try {
     const users = await prisma.users.findMany({
@@ -31,7 +30,6 @@ export async function GET() {
   }
 }
 
-// TODO: Implementar autenticación cuando esté disponible
 export async function POST(req: Request) {
   try {
     const { name, email, pwHash, role } = await req.json();

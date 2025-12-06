@@ -1,11 +1,10 @@
 import {
   Carousel,
-  FeaturedFans,
+  // FeaturedFans,
   DailyHighlights,
   ProductsCarousel,
   ProductCategories,
   ServicesHighlight,
-  PaymentMethods,
 } from "@/components";
 import { getHomeProducts } from "@/services";
 import { ProductType } from "@/types";
@@ -32,14 +31,13 @@ export default async function Page() {
   return (
     <>
       <Carousel />
-      <FeaturedFans />
+      {/* <FeaturedFans /> */}
       <DailyHighlights products={ProductsOnOffer.slice(0, 3)} />
       <ProductsCarousel title="Nuevos Productos" products={NewEntriesProducts} isLoading={isLoading} />
       <ProductsCarousel title="Más Vendidos" products={BestSellersProducts} isLoading={isLoading} />
       <ProductCategories />
       <ProductsCarousel title="Mejores Ofertas" products={ProductsOnOffer} isLoading={isLoading} />
       <ServicesHighlight />
-      <PaymentMethods />
     </>
   );
 }

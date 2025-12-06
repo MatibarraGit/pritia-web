@@ -29,9 +29,9 @@ export const enum PAYMENT_STATUS {
 export const PRODUCTS_PER_PAGE = 60;
 
 export const enum TOPICS {
-  NEW_ENTRIES = 'Nuevos Ingresos',
-  OFFERS = 'Ofertas',
-  BEST_SELLERS = 'Más Vendidos',
+  NEW_ENTRIES = 'nuevos ingresos',
+  OFFERS = 'ofertas',
+  BEST_SELLERS = 'más vendidos',
 }
 
 export const ORDER_PARAMETERS = {

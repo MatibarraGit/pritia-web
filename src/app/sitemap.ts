@@ -1,4 +1,3 @@
-// TODO: Adaptar el sitemap para mi proyecto
 import { getAllProducts } from "@/services"
 
 export const revalidate = 30

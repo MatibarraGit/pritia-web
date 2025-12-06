@@ -1,7 +1,3 @@
-// TODO: Agregar el logo y el nombre del negocio
-// TODO: Agregar los íconos de las redes sociales
-// TODO: Agregar los enlaces del NavigationMenu
-
 "use client";
 
 import Link from "next/link";

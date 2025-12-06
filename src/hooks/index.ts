@@ -1,4 +1,5 @@
 export { useAsyncData } from './use-async-data'
+export { useCategoriesMenu } from './use-categories-menu'
 export { useFetchData } from './use-fetch-data'
 export { useMediaQuery } from './use-media-query'
 export { useFiltersContext } from './use-filters-context'

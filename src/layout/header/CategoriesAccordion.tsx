@@ -2,11 +2,11 @@
 // ? Utilizar handleFilterChange cuando hay una búsqueda o una categoría, y utilizar un Link cuando es todos los productos
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { menuMobileContext } from "@/contexts";
-import { useFetchData, useFiltersContext } from "@/hooks";
+import { useCategoriesMenu, useFetchData, useFiltersContext } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
 import { fetchAllCategories } from "@/services";
@@ -21,23 +21,13 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
   const subcategory = params.get("subcategory") || "";
   const { closeMenu } = menuMobileContext();
   // const { handleFilterChange } = useFiltersContext()
+  const { handleCategoryClick } = useCategoriesMenu({ closeMenuOnClick, closeMenu })
 
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({
     fetchFunction: fetchAllCategories,
   });
 
   const categoriesList = categories || [];
-
-  const router = useRouter();
-
-  const handleSubcategoryClick = (categoryName: string, subcategoryName: string) => {
-    if (closeMenuOnClick) {
-      closeMenu();
-    }
-    router.push(
-      `/products?category=${encodeURIComponent(categoryName)}&subcategory=${encodeURIComponent(subcategoryName)}`
-    );
-  };
 
   // function onClickFunction(subcategoryName: string, categoryName: string) {
   //   if (!!isMenuMobile) return handleSubcategoryClick(categoryName, subcategoryName)
@@ -90,7 +80,7 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
                       "w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start",
                       subcategory === subcategoryItem.name && "text-primary font-semibold"
                     )}
-                    onClick={() => handleSubcategoryClick(categoryItem.category_name, subcategoryItem.name)}
+                    onClick={() => handleCategoryClick(categoryItem.category_name, subcategoryItem.name)}
                   >
                     {subcategoryItem.name}
                   </button>

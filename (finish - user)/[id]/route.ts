@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 // import { auth } from "@/auth";
 
-// TODO: Implementar autenticación cuando esté disponible
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

@@ -1,9 +1,9 @@
-// TODO: Agregar el email del negocio
 "use client";
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Clock } from "lucide-react";
 import Image from "next/image";
+import { ShippingInfo } from "@/components";
 
 export default function Help() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -112,6 +112,12 @@ export default function Help() {
             </div>
           </a>
         </div>
+        
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-heading mb-6">Envíos</h2>
+          <ShippingInfo isHelpPage={true} />
+        </div>
+        
 
         {/* FAQ Section */}
         <div className="mb-12">

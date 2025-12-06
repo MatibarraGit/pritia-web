@@ -109,11 +109,11 @@ export const ProductsCarousel = ({
 
           plugins={isAutoplay ? [getAutoPlay()] : []}
         >
-          <CarouselContent>
+          <CarouselContent className="pl-4">
             {products.map((product) => (
               <CarouselItem key={product.id} className="basis-full xs:basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
-                <div className="w-full border rounded-md"> 
-                  <ProductCard product={product} classNames="border-none bg-white" />
+                <div className="w-full border rounded-md bg-white"> 
+                  <ProductCard product={product} classNames="border-none " />
                 </div>
               </CarouselItem>
             ))}

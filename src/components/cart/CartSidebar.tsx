@@ -17,8 +17,9 @@ export function CartSidebar() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const shipping = 0; // TODO: Implementar cálculo de envío
-  const total = subtotal + shipping;
+  // TODO: Implementar cálculo de envío
+  // const shipping = 0; 
+  const total = subtotal;
 
   return (
     <>
@@ -90,7 +91,7 @@ export function CartSidebar() {
                 ))}
               </div>
               {/* Cart footer */}
-              <div className="w-full absolute bottom-0  border-t py-4 bg-white">
+              {/* <div className="w-full absolute bottom-0  border-t py-4 bg-white">
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between pb-2">
                     <span className="text-gray-600">Envío</span>
@@ -109,7 +110,19 @@ export function CartSidebar() {
                 >
                   Finalizar compra
                 </Button>
+              </div> */}
+
+              <div className="flex justify-between font-subheading text-lg pt-2 border-t">
+                <span>Total</span>
+                <span>{formatPrice(total)}</span>
               </div>
+
+              <Button
+                className="w-full bg-primary hover:bg-primary/90 text-white"
+                href="/cart"
+              >
+                Finalizar compra
+              </Button>
             </div>
           )}
         </div>

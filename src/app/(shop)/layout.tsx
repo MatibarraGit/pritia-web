@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased font-body`} cz-shortcut-listen="true">
+      <body className={`${geistSans.variable} antialiased font-body`} suppressHydrationWarning>
         <Header />
         <NavigationMenu />
         <main className="w-full mt-30 bg-background">{children}</main>

@@ -1,8 +1,7 @@
-import { Truck } from 'lucide-react';
+import { CreditCard, Truck } from 'lucide-react';
 import { cn } from '@/libs/utils';
 import { ServiceType } from '@/types';
 
-// TODO: Cambiar los servicios por los reales
 const services: ServiceType[] = [
   {
     id: 1,
@@ -17,19 +16,15 @@ const services: ServiceType[] = [
   },
   {
     id: 2,
-    icon: <Truck />,
+    icon: (<Truck size={40} color='#20B156' className="mx-auto" />),
     title: 'Envíos a todo el país',
     description: 'Entregamos tus productos en la puerta de tu casa',
   },
   {
     id: 3,
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mx-auto h-10 w-10 text-accent">
-        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-      </svg>
-    ),
-    title: 'Garantía de calidad',
-    description: 'Todos nuestros productos con garantía',
+    icon: (<CreditCard size={40} color='#20B156' className="mx-auto" />),
+    title: 'Pagá con tarjeta',
+    description: 'Aceptamos todos los métodos de pago de Mercado Pago',
   },
   {
     id: 4,
@@ -39,7 +34,7 @@ const services: ServiceType[] = [
       </svg>
     ),
     title: 'Atención personalizada',
-    description: 'Asesores especializados a tu servicio',
+    description: 'Te ayudamos a encontrar la solución que necesitas',
   },
 ];
 

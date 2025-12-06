@@ -41,7 +41,6 @@ function ProductsPageContent() {
             `/api/products/byCategory/${encodeURIComponent(category!)}?page=${page}`
           );
           productsResponse = await categoryResponse.json();
-          // TODO: Obtener total de productos desde el backend
           total = productsResponse.length;
           title.current = category!;
           break;
@@ -51,7 +50,6 @@ function ProductsPageContent() {
             `/api/products/byTopic/${encodeURIComponent(topic!)}?page=${page}`
           );
           productsResponse = await topicResponse.json();
-          // TODO: Obtener total de productos desde el backend
           total = productsResponse.length;
           title.current = topic!;
 
@@ -63,7 +61,6 @@ function ProductsPageContent() {
         default:
           const availableResponse = await fetch(`/api/products/available?page=${page}`);
           productsResponse = await availableResponse.json();
-          // TODO: Obtener total de productos desde el backend
           total = productsResponse.length;
           title.current = 'Todos los Productos';
       }

@@ -1,280 +1,177 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useEffect, useState, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { cn } from '@/libs/utils';
+import {
+  Carousel as ShadcnCarousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { cn } from "@/libs/utils";
+import Image from "next/image";
 
-// TODO: Adaptar el contenido del carousel
-const carouselItems = [
+interface Slide {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonHref: string;
+  buttonText: string;
+  image: string;
+}
+
+const slides: Slide[] = [
   {
     id: 1,
-    title: "ACCESORIOS PREMIUM",
-    subtitle: "PARA TU VEHÍCULO",
-    description: "DESCUBRE NUESTRA NUEVA COLECCIÓN",
-    buttonText: "COMPRAR AHORA",
-    buttonLink: "#",
-    bgColor: "bg-primary",
-    textColor: "text-white",
-    imageSrc: "/soluciones.png"
+    title: "TODO PARA TU HOGAR",
+    subtitle: "MÁS DE 500 PRODUCTOS",
+    description: "Electrodomésticos, muebles, decoración y más",
+    buttonHref: "/products",
+    buttonText: "VER PRODUCTOS",
+    image: "/img/slide-home-products.png",
   },
   {
     id: 2,
     title: "MEGA OFERTAS",
-    subtitle: "EN NEUMÁTICOS Y BATERÍAS",
-    description: "HASTA 40% OFF Y 6 CUOTAS SIN INTERÉS",
+    subtitle: "PENSADAS PARA VOS",
+    description: "HASTA 35% OFF y cuotas sin tarjeta",
+    buttonHref: "/products?topic=ofertas",
     buttonText: "VER OFERTAS",
-    buttonLink: "#",
-    bgColor: "bg-secondary",
-    textColor: "text-white",
-    imageSrc: "/contanos-tu-experiencia.png"
-  }
-  // {
-  //   id: 3,
-  //   title: "HERRAMIENTAS PROFESIONALES",
-  //   subtitle: "TODO PARA TU TALLER",
-  //   description: "ENVÍO GRATIS EN COMPRAS SUPERIORES A $100",
-  //   buttonText: "DESCUBRIR",
-  //   buttonLink: "#",
-  //   bgColor: "bg-neutral-900",
-  //   textColor: "text-white",
-  //   imageSrc: "https://images.unsplash.com/photo-1580402427914-a6cc60d7d03f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NDA2MjB8MHwxfHNlYXJjaHw3fHxtZWNoYW5pYyUyMHRvb2xzfGVufDB8fHx8MTcxNTEwMjUzOXww&ixlib=rb-4.0.3&q=80&w=1080"
-  // }
+    image: "/img/slide-offers.png",
+  },
+  {
+    id: 3,
+    title: "ENVÍOS A TODO EL PAÍS",
+    subtitle: "LLEGAMOS A TU PUERTA",
+    description: "Entregas rápidas y seguras",
+    buttonHref: "/help",
+    buttonText: "VER MÁS",
+    image: "/img/slide-shipping.png",
+  },
 ];
 
 export const Carousel = () => {
-  // Crear array con slides duplicados: [último, ...originales, primero]
-  const infiniteItems = [
-    carouselItems[carouselItems.length - 1], // Último slide al inicio
-    ...carouselItems,
-    carouselItems[0] // Primer slide al final
-  ];
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
-  const totalSlides = infiniteItems.length;
+  useEffect(() => {
+    if (!api) return;
 
-  // Inicializar en el primer slide real (índice 1)
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
+    setCurrent(api.selectedScrollSnap());
 
-  // Función para obtener el índice real (para los dots)
-  const getRealIndex = (index: number) => {
-    if (index === 0) return carouselItems.length - 1;
-    if (index === totalSlides - 1) return 0;
-    return index - 1;
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const goToSlide = (index: number) => {
+    api?.scrollTo(index);
   };
 
-  // Auto scroll infinito - siempre hacia la derecha
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = prevIndex + 1;
-        
-        // Si llegamos al último slide duplicado, saltar sin animación al primer slide real
-        if (nextIndex >= totalSlides - 1) {
-          // Saltar sin animación al primer slide real
-          setTimeout(() => {
-            if (carouselRef.current) {
-              carouselRef.current.style.transition = 'none';
-              setCurrentIndex(1);
-              // Restaurar la transición después de un frame
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  if (carouselRef.current) {
-                    carouselRef.current.style.transition = '';
-                  }
-                });
-              });
-            }
-          }, 500);
-          return nextIndex;
-        }
-        
-        return nextIndex;
-      });
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [totalSlides]);
-
-  // Efecto para manejar el salto cuando llegamos a los slides duplicados
-  useEffect(() => {
-    if (!carouselRef.current) return;
-
-    // Si estamos en el último slide duplicado (índice = length - 1), saltar al primero
-    if (currentIndex === totalSlides - 1) {
-      setTimeout(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.transition = 'none';
-          setCurrentIndex(1);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (carouselRef.current) {
-                carouselRef.current.style.transition = '';
-              }
-            });
-          });
-        }
-      }, 500);
-    }
-
-    // Si estamos en el primer slide duplicado (índice = 0), saltar al último
-    if (currentIndex === 0) {
-      setTimeout(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.transition = 'none';
-          setCurrentIndex(carouselItems.length);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (carouselRef.current) {
-                carouselRef.current.style.transition = '';
-              }
-            });
-          });
-        }
-      }, 500);
-    }
-  }, [currentIndex, totalSlides]);
-
   const nextSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    
-    setCurrentIndex((prevIndex) => {
-      const nextIndex = prevIndex + 1;
-      
-      // Si llegamos al último slide duplicado, saltar sin animación al primer slide real
-      if (nextIndex >= totalSlides - 1) {
-        setTimeout(() => {
-          if (carouselRef.current) {
-            carouselRef.current.style.transition = 'none';
-            setCurrentIndex(1);
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                if (carouselRef.current) {
-                  carouselRef.current.style.transition = '';
-                }
-                setIsAnimating(false);
-              });
-            });
-          }
-        }, 500);
-        return nextIndex;
-      }
-      
-      setTimeout(() => setIsAnimating(false), 500);
-      return nextIndex;
-    });
+    api?.scrollNext();
   };
 
   const prevSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    
-    setCurrentIndex((prevIndex) => {
-      const prevIndexValue = prevIndex - 1;
-      
-      // Si llegamos al primer slide duplicado, saltar sin animación al último slide real
-      if (prevIndexValue <= 0) {
-        setTimeout(() => {
-          if (carouselRef.current) {
-            carouselRef.current.style.transition = 'none';
-            setCurrentIndex(carouselItems.length);
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                if (carouselRef.current) {
-                  carouselRef.current.style.transition = '';
-                }
-                setIsAnimating(false);
-              });
-            });
-          }
-        }, 500);
-        return prevIndexValue;
-      }
-      
-      setTimeout(() => setIsAnimating(false), 500);
-      return prevIndexValue;
-    });
+    api?.scrollPrev();
   };
-
-  const goToSlide = (realIndex: number) => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    // El índice real + 1 porque el primer slide real está en índice 1
-    setCurrentIndex(realIndex + 1);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const realIndex = getRealIndex(currentIndex);
 
   return (
-    <div className="relative overflow-hidden w-full h-[400px] md:h-[500px]">
-      <div 
-        ref={carouselRef}
-        className="flex transition-transform duration-500 ease-in-out w-full h-full" 
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+    <section className="relative w-full overflow-hidden">
+      <ShadcnCarousel
+        setApi={setApi}
+        opts={{
+          loop: true,
+          align: "start",
+        }}
+        plugins={[autoplay.current]}
+        className="w-full h-[500px] bg-primary md:h-96"
+        onMouseEnter={() => autoplay.current.stop()}
+        onMouseLeave={() => autoplay.current.play()}
+        onTouchStart={() => autoplay.current.stop()}
+        onTouchEnd={() => autoplay.current.play()}
       >
-        {infiniteItems.map((item, index) => (
-          <div 
-            key={`${item.id}-${index}`} 
-            className={`shrink-0 w-full h-full ${item.bgColor} relative`}
-            style={{ minWidth: '100%' }}
-          >
-            <div className="absolute inset-0 z-0">
-              <Image 
-                src={item.imageSrc} 
-                alt={item.title} 
-                width={1200}
-                height={600}
-                className="w-full h-full object-cover opacity-50"
-              />
-            </div>
-            <div className="relative z-10 container w-11/12 max-w-content mx-auto h-full flex flex-col justify-center items-center md:items-start text-center md:text-left">
-              <h2 className={`text-3xl md:text-5xl font-subheading ${item.textColor} mb-2`}>{item.title}</h2>
-              <h3 className={`text-xl md:text-3xl font-semibold ${item.textColor} mb-4`}>{item.subtitle}</h3>
-              <p className={`text-lg md:text-xl ${item.textColor} mb-8 max-w-xl`}>{item.description}</p>
-              <Button 
-                className="bg-white text-accent hover:bg-gray-100 font-subheading text-sm px-8 py-6"
-              >
-                <a href={item.buttonLink}>{item.buttonText}</a>
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      {/* Navigation buttons */}
-      <button 
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full z-20"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-      
-      <button 
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full z-20"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
-      
-      {/* Dots indicator */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
-        {carouselItems.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={cn(
-              "w-3 h-3 rounded-full transition-colors",
-              realIndex === index ? "bg-white" : "bg-white/50"
-            )}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-    </div>
+        <CarouselContent className="m-auto">
+          {slides.map((item) => (
+            <CarouselItem key={item.id} className="m-auto basis-full pl-0">
+              <div className="py-4 my-auto relative">
+                <div className="w-11/12 max-w-6xl h-[440px] mx-auto flex flex-col text-white md:h-80 md:flex-row md:gap-12 md:items-center">
+                  {/* Text Content */}
+                  <div className="flex-1 text-center md:text-left order-1">
+                    <h1 className="text-3xl md:text-5xl font-bold text-carousel-text mb-2">
+                      {item.title}
+                    </h1>
+                    <h2 className="text-xl md:text-3xl font-semibold text-carousel-text mb-4">
+                      {item.subtitle}
+                    </h2>
+                    <p className="text-carousel-text/90 text-base md:text-lg mb-6">
+                      {item.description}
+                    </p>
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      href={item.buttonHref}
+                      className="w-fit self-center mt-auto font-semibold tracking-wide bg-white text-primary hover:bg-gray-100"
+                    >
+                      {item.buttonText}
+                    </Button>
+                  </div>
+
+                  {/* Image - Always at the end (order-2) */}
+                  <div className="w-fit mx-auto flex-1 flex items-end order-2 max-h-[200px] md:w-full md:mt-0 md:items-center">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      width={800}
+                      height={400}
+                      className="w-full max-w-lg max-h-[200px] mx-auto rounded-lg object-contain md:max-h-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-carousel-text/10 hover:bg-carousel-text/20 transition-colors backdrop-blur-sm text-white"
+          aria-label="Slide anterior"
+        >
+          <ChevronLeft className="w-6 h-6 text-carousel-text" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-carousel-text/10 hover:bg-carousel-text/20 transition-colors backdrop-blur-sm text-white"
+          aria-label="Siguiente slide"
+        >
+          <ChevronRight className="w-6 h-6 text-carousel-text" />
+        </button>
+
+        {/* Dots Indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={cn(
+                "w-3 h-3 rounded-full transition-all duration-300",
+                index === current
+                  ? "bg-white w-8"
+                  : "bg-white/50 hover:bg-carousel-text/70"
+              )}
+              aria-label={`Ir al slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </ShadcnCarousel>
+    </section>
   );
 };

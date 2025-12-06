@@ -36,7 +36,6 @@ export { CartSidebar } from './cart/CartSidebar'
 
 // Home
 export { DailyHighlights } from './home/DailyHighlights'
-export { PaymentMethods } from './home/PaymentMethods'
 export { ServicesHighlight } from './home/ServicesHighlight'
 export { ProductCategories } from './home/ProductCategories'
 export { FeaturedFans } from './home/FeaturedFans'

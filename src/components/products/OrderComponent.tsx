@@ -71,7 +71,7 @@ export function OrderComponent() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-[200px] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+        <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50">
           <ul className="py-1">
             {orderParameters.map(([key, val]) => {
               const isSelected = selectedParameter?.[1] === val;

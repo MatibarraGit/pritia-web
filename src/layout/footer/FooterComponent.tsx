@@ -1,4 +1,3 @@
-// TODO: Agregar el email y redes sociales del negocio
 import Image from "next/image";
 import Link from "next/link";
 import { ShippingModal, SchedulesModal, ContactModal } from "@/components";

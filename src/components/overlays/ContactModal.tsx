@@ -1,4 +1,3 @@
-// TODO: Agregar el email y redes sociales del negocio
 "use client";
 
 import { useState } from "react";

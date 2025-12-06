@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { createPortal } from "react-dom";
 
-import { useFetchData } from "@/hooks";
+import { useCategoriesMenu, useFetchData } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
 import { fetchAllCategories } from "@/services";
@@ -13,6 +13,8 @@ import { fetchAllCategories } from "@/services";
 export const CategoriesDropdown = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const dropdownRef = useRef<HTMLElement>(null);
+
+  const { handleCategoryClick } = useCategoriesMenu({ closeMenuOnClick: false, closeMenu: () => {} })
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({ 
     fetchFunction: fetchAllCategories 
   });
@@ -57,9 +59,10 @@ export const CategoriesDropdown = () => {
             </div>
           ) : (
             categoriesList.map((category) => (
-              <Link
+              <button
                 key={category.category_id}
-                href={`/products?category=${encodeURIComponent(category.category_name)}`}
+                // href={`/products?category=${encodeURIComponent(category.category_name)}`}
+                onClick={() => handleCategoryClick(category.category_name)}
                 className="w-full px-4 py-2 flex items-center justify-between transition-all duration-200 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 group"
               >
                 <div className="w-full flex items-center justify-between cursor-pointer">
@@ -85,7 +88,7 @@ export const CategoriesDropdown = () => {
                           <Link
                             key={subcategory.id}
                             href={`/products?category=${encodeURIComponent(category.category_name)}&subcategory=${encodeURIComponent(subcategory.name)}`}
-                            className="w-full px-4 py-2 group/subcategory text-gray-700 font-medium no-underline border-b border-gray-100 transition-all duration-200 hover:bg-gray-50 hover:text-primary shrink-0"
+                            className="w-full px-4 py-2 group/subcategory text-gray-700 font-medium text-start no-underline border-b border-gray-100 transition-all duration-200 hover:bg-gray-50 hover:text-primary shrink-0"
                           >
                             <span className="inline-block transition-transform duration-200 group-hover/subcategory:translate-x-1">
                               {subcategory.name}
@@ -104,7 +107,7 @@ export const CategoriesDropdown = () => {
                     </div>
                   </div>
                 )}
-              </Link>
+              </button>
             ))
           )}
         </article>

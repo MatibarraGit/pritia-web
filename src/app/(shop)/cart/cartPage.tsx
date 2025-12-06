@@ -1,4 +1,4 @@
-// TODO: Poner las tarjetas aceptadas
+// TODO: Implementar el cálculo del envío
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
@@ -93,10 +93,11 @@ export default function CartPage() {
 
                 <div className="flex justify-between">
                   <span className="text-gray-600">Envío</span>
-                  <span className="text-green-600 font-medium">{shipping ? formatPrice(shipping) : 'Gratis'}</span>
+                  {/* <span className="text-green-600 font-medium">{shipping ? formatPrice(shipping) : 'Gratis'}</span> */}
+                  <span className="text-green-600 font-medium">A acordar con el vendedor</span>
                 </div>
 
-                <div className="border-t pt-4 flex justify-between">
+                <div className="border-t py-4 flex justify-between">
                   <span className="font-semibold">Total</span>
                   <span className="font-subheading text-xl">
                     {formatPrice(total)}
@@ -113,12 +114,12 @@ export default function CartPage() {
                   </p>
                 </div>
 
-                <div className="flex justify-center gap-2 mt-2">
+                {/* <div className="flex justify-center gap-2 mt-2">
                   <div className="w-10 h-6 bg-gray-200 rounded"></div>
                   <div className="w-10 h-6 bg-gray-200 rounded"></div>
                   <div className="w-10 h-6 bg-gray-200 rounded"></div>
                   <div className="w-10 h-6 bg-gray-200 rounded"></div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

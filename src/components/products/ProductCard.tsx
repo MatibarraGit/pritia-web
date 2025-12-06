@@ -19,13 +19,13 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
       href={`/product/${product.slug}`}
       className={`bg-white rounded-xl overflow-hidden border ${classNames}`}
     >
-      <div className="p-6 flex justify-center">
+      <div className="flex justify-center">
         <Image
           src={image}
           alt={product.name}
-          width={150}
-          height={150}
-          className="object-contain h-[150px]"
+          width={250}
+          height={250}
+          className="object-contain h-40"
         />
       </div>
       <div className="p-4 border-t h-52 flex flex-col">
