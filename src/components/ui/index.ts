@@ -6,6 +6,7 @@ export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 export { Checkbox } from "./checkbox"
 export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from './dialog' 
 export { Input } from "./input"
+export { Label } from "./label"
 export { Popover, PopoverTrigger, PopoverContent } from "./popover"
 export { RadioGroup, RadioGroupItem } from "./radio-group"
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
