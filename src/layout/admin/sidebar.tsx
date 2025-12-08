@@ -57,7 +57,7 @@ export const AdminSidebar = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="w-full h-[calc(100vh-70px)] overflow-y-auto">
+        <nav className="w-full min-h-content overflow-y-auto">
           <div className="p-4">
             <span
               className="text-xs font-semibold text-gray-400 uppercase tracking-wider p-2"

@@ -48,6 +48,7 @@
   --border-1: 1px;
 
   --max-width-content: 1280px;
+  --min-height-content: calc(100vh - 120px);
 }
 
 /* @media (prefers-color-scheme: dark) {

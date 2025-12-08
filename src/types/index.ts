@@ -1,6 +1,14 @@
 import { JSX } from "react";
 import { LucideIcon } from "lucide-react";
 
+export type AuthFormData = {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
+
 export type ProductType = {
   id: number;
   images: string[];

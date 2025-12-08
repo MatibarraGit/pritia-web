@@ -6,7 +6,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
-  extensions = [pg_trgm, unaccent]
+  extensions = [pg_trgm, unaccent, pgcrypto]
 }
 
 model categories {
@@ -14,20 +14,6 @@ model categories {
   category_name String          @unique @db.VarChar(255)
   products      products[]
   subcategories subcategories[]
-}
-
-model clients {
-  client_id       Int               @id @default(autoincrement())
-  user_id         Int?
-  name            String            @db.VarChar(255)
-  phone_number    Int?              @unique
-  dni             Int?              @unique
-  address         String?
-  zip_code        String?           @db.VarChar(10)
-  city            String?           @db.VarChar(255)
-  province        String?           @db.VarChar(255)
-  users           users?            @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
-  purchase_orders purchase_orders[]
 }
 
 model newsletter_emails {
@@ -53,9 +39,8 @@ model products {
   stock                Int?                   @default(0) @db.SmallInt
   images               String[]
   deleted_at           DateTime?              @db.Date
-
-  providers            providers?             @relation(fields: [provider_id], references: [provider_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_provider")
   categories           categories?            @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_category")
+  providers            providers?             @relation(fields: [provider_id], references: [provider_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_provider")
   subcategories        subcategories?         @relation(fields: [subcategory_id], references: [subcategory_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_subcategory")
   purchase_order_items purchase_order_items[]
 }
@@ -100,8 +85,6 @@ model purchase_orders {
   payment_status       payment_status_type
   client               String?
   purchase_order_items purchase_order_items[]
-  clients              clients?               @relation(fields: [client_id], references: [client_id], onUpdate: NoAction)
-  users                users?                 @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
 }
 
 model subcategories {
@@ -112,23 +95,68 @@ model subcategories {
   categories       categories? @relation(fields: [category_id], references: [category_id], onUpdate: NoAction)
 }
 
-model users {
-  user_id         Int               @id @default(autoincrement())
-  user_name       String            @db.VarChar(255)
-  email           String?           @db.VarChar(255)
-  password        String?
-  role            user_role         @default(USER)
-  created_at      DateTime          @default(now()) @db.Timestamp(6)
-  clients         clients[]
-  purchase_orders purchase_orders[]
+model User {
+  id               String   @id @default(dbgenerated("(gen_random_uuid())::text")) @db.VarChar(255)
+  name             String   @db.VarChar(255)
+  email            String   @unique(map: "user_email_unique") @db.VarChar(255)
+  emailVerified    Boolean  @default(false) @map("email_verified")
+  phoneNumber      String?  @unique(map: "phone_number_unique") @db.VarChar(50) @map("phone_number")
+  phoneNumberValid Boolean? @map("phone_number_verified")
+  image            String?  @db.VarChar(255)
+  role             user_role?
+  createdAt        DateTime @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt        DateTime @default(now()) @db.Timestamp(6) @map("updated_at")
+  account          Account[]
+  session          Session[]
+
+  @@map("user")
 }
 
-model verification_token {
-  identifier String
-  expires    DateTime @db.Timestamptz(6)
-  token      String
+model Session {
+  id        String   @id @default(dbgenerated("(gen_random_uuid())::text")) @db.VarChar(255)
+  expiresAt DateTime @db.Timestamp(6) @map("expires_at")
+  token     String   @unique(map: "session_token_unique") @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt DateTime @default(now()) @db.Timestamp(6) @map("updated_at")
+  ipAddress String?  @db.VarChar(255) @map("ip_address")
+  userAgent String?  @map("user_agent")
+  userId    String   @db.VarChar(255) @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "session_user_fkey")
 
-  @@id([identifier, token])
+  @@index([userId], map: "session_userid_idx")
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(dbgenerated("(gen_random_uuid())::text")) @db.VarChar(255)
+  accountId             String    @db.VarChar(255) @map("account_id")
+  providerId            String    @db.VarChar(255) @map("provider_id")
+  userId                String    @db.VarChar(255) @map("user_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("idtoken")
+  accessTokenExpiresAt  DateTime? @db.Timestamp(6) @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @db.Timestamp(6) @map("refresh_token_expires_at")
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt             DateTime  @default(now()) @db.Timestamp(6) @map("updated_at")
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "account_user_fkey")
+
+  @@index([userId], map: "account_userid_idx")
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(dbgenerated("(gen_random_uuid())::text")) @db.VarChar(255)
+  identifier String   @db.VarChar(255)
+  value      String   @db.VarChar(255)
+  expiresAt  DateTime @db.Timestamp(6)
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([identifier])
+  @@map("verification")
 }
 
 enum order_status_type {
@@ -139,10 +167,10 @@ enum order_status_type {
 }
 
 enum payment_method_type {
-  No_especificado @map("No especificado")
+  No_especificado    @map("No especificado")
   Efectivo
   Transferencia
-  Tarjeta_de_debito @map("Tarjeta de débito")
+  Tarjeta_de_debito  @map("Tarjeta de débito")
   Tarjeta_de_credito @map("Tarjeta de crédito")
 }
 

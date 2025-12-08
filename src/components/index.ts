@@ -7,6 +7,9 @@ export { TableToolBar } from './admin/display-data/tableToolBar'
 // Data Display
 export { ShippingInfo } from './data-display/ShippingInfo'
 
+// Forms
+export { AuthForm } from './forms/AuthForm'
+
 // Admin / Overlays
 export { ProductModal } from './admin/overlays/ProductModal'
 

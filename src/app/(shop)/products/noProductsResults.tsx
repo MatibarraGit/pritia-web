@@ -4,7 +4,7 @@ import { Button } from "@/components/ui";
 
 export const NoProductsResults = ({ category }: { category?: string }) => {
   return (
-    <div className="w-full mx-auto flex flex-col relative bg-white items-center min-h-[calc(100vh-92.5px)] md:min-h-[calc(100vh-70px)]">
+    <div className="w-full mx-auto flex flex-col relative bg-white items-center min-h-content">
       <Image
         src={"/img/product-not-found.png"}
         alt="No se encontraron resultados"

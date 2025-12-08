@@ -48,7 +48,7 @@ export default function Help() {
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-92.5px)] bg-background">
+    <div className="w-full min-h-content bg-background">
       {/* Header */}
       <div className="w-full bg-primary text-white">
         <div className="w-11/12 max-w-content mx-auto py-12 text-center">

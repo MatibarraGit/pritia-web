@@ -18,7 +18,10 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <html lang="en">
       <head></head>
-      <body className="font-body bg-[#F2F7FB] antialiased">
+      <body 
+        className="font-body bg-[#F2F7FB] antialiased"
+        suppressHydrationWarning
+      >
         <AdminHeader />
         <AdminSidebar />
         <AdminMainWrapper>

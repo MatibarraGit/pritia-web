@@ -95,7 +95,7 @@ export const ShowProducts = ({
       </div>
 
       {/* Contenido */}
-      <div className="w-11/12 max-w-content h-full min-h-[calc(100vh-92.5px)] mx-auto grid grid-rows-[auto_1fr] gap-6 relative md:min-h-[calc(100vh-70px)] md:grid-cols-[220px_1fr] md:grid-rows-1">
+      <div className="w-11/12 max-w-content h-full min-h-content mx-auto grid grid-rows-[auto_1fr] gap-6 relative md:grid-cols-[220px_1fr] md:grid-rows-1">
         <input
           type="checkbox"
           id="open-filters-menu"

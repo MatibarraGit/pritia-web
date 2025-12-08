@@ -12,7 +12,7 @@ interface NoSearchResultsProps {
 
 export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {
   return (
-    <main className="w-full mx-auto flex flex-col relative bg-white items-center min-h-[calc(100vh-92.5px)] md:min-h-[calc(100vh-70px)]">
+    <main className="w-full mx-auto flex flex-col relative bg-white items-center min-h-content">
       <Image
         src={'/img/no-results.png'}
         alt="No se encontraron resultados"

@@ -15,12 +15,17 @@
   [ ] Agregar el Facebook y el Instagram 
   [ ] Agregar el email del negocio en el footer, en la modal de contacto y en la página /help
 
-[ ] Completar los TODO's de Autenticación y Seguridad
-
 ### Autenticación y Seguridad
-[ ] Finalizar los endpoints /user
+[ ] Terminar solo el sign-in y registrarme desde la base de datos.
 [ ] Proteger las rutas de la api en el middleware/proxy.
 [ ] Verificar el token de autenticación en cada route handler y los datos del body de la request así como sus headers.
+
+[ ] Finalizar los endpoints /user
+[ ] Agregar autenticación con proveedores sociales
+[ ] Agregar autenticación con número de teléfono y validación de número de teléfono
+[ ] Agregar funcionalidad para enviar correo de 
+  [ ] Reinicio de contraseña
+  [ ] Verificación de correo
 
 
 ### UI
