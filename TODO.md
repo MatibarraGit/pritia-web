@@ -15,18 +15,21 @@
   [ ] Agregar el Facebook y el Instagram 
   [ ] Agregar el email del negocio en el footer, en la modal de contacto y en la página /help
 
+### UI
+[] Adaptar estilos de lovedProductsList
+
 ### Autenticación y Seguridad
-[ ] Terminar solo el sign-in y registrarme desde la base de datos.
+[x] Terminar solo el sign-in y registrarme desde la base de datos.
 [ ] Proteger las rutas de la api en el middleware/proxy.
 [ ] Verificar el token de autenticación en cada route handler y los datos del body de la request así como sus headers.
+[ ] Eliminar unauthorized ya que directamente el proxy redirijirá a la página de login
+[ ] Terminar la funcionalidad del botón logout
 
+### Post Release
 [ ] Finalizar los endpoints /user
+[ ] Agregar el sistema de roles
 [ ] Agregar autenticación con proveedores sociales
 [ ] Agregar autenticación con número de teléfono y validación de número de teléfono
 [ ] Agregar funcionalidad para enviar correo de 
   [ ] Reinicio de contraseña
   [ ] Verificación de correo
-
-
-### UI
-[] Adaptar estilos de lovedProductsList

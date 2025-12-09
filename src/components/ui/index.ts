@@ -5,7 +5,7 @@ export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./carousel"
 export { Checkbox } from "./checkbox"
 export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from './dialog' 
-export { Input } from "./input"
+export { Input, PasswordInput } from "./input"
 export { Label } from "./label"
 export { Popover, PopoverTrigger, PopoverContent } from "./popover"
 export { RadioGroup, RadioGroupItem } from "./radio-group"

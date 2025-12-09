@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import { cn } from "@/libs/utils"
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -18,4 +19,29 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   )
 }
 
-export { Input }
+function PasswordInput({ ...props }: React.ComponentProps<"input">) {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <div className="relative">
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={togglePasswordVisibility}
+        className="absolute inset-y-0 right-0 flex items-center pr-3"
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+      >
+        {showPassword ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+      </button>
+    </div>
+  );
+}
+
+export { Input, PasswordInput }

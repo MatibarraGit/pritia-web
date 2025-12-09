@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +16,7 @@ import {
 	Checkbox,
 	Input,
 	Label,
+	PasswordInput,
 } from "@/components/ui";
 import { cn } from "@/libs/utils";
 import { signIn, signUp } from "@/libs/auth-client";
@@ -68,37 +69,28 @@ export function AuthForm({ mode, showSocialButtons = true, callbackUrl }: AuthFo
 
 		// Procesar según el modo
 		if (isRegister) {
-			// alert("Registrado!")
-			await signUp.email({
-				email,
-				password,
-				name: `${firstName} ${lastName}`,
-				callbackURL: callbackUrl,
-				fetchOptions: {
-					onResponse: () => {
-						setLoading(false);
-					},
-					onRequest: () => {
-						setLoading(true);
-					},
-					onError: async (ctx: { error: { message: string } }) => {
-						// cuerpo tal cual viene del servidor
-						console.log("error raw:", ctx);
-
-						// si hay Response, intenta leer el JSON
-						const data =
-							(ctx as any)?.error?.response?.json
-								? await (ctx as any).error.response.json()
-								: (ctx as any).error;
-						console.log("error json:", data)
-						const errorMessage = getErrorMessage(ctx.error);
-						showToast(errorMessage, "error");
-					},
-					onSuccess: async () => {
-						router.push("/");
-					},
-				},
-			});
+			alert("Registrado!")
+			// await signUp.email({
+			// 	email,
+			// 	password,
+			// 	name: `${firstName} ${lastName}`,
+			// 	callbackURL: callbackUrl,
+			// 	fetchOptions: {
+			// 		onResponse: () => {
+			// 			setLoading(false);
+			// 		},
+			// 		onRequest: () => {
+			// 			setLoading(true);
+			// 		},
+			// 		onError: async (ctx: { error: { message: string } }) => {
+			// 			const errorMessage = getErrorMessage(ctx.error);
+			// 			showToast(errorMessage, "error");
+			// 		},
+			// 		onSuccess: async () => {
+			// 			router.push(callbackUrl || "/");
+			// 		},
+			// 	},
+			// });
 		} else {
 			await signIn.email({
 				email,
@@ -116,7 +108,7 @@ export function AuthForm({ mode, showSocialButtons = true, callbackUrl }: AuthFo
 						showToast(errorMessage, "error");
 					},
 					onSuccess: async () => {
-						router.push("/");
+						router.push(callbackUrl || "/");
 					},
 				},
 			});
@@ -244,13 +236,12 @@ export function AuthForm({ mode, showSocialButtons = true, callbackUrl }: AuthFo
 							</div>
 						)}
 						{isRegister && <Label htmlFor="password">Contraseña</Label>}
-						<Input
-							id="password"
-							type="password"
+						<PasswordInput
+							id="password"					
 							placeholder={isRegister ? "Contraseña" : "contraseña"}
 							autoComplete={isRegister ? "new-password" : "password"}
 							value={password}
-							onChange={(e) => {
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 								setPassword(e.target.value);
 								if (errors.password) {
 									setErrors((prev: AuthFormErrors) => {

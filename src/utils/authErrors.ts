@@ -1,93 +1,85 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * Mapeo de códigos de error de Better Auth a mensajes en español
- */
-const ES_AUTH_ERRORS: Record<string, string> = {
-	// Errores de autenticación
-	INVALID_CREDENTIALS: "Usuario o contraseña incorrectos.",
-	USER_NOT_FOUND: "No encontramos una cuenta con esos datos.",
-	EMAIL_ALREADY_IN_USE: "Ese correo ya está registrado.",
-	WEAK_PASSWORD: "La contraseña es demasiado débil.",
-	TOKEN_EXPIRED: "Tu sesión ha caducado.",
-	OAUTH_ACCOUNT_NOT_LINKED: "Esa cuenta ya está vinculada a otro usuario.",
-	RATE_LIMITED: "Demasiados intentos. Inténtalo más tarde.",
-	
-	// Errores de validación
-	INVALID_EMAIL: "El correo electrónico no es válido.",
-	INVALID_PASSWORD: "La contraseña no cumple con los requisitos.",
-	PASSWORDS_DO_NOT_MATCH: "Las contraseñas no coinciden.",
-	MISSING_FIELDS: "Por favor completa todos los campos requeridos.",
-  PASSWORD_TOO_SHORT: "La contraseña debe tener al menos 8 caracteres.",
-	
-	// Errores de OAuth
-	OAUTH_ERROR: "Error al iniciar sesión con la red social.",
-	OAUTH_ACCESS_DENIED: "Acceso denegado. Por favor intenta de nuevo.",
-	
-	// Errores del servidor
-	SERVER_ERROR: "Error interno del servidor. Inténtalo más tarde.",
-	NETWORK_ERROR: "Error de conexión. Verifica tu internet.",
-  FAILED_TO_CREATE_USER: "Error al crear la cuenta. Inténtalo de nuevo.",
-	
-	// Error por defecto
-	UNKNOWN: "Ha ocurrido un error. Inténtalo de nuevo.",
+import { authClient } from "@/libs/auth-client";
+
+type ErrorTypes = Partial<
+	Record<keyof typeof authClient.$ERROR_CODES, { es: string }>
+>;
+
+type BetterAuthError = {
+	code?: string;
+	type?: string;
+	name?: string;
+	message?: string;
+	error?: BetterAuthError;
+	[key: string]: unknown;
 };
 
 /**
- * Obtiene el mensaje de error en español basado en el código de error
- * @param error - El objeto de error que puede contener code, type, name o message
- * @returns El mensaje de error traducido al español
+ * Mapeo oficial de códigos de error de Better Auth a mensajes en español.
+ * Se limita exclusivamente a los códigos expuestos por `authClient.$ERROR_CODES`.
  */
+const errorCodes = {
+	ACCOUNT_NOT_FOUND: { es: "Cuenta no encontrada." },
+	CREDENTIAL_ACCOUNT_NOT_FOUND: {
+		es: "No encontramos una cuenta de credenciales.",
+	},
+	EMAIL_CAN_NOT_BE_UPDATED: {
+		es: "No es posible actualizar el correo electrónico.",
+	},
+	EMAIL_NOT_VERIFIED: { es: "El correo electrónico no está verificado." },
+	FAILED_TO_CREATE_SESSION: { es: "No se pudo crear la sesión." },
+	FAILED_TO_CREATE_USER: { es: "No se pudo crear el usuario." },
+	FAILED_TO_GET_SESSION: { es: "No se pudo obtener la sesión." },
+	FAILED_TO_GET_USER_INFO: {
+		es: "No se pudo obtener la información del usuario.",
+	},
+	FAILED_TO_UNLINK_LAST_ACCOUNT: {
+		es: "No se puede desvincular la última cuenta.",
+	},
+	FAILED_TO_UPDATE_USER: { es: "No se pudo actualizar el usuario." },
+	ID_TOKEN_NOT_SUPPORTED: {
+		es: "El proveedor no soporta tokens de identificación.",
+	},
+	INVALID_EMAIL: { es: "El correo electrónico no es válido." },
+	INVALID_EMAIL_OR_PASSWORD: { es: "Correo o contraseña incorrectos." },
+	INVALID_PASSWORD: { es: "La contraseña no es válida." },
+	INVALID_TOKEN: { es: "El token es inválido o expiró." },
+	PASSWORD_TOO_LONG: { es: "La contraseña es demasiado larga." },
+	PASSWORD_TOO_SHORT: { es: "La contraseña es demasiado corta." },
+	PROVIDER_NOT_FOUND: { es: "Proveedor de autenticación no encontrado." },
+	SESSION_EXPIRED: { es: "La sesión ha expirado." },
+	USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: {
+		es: "Este correo ya está registrado.",
+	},
+	USER_EMAIL_NOT_FOUND: {
+		es: "No se encontró un correo electrónico asociado.",
+	},
+	USER_NOT_FOUND: { es: "Usuario no encontrado." },
+} satisfies ErrorTypes;
+
+const DEFAULT_ERROR_MESSAGE =
+	"Ocurrió un error inesperado. Inténtalo nuevamente.";
+
 export function getErrorMessage(error: unknown): string {
-	// Intentar obtener el código de error de diferentes propiedades
-  console.log(error)
+	console.log(error);
+	const parsedError = error as BetterAuthError;
 	const code =
-		(error as any)?.code ||
-		(error as any)?.type ||
-		(error as any)?.name ||
-		(error as any)?.error?.code ||
-		(error as any)?.error?.type ||
-		(error as any)?.error?.name ||
-		"UNKNOWN";
+		parsedError.code ??
+		parsedError.type ??
+		parsedError.name ??
+		(parsedError.error as BetterAuthError | undefined)?.code ??
+		(parsedError.error as BetterAuthError | undefined)?.type ??
+		(parsedError.error as BetterAuthError | undefined)?.name;
 
-	// Si el código está en el mapeo, devolver el mensaje en español
-	if (ES_AUTH_ERRORS[code]) {
-		return ES_AUTH_ERRORS[code];
+	if (code && code in errorCodes) {
+		return errorCodes[code as keyof typeof errorCodes]?.es ?? DEFAULT_ERROR_MESSAGE;
 	}
 
-	// Si no hay código pero hay un mensaje, intentar mapear por mensaje
-	const message = (error as any)?.message || (error as any)?.error?.message || "";
-	
-	if (message) {
-		// Mapear mensajes comunes en inglés a español
-		const messageLower = message.toLowerCase();
-		
-		if (messageLower.includes("invalid credentials") || messageLower.includes("incorrect password")) {
-			return ES_AUTH_ERRORS.INVALID_CREDENTIALS;
-		}
-		if (messageLower.includes("user not found") || messageLower.includes("email not found")) {
-			return ES_AUTH_ERRORS.USER_NOT_FOUND;
-		}
-		if (messageLower.includes("email already") || messageLower.includes("already in use")) {
-			return ES_AUTH_ERRORS.EMAIL_ALREADY_IN_USE;
-		}
-		if (messageLower.includes("weak password") || messageLower.includes("password too weak")) {
-			return ES_AUTH_ERRORS.WEAK_PASSWORD;
-		}
-		if (messageLower.includes("token expired") || messageLower.includes("session expired")) {
-			return ES_AUTH_ERRORS.TOKEN_EXPIRED;
-		}
-		if (messageLower.includes("rate limit") || messageLower.includes("too many attempts")) {
-			return ES_AUTH_ERRORS.RATE_LIMITED;
-		}
-		if (messageLower.includes("invalid email")) {
-			return ES_AUTH_ERRORS.INVALID_EMAIL;
-		}
-		if (messageLower.includes("network") || messageLower.includes("connection")) {
-			return ES_AUTH_ERRORS.NETWORK_ERROR;
-		}
+	const message =
+		typeof parsedError.message === "string" ? parsedError.message : undefined;
+
+	if (parsedError.message === "Too many requests. Please try again later." && parsedError.status === 429) {
+		return "Demasiados intentos. Inténtalo más tarde.";
 	}
 
-	// Si no se encuentra ningún mapeo, devolver el mensaje de error desconocido
-	return ES_AUTH_ERRORS.UNKNOWN;
+	return message ?? DEFAULT_ERROR_MESSAGE;
 }
-

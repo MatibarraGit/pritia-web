@@ -1,6 +1,6 @@
 import { FanType } from '@/types';
 
-// TODO: Incorporar servicios post MVP
+// TODO: Incorporar servicios post release
 export const fansData: FanType[] = [
   {
     id: 1,

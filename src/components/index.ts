@@ -27,6 +27,7 @@ export { IncreaseButton, DecreaseButton, RemoveButton } from './buttons/CartButt
 export { CheckoutButton } from './buttons/CheckoutButton'
 export { MagnifyingGlass } from './buttons/MagnifyingGlass'
 export { DeleteButton } from './buttons/DeleteButton'
+export { LogOutButton } from './buttons/LogOutButton'
 export { FacebookButton, InstagramButton, WhatsappButton } from "./buttons/SocialButtons"
 
 // Carousels

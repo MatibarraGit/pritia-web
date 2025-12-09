@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
         hostname: 'res.cloudinary.com',
       }
     ]
+  },
+  experimental: {
+    authInterrupts: true
   }
 };
 
