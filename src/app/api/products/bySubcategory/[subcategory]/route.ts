@@ -24,17 +24,32 @@ export async function GET(
     `);
 
     if (productsRaw.length === 0) {
-      return NextResponse.json([]);
+      return NextResponse.json({ products: [], total: 0 });
     }
 
+    const totalResult = await prisma.$queryRaw<[{ count: number }]>`
+      SELECT COUNT(*)::INTEGER
+      FROM products p
+      LEFT JOIN subcategories sc ON sc.subcategory_id = p.subcategory_id
+      WHERE p.in_stock = TRUE 
+        AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
+        AND p.deleted_at IS NULL
+        AND sc.subcategory_name = ${subcategory}
+    `;
+
+    const total = totalResult[0]?.count ?? 0;
+
     const products = formatProducts(productsRaw);
-    return NextResponse.json(products, {
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-      },
-    });
+    return NextResponse.json(
+      { products, total },
+      {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      }
+    );
   } catch {
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos por subcategoría' },

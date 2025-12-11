@@ -23,11 +23,11 @@ export const MultipleSelectionMenu = ({ handleDelete }: MultipleSelectionMenuPro
       {/* Botón flotante para activar/desactivar modo selección */}
       <button
         className={cn(
-          "fixed bottom-6 right-6 z-50 size-14 rounded-full shadow-lg transition-all flex items-center justify-center",
+          "fixed right-6 z-50 size-14 rounded-full shadow-lg transition-all flex items-center justify-center",
           lovedProducts.length === 0 && "hidden",
           isSelecting
-            ? "bg-danger hover:bg-danger-hover text-white"
-            : "bg-primary hover:bg-primary-hover text-white"
+            ? "bg-danger hover:bg-danger-hover text-white bottom-20 "
+            : "bg-primary hover:bg-primary-hover text-white bottom-6"
         )}
         onClick={() => toggleSelecting()}
         aria-label={isSelecting ? "Cerrar modo selección" : "Activar modo selección"}

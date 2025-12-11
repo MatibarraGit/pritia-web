@@ -88,6 +88,26 @@ button {
   @apply overflow-hidden;
 }
 
+.product-carousel-item {
+  flex-basis: 100%;
+
+  @media (min-width: 375px) {
+    flex-basis: calc(100% / 2);
+  }
+
+  @media (min-width: 620px) {
+    flex-basis: calc(100% / 3);
+  }
+
+  @media (min-width: 768px) {
+    flex-basis: calc(100% / 4);
+  }
+  
+  @media (min-width: 1024px) {
+    flex-basis: calc(100% / 5);
+  }
+}
+
 /* ============================================
    ESTILOS BASE GLOBALES
    ============================================ */

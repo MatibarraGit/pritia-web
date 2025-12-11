@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { ProductType } from "@/types";
@@ -9,7 +11,7 @@ export type LovedProductType = ProductType & {
 interface LovedProductsState {
   lovedProducts: LovedProductType[];
   productIsLoved: (id: number) => boolean;
-  addLovedProduct: (product: ProductType) => void;
+  addLovedProduct: (product: LovedProductType) => void;
   removeLovedProduct: (id: number) => void;
 }
 
@@ -22,7 +24,7 @@ export const lovedProductsContext = create<LovedProductsState>()(persist((set, g
     );
   },
 
-  addLovedProduct: (product: ProductType) => {
+  addLovedProduct: (product: LovedProductType) => {
     const existingProduct = get().lovedProducts.find(
       (p) => p.id === product.id
     );

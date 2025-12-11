@@ -27,6 +27,7 @@ export { IncreaseButton, DecreaseButton, RemoveButton } from './buttons/CartButt
 export { CheckoutButton } from './buttons/CheckoutButton'
 export { MagnifyingGlass } from './buttons/MagnifyingGlass'
 export { DeleteButton } from './buttons/DeleteButton'
+export { LikeButton } from './buttons/LikeButton'
 export { LogOutButton } from './buttons/LogOutButton'
 export { FacebookButton, InstagramButton, WhatsappButton } from "./buttons/SocialButtons"
 
@@ -46,7 +47,6 @@ export { FeaturedFans } from './home/FeaturedFans'
 
 // Loved Products
 export { LovedProductList } from './loved-products/LovedProductList'
-export { MultipleSelectionMenu } from './loved-products/MultipleSelectionMenu'
 
 // Overlays
 export { ContactModal } from './overlays/ContactModal'

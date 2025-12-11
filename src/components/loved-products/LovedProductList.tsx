@@ -3,29 +3,52 @@
 import { memo, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { lovedProductsContext, selectItemsContext } from "@/contexts";
-import { formatDate, formatPrice } from "@/utils";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
+import { EllipsisVertical, Trash2 } from "lucide-react"
 import { cn } from "@/libs/utils";
-import { LovedProductType } from "@/contexts";
+
+import { lovedProductsContext, LovedProductType, selectItemsContext, toastContext } from "@/contexts";
+import { Button, Checkbox, Popover, PopoverTrigger, PopoverContent } from "@/components/ui";
+import { formatDate, formatPrice } from "@/utils";
 
 type ListRowProps = {
   product: LovedProductType;
   handleAddToCart: (product: LovedProductType) => void;
 };
 
-const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
-  const notAvailable = product.inStock === false;
+const ListHeader = () => {
+  return (
+    <div className={cn(
+      "hidden md:grid gap-4 items-center px-6 py-6 pr-0 border-b shadow-sm rounded-t-lg font-medium text-sm text-muted-foreground bg-background",
+      "grid-cols-[10px_2fr_1fr_1fr_1fr] transition-all duration-300"
+    )}>
+      <div></div>
+      <div>Producto</div>
+      <div>Precio por unidad</div>
+      <div>Fecha de adición</div>
+      <div></div>
+    </div>
+  )
+}
 
+const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
+  const { showToast } = toastContext();
+  const { removeLovedProduct } = lovedProductsContext();
   const { isSelecting, selectedItems, toggleItemSelection } = selectItemsContext();
   const isSelected = selectedItems.includes(product.id);
+  
+  const notAvailable = product.inStock === false;
 
   function handleClick() {
     if (isSelecting) {
       toggleItemSelection(product.id);
     }
   }
+
+  // Eliminar productos seleccionados de favoritos
+  const handleDelete = () => {
+    removeLovedProduct(product.id);
+    showToast("Producto(s) eliminado(s) de favoritos", "success");
+  };
 
   const image = product.images && product.images.length > 0 
     ? product.images[0] 
@@ -36,11 +59,8 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
       key={product.id}
       className={cn(
         "relative flex flex-col gap-4 p-4 bg-background rounded-lg shadow-sm transition-colors",
-        "md:bg-transparent md:rounded-none md:shadow-none md:p-4 md:grid md:gap-4 md:items-center",
-        isSelecting
-          ? "pl-12 md:pl-4 md:grid-cols-[auto_2fr_1fr_1fr_1fr]"
-          : "md:grid-cols-[2fr_1fr_1fr_1fr]",
-        isSelected && "ring-2 ring-primary/50 md:bg-transparent",
+        "md:bg-transparent md:rounded-none md:shadow-none md:p-4 md:grid md:gap-4 md:items-center md:grid-cols-[auto_2fr_1fr_1fr_1fr] transition-all duration-300",
+        isSelecting ? "pl-12 md:pl-4" : "",
         notAvailable && "[&>*:not(.notAvailableMessage)]:pointer-events-none [&>*:not(.notAvailableMessage)]:opacity-50",
         isSelecting && "cursor-pointer hover:bg-accent/50 md:hover:bg-transparent"
       )}
@@ -59,17 +79,21 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
         </div>
       )}
 
-      {/* Checkbox - Posicionado absolutamente en mobile, en grid en desktop */}
-      {isSelecting && (
-        <div className="absolute left-4 top-16 flex items-center z-10 md:relative md:left-auto md:top-auto">
-          <Checkbox
-            checked={isSelected}
-            onCheckedChange={() => toggleItemSelection(product.id)}
-            onClick={(e) => e.stopPropagation()}
-            className="data-[state=checked]:bg-primary data-[state=checked]:text-white"
-          />
-        </div>
-      )}
+      {/* Checkbox - Posicionado absolutamente en mobile, en grid en desktop */}      
+      <div className={cn(
+        "absolute left-4 top-16 flex h-6 w-6 items-center z-10 transition-all duration-200",
+        "md:relative md:left-auto md:top-auto md:max-w-0 md:min-w-0 md:overflow-hidden md:transition-all md:duration-300",
+        "opacity-0 scale-75 pointer-events-none",
+        isSelecting && "opacity-100 scale-100 pointer-events-auto md:max-w-6 md:w-6"
+      )}>
+        <Checkbox
+          checked={isSelected}
+          onCheckedChange={() => toggleItemSelection(product.id)}
+          onClick={(e) => e.stopPropagation()}
+          className="data-[state=checked]:bg-primary data-[state=checked]:text-white"
+        />
+      </div>
+      
 
       {/* Imagen y nombre del producto */}
       <Link
@@ -79,12 +103,12 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
         )}
         href={`/product/${product.slug}`}
       >
-        <div className="relative w-32 h-32 shrink-0 md:w-36 md:h-24">
+        <div className="relative w-32 h-32 shrink-0 md:w-28 md:h-28">
           <Image
             src={image}
             alt={product.name}
             fill
-            className="object-cover rounded"
+            className="object-cover rounded"  
           />
         </div>
         <span className="text-sm font-medium capitalize line-clamp-2 text-center md:text-left">
@@ -117,6 +141,28 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
           Añadir al carrito
         </Button>
       </div>
+
+      <div className="absolute right-2 top-4">
+        <Popover>
+          <PopoverTrigger>
+            <EllipsisVertical size={16}  />
+          </PopoverTrigger>
+          <PopoverContent className="w-32 py-2 px-1 bg-white">
+            <Button 
+              className="w-full border-none"
+              variant="destructive" 
+              size="sm" 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete();
+              }}
+            >
+              <Trash2 size={16} />
+              Eliminar
+            </Button>
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
   );
 });
@@ -139,27 +185,7 @@ export const LovedProductList = memo(
         const dateB = b.dateAdded || "";
         return dateB.localeCompare(dateA);
       });
-    }, [lovedProducts]);
-
-    const { isSelecting } = selectItemsContext();
-    
-    const ListHeader = useMemo(
-      () => (
-        <div className={cn(
-          "hidden md:grid gap-4 items-center px-6 py-6 pr-0 border-b shadow-sm rounded-t-lg font-medium text-sm text-muted-foreground bg-background",
-          isSelecting
-            ? "grid-cols-[auto_2fr_1fr_1fr_1fr]"
-            : "grid-cols-[2fr_1fr_1fr_1fr]"
-        )}>
-          {isSelecting && <div></div>}
-          <div>Producto</div>
-          <div>Precio por unidad</div>
-          <div>Fecha de adición</div>
-          <div></div>
-        </div>
-      ),
-      [isSelecting]
-    );
+    }, [lovedProducts]);    
 
     const ListContent = useMemo(() => {
       return sortedProducts.map((product) => (
@@ -174,16 +200,16 @@ export const LovedProductList = memo(
     return (
       <>
         <div className="w-11/12 max-w-5xl mx-auto -mt-10 relative z-10 md:mt-0 md:pt-8">
-          <div className="grid gap-4 min-h-96 md:bg-background md:rounded-lg md:border md:overflow-hidden">
-            {ListHeader}
-            <div className="flex flex-col gap-4 md:contents">
+          <div className="grid gap-4 mt-16 md:bg-background md:mt-0 md:rounded-lg md:border md:overflow-hidden">
+            <ListHeader />
+            <div className="flex flex-col gap-4">
               {ListContent}
             </div>
           </div>
         </div>
 
         {/* Comprar y Agregar todo al carrito */}
-        <div className="w-11/12 max-w-5xl mx-auto pb-6 relative z-10 md:pb-8">
+        <div className="w-11/12 max-w-5xl mx-auto py-6 relative z-10 md:pb-8">
           <Button onClick={handleAddAllToCart} variant="primary" size="lg" className="w-full md:w-auto md:ml-auto md:flex">
             Añadir todo al carrito
           </Button>

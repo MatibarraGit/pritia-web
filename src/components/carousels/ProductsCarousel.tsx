@@ -14,23 +14,27 @@ import {
 import { ProductCard } from "@/components";
 import { useMediaQuery } from '@/hooks';
 import { ProductType } from "@/types";
+import Link from "next/link";
 
 interface ProductsCarouselProps {
   title?: string;
-  isAutoplay?: boolean;
+  href?: string;
   isLoading?: boolean;
   products: ProductType[];
+  isAutoplay?: boolean;
+  withIndicators?: boolean;
+  loop: boolean;
 }
 
 export const ProductsCarousel = ({
   title,
-  // href,
-  isAutoplay = true,
-  // withIndicators = false,
-  // isProductPage = false,
+  href,
   isLoading,
   products = [],
-  // loop = false
+  // isProductPage = false,
+  isAutoplay = true,
+  withIndicators = false,
+  loop = false
 }: ProductsCarouselProps) => {
 
   const isMobile = useMediaQuery("(max-width: 575px)");
@@ -55,6 +59,8 @@ export const ProductsCarousel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, isTablet, isAutoplay]);
 
+  const slides = [1,2,3,4,5]
+
   if (products.length === 0) {
     return null;
   }
@@ -66,31 +72,63 @@ export const ProductsCarousel = ({
         <div className="flex items-center justify-center py-8">
           <p className="text-gray-500">Cargando productos...</p>
         </div>
-      </section>
+    </section>
     );
   }
 
   return (
-    <section className="w-11/12 max-w-content mx-auto py-8">
+    <section className="w-11/12 max-w-content mx-auto py-8 relative">
       {title && (
-        <div>
-          <h2 className="font-heading text-2xl text-center mb-4">{title}</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="w-full mb-4">
+            {href ? 
+              <Link href={href} className="w-full inline-flex items-center justify-center gap-2 text-foreground hover:text-primary transition-colors font-heading text-2xl text-center group cursor-pointer md:w-fit md:text-3xl" 
+              >
+                {title}
+                <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary group-hover:bg-primary 
+                group-hover:text-white transition-colors">
+                  Ver todo
+                </span>
+              </Link>
+            : 
+              title
+            }
+          </h2>
 
-          {/* {href && <ViewAll href={href} />} */}
+          {withIndicators && (
+            <div 
+            className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 z-20 md:relative md:left-0 md:translate-x-0 md:z-0"
+          >
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                // onClick={() => goToSlide(index)}
+                // className={cn(
+                //   "w-3 h-3 rounded-full transition-all duration-300",
+                //   index === current
+                //     ? "bg-white w-8"
+                //     : "bg-white/50 hover:bg-carousel-text/70"
+                // )}
+                className="w-2 h-2 rounded-full transition-all duration-300 bg-red-500"
+                aria-label={`Ir al slide ${index + 1}`}
+              />
+            ))}
+          </div>
+          )}
         </div>
       )}
       <div>
         <Carousel
           className="w-full"
           opts={{
-            loop: true,
+            loop: loop,
             align: "start",
             slidesToScroll: 1,
             breakpoints: {
-              '(min-width: 425px)': {
-                slidesToScroll: 2
+              '(min-width: 375px)': {
+                slidesToScroll: 2,
               },
-              '(min-width: 640px)': {
+              '(min-width: 620px)': {
                 slidesToScroll: 3
               },
               '(min-width: 768px)': {
@@ -109,9 +147,9 @@ export const ProductsCarousel = ({
 
           plugins={isAutoplay ? [getAutoPlay()] : []}
         >
-          <CarouselContent className="pl-4">
+          <CarouselContent className="">
             {products.map((product) => (
-              <CarouselItem key={product.id} className="basis-full xs:basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+              <CarouselItem key={product.id} className="product-carousel-item">
                 <div className="w-full border rounded-md bg-white"> 
                   <ProductCard product={product} classNames="border-none " />
                 </div>

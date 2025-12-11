@@ -55,13 +55,13 @@ export function OrderComponent() {
           {selectedParameter ? (
             <>
               <span className="text-left flex-1">{selectedParameter[0]}</span>
-              <button
+              <div
                 onClick={handleClear}
                 className="p-0.5 hover:bg-gray-200 rounded"
                 aria-label="Clear value"
               >
                 <X className="size-3" />
-              </button>
+              </div>
             </>
           ) : (
             <span className="text-muted-foreground">Ordenar</span>

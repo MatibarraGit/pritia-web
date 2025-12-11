@@ -10,16 +10,16 @@ export function ProductTabs({ description }: ProductTabsProps) {
       <TabsList className="w-full justify-start border-b rounded-none bg-transparent h-auto p-0">
         <TabsTrigger
           value="description"
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary px-4 py-2"
+          className="rounded-none border-b-2 border-transparent px-4 py-2" //data-[state=active]:border-primary data-[state=active]:text-primary
         >
           Descripción
         </TabsTrigger>
-        <TabsTrigger
+        {/* <TabsTrigger
           value="specifications"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary px-4 py-2"
         >
           Especificaciones
-        </TabsTrigger>
+        </TabsTrigger> */}
       </TabsList>
       <TabsContent value="description" className="pt-6">
         <div className="bg-white p-6 rounded-lg border">

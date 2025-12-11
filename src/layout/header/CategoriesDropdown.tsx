@@ -14,7 +14,7 @@ export const CategoriesDropdown = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const dropdownRef = useRef<HTMLElement>(null);
 
-  const { handleCategoryClick } = useCategoriesMenu({ closeMenuOnClick: false, closeMenu: () => {} })
+  useCategoriesMenu({ closeMenuOnClick: false, closeMenu: () => {} });
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({ 
     fetchFunction: fetchAllCategories 
   });
@@ -59,16 +59,17 @@ export const CategoriesDropdown = () => {
             </div>
           ) : (
             categoriesList.map((category) => (
-              <button
+              <div
                 key={category.category_id}
-                // href={`/products?category=${encodeURIComponent(category.category_name)}`}
-                onClick={() => handleCategoryClick(category.category_name)}
                 className="w-full px-4 py-2 flex items-center justify-between transition-all duration-200 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 group"
               >
-                <div className="w-full flex items-center justify-between cursor-pointer">
-                  <div className="font-medium text-gray-700 transition-all duration-200 group-hover:text-primary group-hover:translate-x-1">
+                <div className="w-full flex items-center justify-between">
+                  <Link
+                    href={`/products?category=${encodeURIComponent(category.category_name)}`}
+                    className="font-medium text-gray-700 transition-all duration-200 group-hover:text-primary group-hover:translate-x-1 no-underline"
+                  >
                     {category.category_name}
-                  </div>
+                  </Link>
                   {category.subcategories && category.subcategories.length > 0 && (
                     <ChevronRight 
                       size={12} 
@@ -107,7 +108,7 @@ export const CategoriesDropdown = () => {
                     </div>
                   </div>
                 )}
-              </button>
+              </div>
             ))
           )}
         </article>

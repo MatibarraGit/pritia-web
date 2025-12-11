@@ -5,8 +5,8 @@ export { apiRequest } from './api-client';
 export { fetchAllCategories } from './categories';
 
 // Products
-export { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct, disableProduct, getHomeProducts } from './products';
-export type { HomeProductsResponse } from './products';
+export { createProduct, deleteProduct, disableProduct, getAllProducts, getAvailableProducts, getHomeProducts, getProductById, getProductsByCategory, getProductsBySubcategory, getProductsByTopic, searchProducts, updateProduct } from './products';
+export type { GetAllProductsParams, GetAllProductsResponse, GetProductsByCategoryParams, GetProductsBySubcategoryParams, GetProductsByTopicParams, SearchProductsParams, SearchProductsResponse } from './products';
 
 // Providers
 export { fetchAllProviders } from './providers';

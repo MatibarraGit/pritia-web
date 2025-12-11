@@ -2,7 +2,7 @@ import { HeartOff } from 'lucide-react';
 
 export const NoLovedProducts = () => {
   return (
-    <section className="w-4/5 max-w-[500px] mt-[30px] mx-auto text-center text-lg">
+    <section className="w-4/5 max-w-2xl mt-8 mx-auto center-flex flex-col text-center text-lg">
       <HeartOff size={150} className="text-primary" />
       <h2 className="mt-4">Sin productos favoritos</h2>
       <p className="max-w-lg text-center mt-2 mx-auto">

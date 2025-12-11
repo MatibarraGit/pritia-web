@@ -37,8 +37,25 @@ export async function GET(request: Request) {
       OFFSET ${offset}
     `);
 
+    if (!productsRaw || productsRaw.length === 0) {
+      return NextResponse.json({ products: [], total: 0 });
+    }
+
+    const total = await prisma.$queryRaw<[{ count: number }]>`
+      SELECT COUNT(*)::INTEGER
+      FROM products p
+      WHERE 
+        p.in_stock = TRUE 
+        AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
+        AND p.deleted_at IS NULL
+        AND (p.product_name ILIKE ${pattern} OR p.product_id::TEXT LIKE ${pattern})
+    `;
+
     const products = formatProducts(productsRaw);
-    return NextResponse.json(products);
+    return NextResponse.json({ 
+      products,
+      total: total[0].count
+     });
   } catch {
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos disponibles' },

@@ -31,11 +31,23 @@ export async function GET(
     `);
 
     if (!productsRaw || productsRaw.length === 0) {
-      return NextResponse.json([]);
+      return NextResponse.json({ products: [], total: 0 });
     }
 
+    const totalResult = await prisma.$queryRaw<[{ count: number }]>`
+      SELECT COUNT(*)::INTEGER
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.category_id
+      WHERE p.in_stock = TRUE 
+        AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
+        AND p.deleted_at IS NULL
+        AND c.category_name = ${category}
+    `;
+
+    const total = totalResult[0]?.count ?? 0;
+
     const products = formatProducts(productsRaw);
-    return NextResponse.json(products);
+    return NextResponse.json({ products, total });
   } catch {
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos por categoría' },

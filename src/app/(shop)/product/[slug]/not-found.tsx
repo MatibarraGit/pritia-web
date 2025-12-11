@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function NotFound() {
@@ -10,15 +10,15 @@ export default function NotFound() {
   }, []);
 
   return (
-    <main className="min-h-screen p-4 pt-[100px] grid items-start justify-items-center bg-background">
+    <main className="min-h-screen p-4 pt-25 grid items-start justify-items-center bg-background">
       <div className="w-11/12 max-w-content mx-auto grid gap-8 md:flex md:justify-center md:items-center md:gap-5">
         <div className="grid place-items-center">
           <img
-            src="/img/productNotFound.png"
+            src="/img/product-not-found.webp"
             alt="Producto no encontrado"
             width={300}
             height={300}
-            className="w-[250px] h-auto opacity-90 md:w-[300px]"
+            className="w-60 h-auto opacity-90 md:w-72"
           />
         </div>
         <div className="grid gap-4 text-center md:text-left">

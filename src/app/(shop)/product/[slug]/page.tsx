@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs } from "@/components";
+import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs } from "@/components";
 import { ProductType } from "@/types";
 
 import type { Metadata } from "next";
@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
         <div className="w-11/12 max-w-content mx-auto container py-3">
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center flex-wrap text-sm text-gray-500">
             <Link href="/" className="hover:text-primary">
               Inicio
             </Link>
@@ -118,7 +118,10 @@ export default async function ProductPage({ params }: Props) {
       <div className="w-11/12 max-w-content mx-auto container py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
-          <ProductImages images={images} name={name} />
+          <div className="relative">
+            <ProductImages images={images} name={name} />
+            <LikeButton product={product} classNames="absolute top-2 right-2" />
+          </div>
 
           {/* Product Info */}
           <div className="space-y-6">

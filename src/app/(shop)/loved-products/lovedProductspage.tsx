@@ -4,24 +4,16 @@ import { NoLovedProducts } from "./noLovedProducts";
 import {
   cartContext,
   lovedProductsContext,
-  selectItemsContext,
   toastContext,
 } from "@/contexts";
-import { LovedProductList, MultipleSelectionMenu } from "@/components";
+import { LovedProductList } from "@/components";
 import { LovedProductType } from "@/contexts";
 
 export default function LovedProductsPage() {
-  const { lovedProducts, removeLovedProduct } = lovedProductsContext();
+  const { lovedProducts } = lovedProductsContext();
   const hasLovedProducts = lovedProducts.length > 0;
-  const { deleteSelectedItems } = selectItemsContext();
   const { addToCart } = cartContext();
   const { showToast } = toastContext();
-
-  // Eliminar productos seleccionados de favoritos
-  const handleDelete = () => {
-    deleteSelectedItems(removeLovedProduct);
-    showToast("Producto(s) eliminado(s) de favoritos", "success");
-  };
 
   // Agregar un producto al carrito
   const handleAddToCart = (product: LovedProductType) => {
@@ -57,18 +49,15 @@ export default function LovedProductsPage() {
 
   return (
     <div className="min-h-content bg-background relative">
-      <div className="w-full pb-10 relative top-0 bg-primary">
-        <h1 className="p-6 text-2xl text-center text-white">Productos Favoritos</h1>
+      <div className="w-full py-8 relative top-0 bg-primary">
+        <h1 className="text-2xl text-center text-white">Productos Favoritos</h1>
       </div>
 
       {hasLovedProducts ? (
-        <>
-          <MultipleSelectionMenu handleDelete={handleDelete} />
-          <LovedProductList
-            handleAddToCart={handleAddToCart}
-            handleAddAllToCart={handleAddAllToCart}
-          />
-        </>
+        <LovedProductList
+          handleAddToCart={handleAddToCart}
+          handleAddAllToCart={handleAddAllToCart}
+        />    
       ) : (
         <NoLovedProducts />
       )}

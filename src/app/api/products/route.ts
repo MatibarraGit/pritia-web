@@ -41,7 +41,18 @@ export async function GET(request: Request) {
       return NextResponse.json([]);
     }
 
-    return NextResponse.json(formatProducts(products));
+    const total = await prisma.$queryRaw<[{ count: number }]>`
+      SELECT COUNT(*)::INTEGER
+      FROM products p
+      WHERE 
+        p.deleted_at IS NULL
+        AND (p.product_name ILIKE ${pattern} OR p.product_id::TEXT LIKE ${pattern})
+    `;
+
+    return NextResponse.json({ 
+      products: formatProducts(products),
+      total: total[0].count
+     });
   } catch {
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos' },

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { X } from "lucide-react";
 
@@ -10,8 +12,13 @@ import { formatPrice } from "@/utils";
 import { CartItem } from "./CartItem";
 
 export function CartSidebar() {
+  const path = usePathname();
   const { isCartOpen, closeCart } = toastContext();
   const { items } = cartContext();
+
+  useEffect(() => {
+    closeCart();
+  }, [path])
 
   const subtotal = items.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -33,7 +40,7 @@ export function CartSidebar() {
 
       <aside
         className={cn(
-          "w-76 h-full px-4 flex flex-col fixed top-0 right-0 z-50 shadow-xl bg-white sidebar-transition sm:w-96",
+          "w-76 h-full pb-4 px-4 flex flex-col fixed top-0 right-0 z-50 shadow-xl bg-white sidebar-transition sm:w-96",
           !isCartOpen && "-right-76 sm:-right-96"
         )}
       >

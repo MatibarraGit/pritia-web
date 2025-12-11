@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/libs/utils";
+import { LikeButton } from "@/components";
 import { ProductType } from "@/types";
 import { formatPrice } from "@/utils";
 
@@ -57,14 +58,16 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           </div>
         )}
 
-        <div
-          className={cn(
-            "text-xl font-subheading",
-            product.discountPercent === 0 && "mt-auto"
-            // installmentQuantity === 0 &&
-          )}
-        >
-          {formatPrice(product.price)}
+        <div className={cn(
+          "flex items-center justify-between  relative",
+          product.discountPercent === 0 && "mt-auto",
+          // installmentQuantity === 0 &&
+        )}>
+          <span className="text-xl font-subheading">
+            {formatPrice(product.price)}
+          </span>
+
+          <LikeButton product={product} />
         </div>
       </div>
     </Link>

@@ -26,22 +26,18 @@ export const ShowProducts = ({
   breadcumbs = false,
   subcategory = "",
 }: ShowProductsProps) => {
-  const totalPages = Math.ceil((totalProducts || products.length) / PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil(totalProducts ? totalProducts / PRODUCTS_PER_PAGE : (products.length) / PRODUCTS_PER_PAGE);
 
   // Filtros y ordenamiento
   const { filterProducts } = useFiltersContext();
   const { orderProducts } = useOrderContext();
 
-  const { processedProducts, results } = useMemo(() => {
+  const { processedProducts } = useMemo(() => {
     const filteredProducts = filterProducts(products);
     const orderedProducts = orderProducts(filteredProducts);
     const finalProducts = orderedProducts || filteredProducts;
-    const resultsText = finalProducts.length > 1 ? `${finalProducts.length} Resultados` : "1 Resultado";
 
-    return {
-      processedProducts: finalProducts,
-      results: resultsText
-    };
+    return { processedProducts: finalProducts };
   }, [filterProducts, products, orderProducts]);
 
   return (
@@ -79,7 +75,7 @@ export const ShowProducts = ({
               <OrderComponent />
 
               <span className="w-fit h-full flex items-center md:text-base md:whitespace-nowrap">
-                {results}
+                {totalProducts && totalProducts > 1 ? `${totalProducts} Resultados` : "1 Resultado"}
               </span>
 
               <label

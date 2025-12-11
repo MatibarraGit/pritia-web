@@ -4,6 +4,8 @@ import { type ReactNode } from "react";
 
 import { AdminHeader, AdminSidebar } from "@/layout";
 import { AdminMainWrapper, Toast } from "@/components";
+import { getServerSession } from "@/libs";
+import ForbbidenPage from "./forbidden";
 
 export const metadata = {
   title: "Panel de administración",
@@ -15,19 +17,29 @@ interface AdminLayoutProps {
 }
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
+  const session = await getServerSession();
+  const sessionUser = session?.session;
+  const user = session?.user;
+
   return (
-    <html lang="en">
+    <html lang="es">
       <head></head>
       <body 
         className="font-body bg-[#F2F7FB] antialiased"
         suppressHydrationWarning
       >
-        <AdminHeader />
-        <AdminSidebar />
-        <AdminMainWrapper>
-          {children}
-        </AdminMainWrapper>
-        <Toast />
+        {user && sessionUser ? (
+          <>
+            <AdminHeader />
+            <AdminSidebar />
+            <AdminMainWrapper>
+              {children}
+            </AdminMainWrapper>
+            <Toast />
+          </>
+        ) : (
+          <ForbbidenPage />
+        )}
       </body>
     </html>
   );

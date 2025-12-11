@@ -37,6 +37,19 @@ export async function GET(request: Request) {
     `
     const subcategoriesId = subcategories.map(sc => sc.subcategory_id);
 
+    const totalResult = await prisma.$queryRaw<[{ count: number }]>`
+      SELECT COUNT(*)::INTEGER
+      FROM products p
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
+      WHERE 
+        p.sell_price > 0 AND 
+        p.in_stock = TRUE AND 
+        (unaccent(p.product_name) ILIKE unaccent(${pattern})
+          OR p.subcategory_id = ANY(${subcategoriesId})
+          OR WORD_SIMILARITY(unaccent(p.product_name), unaccent(${search})) > 0.45
+        )
+    `;
+
     // Obtener productos
     const productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
@@ -72,6 +85,7 @@ export async function GET(request: Request) {
       return NextResponse.json({
         type: 'tooInteresting',
         products: fallbackProducts,
+        total: totalResult[0]?.count ?? 0,
       });
     }
 
@@ -79,6 +93,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       type: 'exact',
       products: products,
+      total: totalResult[0]?.count ?? 0,
     });
   } catch (error) {
     console.error('Error en búsqueda:', error);

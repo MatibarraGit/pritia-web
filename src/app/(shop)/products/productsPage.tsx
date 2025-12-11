@@ -8,6 +8,7 @@ import { PageLoader, ShowProducts } from "@/components";
 import { useFiltersContext, useOrderContext } from "@/hooks";
 import { TOPICS } from "@/utils";
 import { ProductType } from "@/types";
+import { getAvailableProducts, getProductsByCategory, getProductsBySubcategory, getProductsByTopic } from "@/services/products";
 
 function ProductsPageContent() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -36,21 +37,33 @@ function ProductsPageContent() {
       let total = 0;
 
       switch (true) {
+        case !!subcategory:
+          const subcategoryResponse = await getProductsBySubcategory({
+            subcategory: subcategory!,
+            page
+          });
+          productsResponse = subcategoryResponse.products;
+          total = subcategoryResponse.total;
+          title.current = subcategory!;
+          break;
+          
         case !!isCategory:
-          const categoryResponse = await fetch(
-            `/api/products/byCategory/${encodeURIComponent(category!)}?page=${page}`
-          );
-          productsResponse = await categoryResponse.json();
-          total = productsResponse.length;
+          const categoryResponse = await getProductsByCategory({
+            category: category!,
+            page
+          });
+          productsResponse = categoryResponse.products;
+          total = categoryResponse.total;
           title.current = category!;
           break;
 
         case !!isTopic:
-          const topicResponse = await fetch(
-            `/api/products/byTopic/${encodeURIComponent(topic!)}?page=${page}`
-          );
-          productsResponse = await topicResponse.json();
-          total = productsResponse.length;
+          const topicResponse = await getProductsByTopic({
+            topic: topic!,
+            page
+          });
+          productsResponse = topicResponse.products;
+          total = topicResponse.total;
           title.current = topic!;
 
           if (topic === TOPICS.BEST_SELLERS) {
@@ -59,9 +72,9 @@ function ProductsPageContent() {
           break;
 
         default:
-          const availableResponse = await fetch(`/api/products/available?page=${page}`);
-          productsResponse = await availableResponse.json();
-          total = productsResponse.length;
+          const availableResponse = await getAvailableProducts({ page });
+          productsResponse = availableResponse.products;
+          total = availableResponse.total;
           title.current = 'Todos los Productos';
       }
 

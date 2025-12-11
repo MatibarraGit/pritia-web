@@ -5,10 +5,12 @@ import { useSearchParams } from "next/navigation";
 
 import { AdminDisplayData, Pagination, PageLoader, ProductModal } from "@/components";
 import { useFetchData } from "@/hooks";
-import type { SortConfig } from "@/hooks";
 import { getAllProducts, fetchAllCategories, fetchAllProviders, deleteProduct, disableProduct } from "@/services";
-import type { ProductType } from "@/types";
 import { ACTION_TYPES, PRODUCTS_PER_PAGE, confirmAction } from "@/utils";
+
+import type { SortConfig } from "@/hooks";
+import type { GetAllProductsResponse } from "@/services";
+import type { ProductType } from "@/types";
 
 interface ProductToAction {
   id: number | null;
@@ -26,12 +28,12 @@ function AdminProducts() {
     setData,
     isLoading,
     fetchData,
-  } = useFetchData<{ products: ProductType[]; totalProducts: number }, { page: number; search: string }>({ 
+  } = useFetchData<GetAllProductsResponse, { page: number; search: string }>({ 
     fetchFunction: (args) => getAllProducts(args || { page: 1, search: "" }) 
   });
 
   const products = data?.products || [];
-  const totalProducts = data?.totalProducts || 0;
+  const totalProducts = data?.total || 0;
   const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
 
   // Cuando vuelvo después de editar un producto, mantiene la página y la búsqueda en la url y los resultados coinciden con la url
@@ -83,7 +85,7 @@ function AdminProducts() {
     if (data) {
       setData({ 
         products: products.filter((product) => product.id !== productToAction.id), 
-        totalProducts: totalProducts - 1 
+        total: totalProducts - 1 
       });
     }
   }
