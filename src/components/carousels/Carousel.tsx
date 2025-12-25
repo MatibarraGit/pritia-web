@@ -28,7 +28,7 @@ const slides: Slide[] = [
   {
     id: 1,
     title: "TODO PARA TU HOGAR",
-    subtitle: "MÁS DE 500 PRODUCTOS",
+    subtitle: "CATÁLOGO CON +500 PRODUCTOS",
     description: "Electrodomésticos, muebles, decoración y más",
     buttonHref: "/products",
     buttonText: "VER PRODUCTOS",
@@ -90,7 +90,7 @@ export const Carousel = () => {
           align: "start",
         }}
         plugins={[autoplay.current]}
-        className="w-full h-[500px] bg-primary md:h-96"
+        className="w-full h-125 bg-primary md:h-96"
         onMouseEnter={() => autoplay.current.stop()}
         onMouseLeave={() => autoplay.current.play()}
         onTouchStart={() => autoplay.current.stop()}
@@ -100,15 +100,15 @@ export const Carousel = () => {
           {slides.map((item) => (
             <CarouselItem key={item.id} className="m-auto basis-full pl-0">
               <div className="py-4 my-auto relative">
-                <div className="w-11/12 max-w-6xl h-[440px] mx-auto flex flex-col text-white md:h-80 md:flex-row md:gap-12 md:items-center">
+                <div className="w-11/12 max-w-6xl h-110 mx-auto flex flex-col text-white md:h-80 md:flex-row md:gap-12 md:items-center">
                   {/* Text Content */}
                   <div className="flex-1 text-center md:text-left order-1">
-                    <h1 className="text-3xl md:text-5xl font-bold text-carousel-text mb-2">
+                    <h2 className="text-3xl md:text-5xl font-heading! text-carousel-text mb-2">
                       {item.title}
-                    </h1>
-                    <h2 className="text-xl md:text-3xl font-semibold text-carousel-text mb-4">
-                      {item.subtitle}
                     </h2>
+                    <h3 className="text-xl md:text-3xl font-subheading text-carousel-text mb-4">
+                      {item.subtitle}
+                    </h3>
                     <p className="text-carousel-text/90 text-base md:text-lg mb-6">
                       {item.description}
                     </p>
@@ -116,20 +116,20 @@ export const Carousel = () => {
                       variant="secondary"
                       size="lg"
                       href={item.buttonHref}
-                      className="w-fit self-center mt-auto font-semibold tracking-wide bg-white text-primary hover:bg-gray-100"
+                      className="w-fit self-center mt-auto font-subheading tracking-wide bg-white text-primary hover:bg-gray-100"
                     >
                       {item.buttonText}
                     </Button>
                   </div>
 
                   {/* Image - Always at the end (order-2) */}
-                  <div className="w-fit mx-auto flex-1 flex items-end order-2 max-h-[200px] md:w-full md:mt-0 md:items-center">
+                  <div className="w-fit mx-auto flex-1 flex items-end order-2 max-h-50 md:w-full md:mt-0 md:items-center">
                     <Image
                       src={item.image}
                       alt={item.title}
                       width={800}
                       height={400}
-                      className="w-full max-w-lg max-h-[200px] mx-auto rounded-lg object-contain md:max-h-none"
+                      className="w-full max-w-lg max-h-50 mx-auto rounded-lg object-contain md:max-h-none"
                     />
                   </div>
                 </div>

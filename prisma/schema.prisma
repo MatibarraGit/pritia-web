@@ -29,16 +29,18 @@ model products {
   purchase_price       Int
   sell_price           Int?
   resellers_price      Int?
-  in_stock             Boolean                @default(true)
-  category_id          Int?
-  product_description  String?
-  created_at           DateTime               @default(now()) @db.Timestamp(6)
-  product_slug         String?                @db.VarChar(255)
   discount_percent     Int?                   @default(0)
+  category_id          Int?
   subcategory_id       Int?
+  in_stock             Boolean                @default(true)
   stock                Int?                   @default(0) @db.SmallInt
+  product_description  String?
   images               String[]
+  product_slug         String?                @db.VarChar(255)
+  created_at           DateTime               @default(now()) @db.Timestamp(6)
+  updated_at           DateTime               @default(now()) @db.Timestamp(6)
   deleted_at           DateTime?              @db.Date
+
   categories           categories?            @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_category")
   providers            providers?             @relation(fields: [provider_id], references: [provider_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_provider")
   subcategories        subcategories?         @relation(fields: [subcategory_id], references: [subcategory_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_subcategory")

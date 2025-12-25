@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import { Suspense } from "react";
 import { Button, Input, Slider } from "@/components/ui";
 import { useFiltersContext } from "@/hooks";
 import { CategoriesAccordion } from "@/layout/header/CategoriesAccordion";
@@ -26,7 +27,13 @@ export const FiltersComponent = () => {
 
       {/* CATEGORÍA - Accordion */}
       <section className="md:px-1 mb-6 overflow-hidden">
-        <CategoriesAccordion closeMenuOnClick={false} />
+        <Suspense fallback={
+          <div className="w-full p-4 text-center text-sm text-gray-500">
+            Cargando categorías...
+          </div>
+        }>
+          <CategoriesAccordion closeMenuOnClick={false} />
+        </Suspense>
       </section>
 
       {/* PRECIO */}

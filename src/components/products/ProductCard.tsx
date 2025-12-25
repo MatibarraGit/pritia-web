@@ -59,8 +59,8 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
         )}
 
         <div className={cn(
-          "flex items-center justify-between  relative",
-          product.discountPercent === 0 && "mt-auto",
+          "flex items-center justify-between relative",
+          (product.discountPercent === 0 || !product.category) && "mt-auto",
           // installmentQuantity === 0 &&
         )}>
           <span className="text-xl font-subheading">

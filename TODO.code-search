@@ -1,25 +1,22 @@
 # Query: // TODO:
 # Flags: CaseSensitive WordMatch
 
-7 results - 7 files
+6 results - 6 files
 
 src\app\(shop)\cart\cartPage.tsx:
   1: // TODO: Implementar el cálculo del envío
 
 src\app\(shop)\products\productsPage.tsx:
-  82:     // TODO: Devolver desde el backend únicamente los productos que pertenecen a la subcategoría para no tener que usar los filtros del frontend para filtrar
-
-src\app\api\products\count\route.ts:
-  42:       // TODO: Cambiar este total arbitrario
+  95:     // TODO: Devolver desde el backend únicamente los productos que pertenecen a la subcategoría para no tener que usar los filtros del frontend para filtrar
 
 src\components\buttons\CheckoutButton.tsx:
   1: // TODO: Asegurar que se cree la orden correctamente + Integrar Mercado Pago
 
 src\components\cart\CartSidebar.tsx:
-  20:   // TODO: Implementar cálculo de envío
+  27:   // TODO: Implementar cálculo de envío
 
 src\layout\header\CategoriesAccordion.tsx:
   1: // TODO: Manejar los filtros ¿En backend o en frontend?
 
 src\mocks\fans.ts:
-  3: // TODO: Incorporar servicios post MVP
+  3: // TODO: Incorporar servicios post release

@@ -2,10 +2,12 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs } from "@/components";
-import { ProductType } from "@/types";
+import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs, ProductsCarousel } from "@/components";
+import { getProductsBySubcategory } from "@/services";
 
 import type { Metadata } from "next";
+import type { ProductType } from "@/types";
+
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -57,6 +59,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) return notFound();
 
   const {
+    id,
     images,
     name,
     price,
@@ -69,13 +72,14 @@ export default async function ProductPage({ params }: Props) {
     description
   } = product
 
-  if (!product) {
-    notFound();
-  }
-
   // Cuotas
   // const installmentQuantity = installmentQuantity ? installmentQuantity : 0;
   // const installmentPrice = (finalPrice / installmentQuantity) * 1.20;
+
+  // ----Productos relacionados----
+  const relatedProducts = (await getProductsBySubcategory({ subcategory })) ?? [];
+  const filteredRelatedProducts = relatedProducts?.products?.filter((p: ProductType) => String(p.id) !== String(id));
+  
 
   return (
     <div className="w-full min-h-screen bg-gray-50">
@@ -147,14 +151,13 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {/* Related Products */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-subheading mb-6">Productos relacionados</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* {relatedProducts.map((relatedProduct) => (
-              <ProductCard key={relatedProduct.id} product={relatedProduct} />
-            ))} */}
+        {filteredRelatedProducts.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-subheading">Productos relacionados</h2>
+
+            <ProductsCarousel products={filteredRelatedProducts} isAutoplay={false} loop={false} />
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

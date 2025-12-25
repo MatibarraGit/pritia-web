@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers"; 
 import { auth } from "./libs/auth";
 
-// * Rate limiting / brute force
-// Para rutas de login, considera protección contra intentos excesivos.
-// * Permitir OPTIONS sin auth.
-
 export async function proxy(req: NextRequest) {
   const { nextUrl } = req;
   const { pathname } = nextUrl;
@@ -46,7 +42,8 @@ export async function proxy(req: NextRequest) {
       );
     } else {
       // Manejar páginas no autenticadas
-      return NextResponse.redirect(new URL("/auth/sign-in", nextUrl.origin));
+      const callBackURL = encodeURIComponent(nextUrl.pathname);
+      return NextResponse.redirect(new URL(`/auth/sign-in?callbackUrl=${callBackURL}`, nextUrl.origin));
     }
   }
 

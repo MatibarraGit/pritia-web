@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -10,11 +10,13 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui"
+import { type CarouselApi } from "@/components/ui/carousel";
 
 import { ProductCard } from "@/components";
 import { useMediaQuery } from '@/hooks';
 import { ProductType } from "@/types";
 import Link from "next/link";
+import { cn } from "@/libs/utils";
 
 interface ProductsCarouselProps {
   title?: string;
@@ -37,8 +39,14 @@ export const ProductsCarousel = ({
   loop = false
 }: ProductsCarouselProps) => {
 
-  const isMobile = useMediaQuery("(max-width: 575px)");
-  const isTablet = useMediaQuery("(min-width: 576px) and (max-width: 768px)");
+  const isMobile = useMediaQuery("(min-width: 375px)");
+  const isTablet = useMediaQuery("(min-width: 620px) and (max-width: 768px)");
+  const isSmallDesktop = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(1);
 
   const mobileAutoPlay = useRef(Autoplay({ delay: 5000 }));
   const tabletAutoPlay = useRef(Autoplay({ delay: 6000 }));
@@ -50,6 +58,39 @@ export const ProductsCarousel = ({
     return desktopAutoPlay.current;
   };
 
+  // Calcular slides por vista según breakpoint
+  useEffect(() => {
+    if (isDesktop) {
+      setSlidesPerView(5);
+    } else if (isSmallDesktop) {
+      setSlidesPerView(4);
+    } else if (isTablet) {
+      setSlidesPerView(3);
+    } else if (isMobile) {
+      setSlidesPerView(2);
+    } else {
+      setSlidesPerView(1);
+    }
+  }, [isMobile, isTablet, isSmallDesktop, isDesktop]);
+
+  // Calcular número de indicadores basado en slides por vista
+  const totalIndicators = Math.ceil(products.length / slidesPerView);
+
+  // Sincronizar el slide actual con la API del carousel
+  useEffect(() => {
+    if (!api) return;
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+
+    return () => {
+      api.off("select", () => {});
+    };
+  }, [api]);
+
   useEffect(() => {
     if (isAutoplay) {
       getAutoPlay().reset();
@@ -59,7 +100,24 @@ export const ProductsCarousel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, isTablet, isAutoplay]);
 
-  const slides = [1,2,3,4,5]
+  const breakpoints = {
+    '(min-width: 375px)': {
+      slidesToScroll: 2,
+    },
+    '(min-width: 620px)': {
+      slidesToScroll: 3,
+    },
+    '(min-width: 768px)': {
+      slidesToScroll: 4,
+    },
+    '(min-width: 1024px)': {
+      slidesToScroll: 5,
+    }
+  };
+
+  const goToSlide = (index: number) => {
+    api?.scrollTo(index);
+  };
 
   if (products.length === 0) {
     return null;
@@ -82,7 +140,7 @@ export const ProductsCarousel = ({
         <div className="flex items-center justify-between">
           <h2 className="w-full mb-4">
             {href ? 
-              <Link href={href} className="w-full inline-flex items-center justify-center gap-2 text-foreground hover:text-primary transition-colors font-heading text-2xl text-center group cursor-pointer md:w-fit md:text-3xl" 
+              <Link href={href} className="w-full inline-flex items-center justify-center gap-2 text-foreground hover:text-primary transition-colors font-subheading text-2xl text-center group cursor-pointer md:w-fit md:text-3xl" 
               >
                 {title}
                 <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary group-hover:bg-primary 
@@ -95,56 +153,46 @@ export const ProductsCarousel = ({
             }
           </h2>
 
-          {withIndicators && (
-            <div 
-            className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 z-20 md:relative md:left-0 md:translate-x-0 md:z-0"
-          >
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                // onClick={() => goToSlide(index)}
-                // className={cn(
-                //   "w-3 h-3 rounded-full transition-all duration-300",
-                //   index === current
-                //     ? "bg-white w-8"
-                //     : "bg-white/50 hover:bg-carousel-text/70"
-                // )}
-                className="w-2 h-2 rounded-full transition-all duration-300 bg-red-500"
-                aria-label={`Ir al slide ${index + 1}`}
-              />
-            ))}
-          </div>
+          {withIndicators && totalIndicators > 1 && (
+            <div className={cn(
+              "w-70 mx-auto space-y-0.5 flex items-center justify-center gap-1.5 flex-wrap absolute -bottom-1 left-0 right-0 md:justify-end md:gap-2 md:relative md:bottom-auto md:left-auto",
+              isMobile && "bottom-1"
+            )}>
+              {Array.from({ length: totalIndicators }).map((_, index) => {
+                const isActive = Math.floor(current) === index;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={cn(
+                      "rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                      isActive
+                        ? "w-3 h-2 md:w-6 md:h-2.5 bg-primary"
+                        : "w-2 h-2 md:w-2.5 md:h-2.5 bg-gray-300 hover:bg-gray-400"
+                    )}
+                    aria-label={`Ir al grupo ${index + 1} de ${totalIndicators}`}
+                    aria-current={isActive ? "true" : "false"}
+                  />
+                );
+              })}
+            </div>
           )}
         </div>
       )}
       <div>
         <Carousel
           className="w-full"
+          setApi={setApi}
           opts={{
             loop: loop,
             align: "start",
             slidesToScroll: 1,
-            breakpoints: {
-              '(min-width: 375px)': {
-                slidesToScroll: 2,
-              },
-              '(min-width: 620px)': {
-                slidesToScroll: 3
-              },
-              '(min-width: 768px)': {
-                slidesToScroll: 4
-              },
-              '(min-width: 1024px)': {
-                slidesToScroll: 5
-              }
-            },
+            breakpoints,
           }}
-
           onMouseEnter={() => isAutoplay && getAutoPlay().stop()}
           onMouseLeave={() => isAutoplay && getAutoPlay().play()}
           onTouchStart={() => isAutoplay && getAutoPlay().stop()}
           onTouchEnd={() => isAutoplay && getAutoPlay().play()}
-
           plugins={isAutoplay ? [getAutoPlay()] : []}
         >
           <CarouselContent className="">

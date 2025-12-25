@@ -73,7 +73,7 @@ export const AdminSidebar = () => {
                   onClick={handleLinkClick} 
                   src={"/icons/dashboard.svg"} 
                   alt='productos' 
-                  size={20} 
+                  size={24} 
                   span={'Dashboard'}
                 />
               </div>
@@ -92,7 +92,7 @@ export const AdminSidebar = () => {
                   span={'Productos'}
                 />
 
-                <AdminSidebarLink 
+                {/* <AdminSidebarLink 
                   to={"/admin/categories"} 
                   onClick={handleLinkClick} 
                   src={"/icons/categories.svg"} 
@@ -108,12 +108,12 @@ export const AdminSidebar = () => {
                   alt='Órdenes de compra' 
                   size={20} 
                   span={'Órdenes de compra'}
-                />
+                /> */}
               </div>
             </div>
 
             {/* Sección Control */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <h2 className="text-sm font-semibold text-gray-600 mb-3 px-2">Control</h2>
               <div className="flex flex-col gap-1">
                 <AdminSidebarLink 
@@ -134,7 +134,7 @@ export const AdminSidebar = () => {
                   span={'Proveedores'}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Volver a la tienda */}

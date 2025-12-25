@@ -1,24 +1,35 @@
 "use client";
 
+import { useTransition } from "react";
 import { redirect } from "next/navigation";
 import { LogOut } from "lucide-react";
-import { Button } from "../ui";
 import { signOut } from "@/libs/auth-client";
 
+import { Button } from "../ui";
+import { MyLoader } from "@/components";
+
 export const LogOutButton = () => {
+  const [isPending, startTransition] = useTransition();
+
   function onClick() {
-    signOut();
-    redirect('/');
+    startTransition(async () => {
+      await signOut();
+      redirect('/');
+    })
   }
 
   return (
     <Button
       variant="ghost"
       onClick={onClick}
-      className="border border-black bg-black text-white"
+      className="bg-black text-white hover:bg-black/85 relative"
+      disabled={isPending}
     >
+      {isPending && (
+        <MyLoader className="w-full center-flex absolute bg-black/85" />
+      )}
       <LogOut size={18} color="#fff" />
-      Cerrar sesión
+      <span>Cerrar sesión</span>
     </Button>
   );
 };

@@ -34,7 +34,7 @@ export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {
 
         <div className="my-[15px] mx-auto">
           {products && products.length > 0 && (
-            <ProductsCarousel products={products} />
+            <ProductsCarousel products={products} loop={false} />
           )}
         </div>
       </div>

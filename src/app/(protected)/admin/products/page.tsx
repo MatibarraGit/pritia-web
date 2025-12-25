@@ -102,7 +102,7 @@ function AdminProducts() {
       <AdminDisplayData 
         pageConfig={{
           pageTitle: 'Productos',
-          pageDescription: 'Gestiona tu catálogo de productos',
+          pageDescription: 'Gestioná tu catálogo de productos',
           isLoading: isLoading || isLoadingFilterConfig,
           span: 'Añadir Producto',
         }}

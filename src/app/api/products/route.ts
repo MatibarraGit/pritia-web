@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
+import { auth } from "@/libs/auth";
 import { cloudinary, prisma } from "@/libs";
-import type { ProductResponseType } from "@/types";
+
 import { PRODUCTS_PER_PAGE, convertImageToBuffer, formatProducts } from "@/utils";
+import type { ProductResponseType } from "@/types";
 
 export async function GET(request: Request) {
   try {
@@ -62,6 +65,17 @@ export async function GET(request: Request) {
 }
 
 export async function POST(req: Request) {
+  const session = await auth.api.getSession({ 
+    headers: await headers()
+  })
+
+  if (!session?.user || !session?.session) {
+    return NextResponse.json(
+      { message: 'No se ha podido autenticar el usuario' },
+      { status: 401 }
+    );
+  }
+
   try {
     // Obtener datos
     const data = await req.formData();

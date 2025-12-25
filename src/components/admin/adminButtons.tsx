@@ -47,9 +47,9 @@ export const AdminSidebarLink = ({ to, onClick, className, src, alt, size, span 
       onClick={onClick} 
       className={cn(
         className,
-        "px-3 py-2 flex items-center gap-3 whitespace-nowrap rounded-lg transition-all duration-200 font-medium",
-        isActive && "text-white bg-primary shadow-md",
-        !isActive && "text-gray-700 hover:text-white hover:bg-primary hover:shadow-sm"
+        "px-3 py-2 flex items-center gap-3 whitespace-nowrap rounded-lg font-medium group",
+        isActive && " bg-primary/10 outline outline-primary",
+        !isActive && "text-gray-700 hover:outline hover:outline-primary hover:bg-primary/10"
       )}
     >
       <img 
@@ -57,10 +57,6 @@ export const AdminSidebarLink = ({ to, onClick, className, src, alt, size, span 
         alt={alt} 
         width={size} 
         height={size} 
-        className={cn(
-          "transition-all duration-200",
-          isActive && "brightness-0 invert"
-        )}
       />
       {span && <span className="text-sm">{span}</span>}
     </Link>

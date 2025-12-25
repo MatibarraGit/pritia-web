@@ -39,6 +39,7 @@ const buttonVariants = cva(
 interface BaseButtonProps {
   className?: string;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 // Discriminated union for button vs link
@@ -56,13 +57,19 @@ type ButtonAsLink = BaseButtonProps &
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-function Button({ href, className, variant, size, ...props }: ButtonProps) {
+function Button({ href, className, variant, size, disabled, ...props }: ButtonProps) {
   const classes = cn(buttonVariants({ variant, size, className }));
 
   if (href && href !== "" && !props.onClick) {
     const { children, ...linkProps } = props as ButtonAsLink;
+    // For links, disabled is handled via CSS classes only
     return (
-      <Link {...linkProps} href={href} className={classes}>
+      <Link 
+        {...linkProps} 
+        href={href} 
+        className={cn(classes, disabled && "pointer-events-none opacity-50")}
+        aria-disabled={disabled}
+      >
         {children}
       </Link>
     );
@@ -70,7 +77,7 @@ function Button({ href, className, variant, size, ...props }: ButtonProps) {
 
   const { children, ...buttonProps } = props as ButtonAsButton;
   return (
-    <button {...buttonProps} className={classes}>
+    <button {...buttonProps} disabled={disabled} className={classes}>
       {children}
     </button>
   );

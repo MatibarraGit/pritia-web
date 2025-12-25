@@ -4,6 +4,43 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MontserratMedium";
+  src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MontserratSemiBold";
+  src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mulish";
+  src: url("/fonts/Mulish-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MulishBold";
+  src: url("/fonts/Mulish-Bold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MulishExtraBold";
+  src: url("/fonts/Mulish-ExtraBold.woff2") format("woff2");
+  font-display: swap;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================
@@ -24,13 +61,10 @@
   --color-danger: #ff0000;
   --color-danger-hover: #f10000;
 
-  /* TODO: Agregar las fuentes */
   /* Fonts */
-  --font-body: "Mulish", "Roboto", sans-serif; 
-  --font-heading: "MulishExtraBold", "RobotoExtraBold", sans-serif;
-  --font-subheading: "MulishBold", "RobotoExtraBold", sans-serif;
-
-  /* Breakpoints */
+  --font-body: "Montserrat", "Mulish", sans-serif; 
+  --font-subheading: "MontserratMedium", "MulishBold", sans-serif;
+  --font-heading: "MontserratSemiBold", "MulishExtraBold", sans-serif;
 }
 
 /* ============================================
@@ -61,11 +95,11 @@
 /* ============================================
    ESTILOS DE ELEMENTOS HTML
    ============================================ */
-h1, h2 {
+h1 {
   @apply font-heading;
 }
 
-h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   @apply font-subheading;
 }
 

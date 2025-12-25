@@ -4,7 +4,10 @@ export function validateAuthForm(
   form: AuthFormData
 ): AuthFormData | null {
   // Inicializar objeto de errores
-  const errors: AuthFormData = {};
+  const errors: AuthFormData = {
+    email: "",
+    password: ""
+  };
 
   // Validación del firstName (solo si es registro)
   if (register === true) {

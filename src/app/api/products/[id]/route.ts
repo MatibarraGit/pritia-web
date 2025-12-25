@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
+import { auth } from "@/libs/auth";
 import { prisma, cloudinary } from "@/libs";
 import { convertImageToBuffer, getPublicIdFromUrl, formatProduct, formatDate } from "@/utils";
 import type { ProductType } from "@/types";
@@ -72,6 +74,17 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await auth.api.getSession({ 
+    headers: await headers()
+  })
+
+  if (!session?.user || !session?.session) {
+    return NextResponse.json(
+      { message: 'No se ha podido autenticar el usuario' },
+      { status: 401 }
+    );
+  }
+
   const { id } = await params;
 
   try {
@@ -251,6 +264,16 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await auth.api.getSession({ 
+    headers: await headers()
+  })
+
+  if (!session?.user || !session?.session) {
+    return NextResponse.json(
+      { message: 'No se ha podido autenticar el usuario' },
+      { status: 401 }
+    );
+  }
   const { id } = await params;
 
   try {
@@ -277,6 +300,17 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await auth.api.getSession({ 
+    headers: await headers()
+  })
+
+  if (!session?.user || !session?.session) {
+    return NextResponse.json(
+      { message: 'No se ha podido autenticar el usuario' },
+      { status: 401 }
+    );
+  }
+  
   const { id } = await params;
 
   try {

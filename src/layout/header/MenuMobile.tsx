@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { X } from "lucide-react";
+import { Suspense } from "react";
 
 import { menuMobileContext } from "@/contexts";
 import { CategoriesAccordion } from "./CategoriesAccordion";
@@ -71,7 +72,13 @@ export const MenuMobile = () => {
               </Link>
             </li>
             <li>
-              <CategoriesAccordion isMenuMobile={true} />
+              <Suspense fallback={
+                <div className="w-full p-4 text-center text-sm text-gray-500">
+                  Cargando categorías...
+                </div>
+              }>
+                <CategoriesAccordion isMenuMobile={true} />
+              </Suspense>
             </li>
 
             {/* Social Icons */}

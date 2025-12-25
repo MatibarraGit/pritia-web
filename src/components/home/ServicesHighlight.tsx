@@ -42,7 +42,7 @@ export const ServicesHighlight = () => {
   return (
     <section className="w-11/12 max-w-content mx-auto py-12">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-subheading text-center mb-12 text-accent">Nuestros Servicios</h2>
+        <h2 className="mb-6 text-2xl font-subheading text-center md:text-3xl">Nuestros Servicios</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
@@ -59,7 +59,7 @@ export const ServicesHighlight = () => {
                   service.icon
                 )}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              <h3 className="text-xl mb-2">{service.title}</h3>
               <p className="text-gray-600">{service.description}</p>
             </div>
           ))}
