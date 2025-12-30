@@ -1,11 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle, AlertTriangle, Plus, Copy, Eye, ArrowLeft } from "lucide-react";
+import { CheckCircle, AlertTriangle, Plus, Copy, Eye, ArrowLeft, Send, X } from "lucide-react";
+
+import { selectItemsContext, toastContext } from "@/contexts";
 import { MyLoader } from "@/components";
 import { Button } from "@/components/ui";
-import { ACTION_TYPES } from "@/utils";
+import { shareProducts } from "@/services/products";
+import { ACTION_TYPES, TO_OPTIONS } from "@/utils";
 
 interface ProductModalProps {
   type: string;
@@ -99,6 +103,89 @@ export const ProductModal = ({
       </div>
     );
   } 
+
+  if (type === ACTION_TYPES.SHARE) {
+    const { selectedItems, deleteItemToSelection } = selectItemsContext();
+    const { showToast } = toastContext()
+
+    const onConfirmShare = async (number: number, type: string) => {
+      try {
+        setIsLoading(true);
+        for (const item of selectedItems) {
+          item.price = type === 'seller' ? item.sellPrice : item.resellersPrice
+          if (item.price === 0 || item.price === undefined) {
+            showToast("Todos los productos deben tener precio", "error");
+            close()
+            return;
+          }
+        }
+  
+        const { successMessage, errorMessage } = await shareProducts(selectedItems, number);
+        if (errorMessage && errorMessage !== "") showToast(errorMessage, "error");
+        else if (successMessage && successMessage !== "") showToast(successMessage, "success");
+      } finally {
+        setIsLoading(false);
+        close(); 
+      }
+    };
+
+    return (
+
+      <div>
+          {/* Product Grid */}
+            <div className="max-h-120 mt-2 grid grid-cols-[repeat(auto-fit,75px)] gap-3 overflow-y-auto">
+              {isLoading && <MyLoader />}
+
+              {selectedItems.map((product) => (
+                <div
+                  key={product.id}
+                  className="group max-w-[75px] cursor-pointer"
+                >
+                  <div className="relative overflow-hidden rounded-lg border border-border/50 transition-all duration-200 group-hover:border-primary/30 group-hover:shadow-md">
+                    <Button 
+                      className="w-4 h-4 absolute top-0 right-0 z-10 p-3 rounded-full bg-danger/50 transition-all duration-200 hover:bg-danger/70"
+                      onClick={() => deleteItemToSelection(product)}
+                    >
+                      <X />
+                    </Button>
+                    
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-[75px] w-[75px] object-cover transition-transform duration-200 group-hover:scale-105"
+                    />
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground line-clamp-2 leading-tight">
+                    {product.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+    
+            {/* Buttons */}
+            <div className="mt-8 flex flex-col gap-4">
+              <h3
+                className="w-full"
+              >Compartir a</h3>
+
+              <div className="flex items-center gap-4 flex-wrap">
+                {TO_OPTIONS.map((to) => (
+                  <Button
+                    key={to.number}
+                    variant={to.type === 'seller' ? "primary" : "outline"}
+                    size="lg"
+                    onClick={() => onConfirmShare(to.number, to.type)}
+                    className="md:w-auto"
+                  >
+                    <Send className="h-4 w-4" />
+                    {to.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+    );
+  }
   
   if (type === ACTION_TYPES.DISABLE) {
     const handleDisable = async () => {

@@ -62,7 +62,7 @@ export function AuthForm({ mode, showSocialButtons = true, callbackUrl }: AuthFo
 		// Validar formulario
 		const validationErrors = validateAuthForm(isRegister, formData);
 
-		if (validationErrors) {
+		if (validationErrors && Object.values(validationErrors).some(error => error)) {
 			setErrors(validationErrors);
 			return;
 		}

@@ -11,6 +11,7 @@ export { ShippingInfo } from './data-display/ShippingInfo'
 export { AuthForm } from './forms/AuthForm'
 
 // Admin / Overlays
+export { SelectionMenu } from './admin/overlays/SelectionMenu'
 export { ProductModal } from './admin/overlays/ProductModal'
 
 // Admin / Product Form

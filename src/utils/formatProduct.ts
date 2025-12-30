@@ -24,6 +24,7 @@ export function formatProduct(p: ProductResponseType): ProductType {
     description: p.product_description,
     images: p.images,
     slug: p.product_slug,
+    updatedAt: p.updated_at,
     createdAt: p.created_at,
   };
 }

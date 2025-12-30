@@ -1,5 +1,5 @@
-import type { ProductType, ActionResponse } from "@/types";
 import { apiRequest } from "./api-client";
+import type { ProductType, ActionResponse, SelectedItemsType } from "@/types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -210,6 +210,46 @@ export async function createProduct(formData: FormData): Promise<ActionResponse 
     errorMessage: 'Error al crear el producto',
     transformResponse: (data) => ({ slug: (data as { slug?: string })?.slug }),
   });
+}
+
+// POST - Compartir producto
+export async function shareProducts(products: SelectedItemsType[], to: number): Promise<ActionResponse> {
+  let errorMessage: string = "";
+  async function postToWebhook(product: SelectedItemsType) {
+    try {
+      const response = await fetch(
+        `https://n8n-personal-n8n.b1o0vq.easypanel.host/webhook/share-products`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ product, to }),
+        }
+      );
+      const json = await response.json()
+  
+      if (!json.ok) {
+        return errorMessage += `${product.name}. `;
+      }
+    } catch (error) {
+      console.error(error);
+      return errorMessage +=  `${product.name}. `;
+    }
+  }    
+
+  // Función para pausar
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  for (const product of products) {
+    await postToWebhook(product);
+    await delay(1000); // Espera 1 segundo (1000 ms)
+  };
+
+  if (errorMessage !== "") return { errorMessage: `Error al compartir los productos: ${errorMessage}` };
+  return { successMessage: "Productos compartidos exitosamente" };
 }
 
 // PUT - Actualizar producto

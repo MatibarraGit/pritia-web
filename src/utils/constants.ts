@@ -1,8 +1,11 @@
 export const enum ACTION_TYPES {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
+  UPDATE_MANY = 'UPDATE_MANY',
   DELETE = 'DELETE',
-  DISABLE = 'DISABLE'
+  DISABLE = 'DISABLE',
+  DISABLE_MANY = 'DISABLE_MANY',
+  SHARE = 'SHARE'
 };
 
 export const enum PURCHASE_ORDER_STATUS {
@@ -33,6 +36,34 @@ export const enum TOPICS {
   OFFERS = 'ofertas',
   BEST_SELLERS = 'más vendidos',
 }
+
+export const TO_OPTIONS = Object.freeze([
+  {
+    name: 'Número secundario',
+    number: 5491140226227,
+    type: 'seller'
+  },
+  {
+    name: 'Vicky',
+    number: 5491156188109,
+    type: 'seller'
+  },
+  {
+    name: 'Morty',
+    number: 5491155256122,
+    type: 'seller'
+  },
+  {
+    name: 'Adri',
+    number: 5491130806126,
+    type: 'seller'
+  },
+  {
+    name: 'Jana',
+    number: 5491131134516,
+    type: 'reseller'
+  }
+] as const);
 
 export const ORDER_PARAMETERS = {
   "Relevancia": 'createdAt',

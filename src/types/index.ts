@@ -25,6 +25,7 @@ export type ProductType = {
   stock: number;
   description: string;
   slug: string;
+  updatedAt?: string;
   createdAt?: string;
   totalQuantitySold?: number;
 }
@@ -44,6 +45,7 @@ export type ProductResponseType = {
   stock: number;
   product_description: string;
   product_slug: string;
+  updated_at?: string;
   created_at?: string;
   total_quantity_sold?: number;
 }
@@ -121,6 +123,16 @@ export type ServiceType = {
   title: string;
   description: string;
 };
+
+export type SelectedItemsType = {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  sellPrice: number;
+  resellersPrice: number;
+  price?: number;
+}
 
 export type ActionResponse = {
   successMessage?: string | undefined;

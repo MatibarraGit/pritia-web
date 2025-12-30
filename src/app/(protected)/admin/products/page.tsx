@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { AdminDisplayData, Pagination, PageLoader, ProductModal } from "@/components";
+import { AdminDisplayData, SelectionMenu, Pagination, PageLoader, ProductModal } from "@/components";
 import { useFetchData } from "@/hooks";
 import { getAllProducts, fetchAllCategories, fetchAllProviders, deleteProduct, disableProduct } from "@/services";
 import { ACTION_TYPES, PRODUCTS_PER_PAGE, confirmAction } from "@/utils";
@@ -49,8 +49,8 @@ function AdminProducts() {
     fetchFunction: getFilterConfig 
   });
   
-  const columns = ['Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Categoría', 'Subcategoría', 'Stock', 'Creación', 'Ver/Editar', 'Desactivar', 'Eliminar'];
-  const map = ['images', 'name', 'provider', 'purchasePrice', 'originalPrice', 'resellersPrice', 'discountPercent', 'category', 'subcategory', 'inStock', 'createdAt'];
+  const columns = ['Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Categoría', 'Subcategoría', 'Stock', 'Actualizado', 'Creación', 'Ver/Editar', 'Desactivar', 'Eliminar'];
+  const map = ['images', 'name', 'provider', 'purchasePrice', 'price', 'resellersPrice', 'discountPercent', 'category', 'subcategory', 'inStock', 'updatedAt', 'createdAt'];
   
   const [opened, setOpened] = useState(false);
   const [actionType, setActionType] = useState<string>(ACTION_TYPES.DELETE);
@@ -61,10 +61,20 @@ function AdminProducts() {
   });
 
   const handleAction = (action: string, item: ProductType | null = null) => {
-    if (item) {
-      setProductToAction({ id: item.id, name: item.name, slug: item.slug });
-      setActionType(action);
-      setOpened(true);
+    switch (action) {
+      case ACTION_TYPES.DISABLE:
+      case ACTION_TYPES.DELETE:
+        if (item) {
+          setProductToAction({ id: item.id, name: item.name, slug: item.slug });
+          setActionType(action);
+          setOpened(true);
+        }
+        break
+
+      default:
+        setActionType(action);
+        setOpened(true);
+        break
     }
   };
 
@@ -99,6 +109,8 @@ function AdminProducts() {
 
   return (
     <> 
+      <SelectionMenu products={products} handleAction={handleAction} />
+
       <AdminDisplayData 
         pageConfig={{
           pageTitle: 'Productos',

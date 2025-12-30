@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useMemo } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, Filter, Eye, Power } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, Power, Pencil } from "lucide-react";
 
+import { selectItemsContext } from "@/contexts";
 import { DeleteButton, TableLoader } from "@/components";
 import { Button, Popover, PopoverContent, PopoverTrigger } from "@/components/ui";
 import { useFiltersContext, useOrderContext, type SortConfig } from "@/hooks";
@@ -40,6 +40,26 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
 }: TableOfItemsProps<T>) {
   const { adminFilters, handleAdminFilterChange, clearAllFilters, filterItems } = useFiltersContext();
   const { sortObject, handleSort, orderItems } = useOrderContext();
+  const { isSelecting, selectedIds, toggleItemSelection } = selectItemsContext(); 
+
+  const handleClickItem = (item: T) => {
+    if (!isSelecting) return;
+    const images = (item.images as string[] | undefined) || [];
+    const image = images.length > 0 ? images[0] : '';
+    const name = (item.name as string | undefined) || '';
+    const description = (item.description as string | undefined) || '';
+    const sellPrice = Number(item.price) || 0;
+    const resellersPrice = Number(item.resellersPrice) || 0;
+    
+    toggleItemSelection({
+      id: Number(item.id),
+      name,
+      image,
+      description,
+      sellPrice,
+      resellersPrice
+    });
+  }
 
   useEffect(() => {
     clearAllFilters();
@@ -171,13 +191,21 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
         {processedItems.map((item, index) => (
           <div 
             key={String(item.id)} 
-            className="contents group hover:bg-gray-50 transition-colors duration-200"
+            className={cn(
+              "contents group hover:bg-gray-50 transition-colors duration-200",
+              isSelecting && "cursor-pointer"
+            )
+            }
             style={{ animationDelay: `${index * 20}ms` }}
+            onClick={() => handleClickItem(item)}
           >
             {map.map((mapKey) => (
               <div 
                 key={mapKey} 
-                className="min-w-full w-max max-w-75 p-4 flex items-center justify-center text-center whitespace-normal wrap-break-words border-b border-gray-100 transition-all overflow-hidden group-hover:bg-gray-50"
+                className={cn(
+                  "min-w-full w-max max-w-75 p-4 flex items-center justify-center text-center whitespace-normal wrap-break-words border-b border-gray-100 transition-all overflow-hidden group-hover:bg-gray-50",
+                  selectedIds.includes(Number(item.id)) && "bg-secondary/30 group-hover:bg-secondary/50"
+                )}
               >
                 {mapKey !== "" 
                   ? renderCellValue(item, mapKey)
@@ -193,7 +221,7 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
                   variant="outline"
                   onClick={() => handleAction(ACTION_TYPES.UPDATE, item)}
                 >
-                  <Eye size={18} />
+                  <Pencil size={18} />
                 </Button>
               </div>
             )}
@@ -204,7 +232,7 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
                   variant="outline"
                   href={`${editLink}/${item.id}`}
                 >
-                  <Eye size={18} />
+                  <Pencil size={18} />
                 </Button>
               </div>
             )}
@@ -251,7 +279,7 @@ function renderCellValue(item: Record<string, unknown>, mapKey: string) {
     return formatPrice(Number(value) || 0);
   }
 
-  if (mapKey.toLowerCase().includes("date") || mapKey === "createdAt") {
+  if (mapKey.toLowerCase().includes("date") || mapKey === "createdAt" || mapKey === "updatedAt") {
     return formatDate(String(value || '')).fechaMostrar;
   }
   

@@ -168,7 +168,8 @@ export function ProductForm() {
               Proveedor
             </label>
             <Select
-              value={productData.provider}
+              key={`provider-${productData.id || 'new'}-${productData.provider || ''}-${providerNames.length}`}
+              value={productData.provider || undefined}
               onValueChange={(value) => handleChange("provider", value)}
               disabled={providerNames.length === 0}
             >
@@ -291,7 +292,8 @@ export function ProductForm() {
               Categoría
             </label>
             <Select
-              value={productData.category}
+              key={`category-${productData.id || 'new'}-${productData.category || ''}-${categoryNames.length}`}
+              value={productData.category || undefined}
               onValueChange={(value) => {
                 handleChange("category", value);
                 handleChange("subcategory", "");
@@ -317,8 +319,8 @@ export function ProductForm() {
               Subcategoría
             </label>
             <Select
-              key={`subcategory-${productData.category}`}
-              value={productData.subcategory || ""}
+              key={`subcategory-${productData.id || 'new'}-${productData.category || ''}-${productData.subcategory || ''}-${subcategoriesNames.length}`}
+              value={productData.subcategory || undefined}
               onValueChange={(value) => handleChange("subcategory", value)}
               disabled={subcategoriesNames.length === 0}
             >
@@ -394,7 +396,7 @@ export function ProductForm() {
               Procesando...
             </>
           ) : productData.id ? (
-            "Editar"
+            "Guardar"
           ) : (
             "Publicar"
           )}

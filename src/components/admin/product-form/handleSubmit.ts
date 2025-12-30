@@ -110,7 +110,7 @@ export async function handleSubmit(
   formData.append('description', (form.description as string) || '');
 
   // Petición a la base de datos
-  const result = productData?.slug && productData.id
+  const result = productData.id
     ? await updateProduct(productData.id, formData)
     : await createProduct(formData);
 
