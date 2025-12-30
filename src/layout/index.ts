@@ -15,12 +15,10 @@ export { Header } from './Header';
 export { NavigationMenu } from './NavigationMenu';
 
 // Header Components
-export {
-  CartButton,
-  CategoriesAccordion,
-  CategoriesDropdown,
-  CheckboxMenu,
-  FavouritesMenu,
-  MenuMobile,
-  SearchComponent,
-} from './header/index';
+export { CartButton } from './header/CartButton';
+export { CategoriesAccordion } from './header/CategoriesAccordion';
+export { CategoriesDropdown } from './header/CategoriesDropdown';
+export { CheckboxMenu } from './header/CheckboxMenu';
+export { FavouritesMenu } from './header/FavouritesMenu';
+export { MenuMobile } from './header/MenuMobile';
+export { SearchComponent } from './header/SearchComponent';
