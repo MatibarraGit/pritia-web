@@ -116,6 +116,7 @@ export const ProductModal = ({
           if (item.price === 0 || item.price === undefined) {
             showToast("Todos los productos deben tener precio", "error");
             close()
+            setIsLoading(false);
             return;
           }
         }
