@@ -1,7 +1,7 @@
 # Query: // TODO:
 # Flags: CaseSensitive WordMatch
 
-7 results - 7 files
+6 results - 6 files
 
 src\app\(shop)\cart\cartPage.tsx:
   1: // TODO: Implementar el cálculo del envío
@@ -14,9 +14,6 @@ src\components\buttons\CheckoutButton.tsx:
 
 src\components\cart\CartSidebar.tsx:
   27:   // TODO: Implementar cálculo de envío
-
-src\contexts\select-items-context.ts:
-  70:       // TODO: Verificar el tipo del item y pasarlo a la función de eliminación
 
 src\layout\header\CategoriesAccordion.tsx:
   1: // TODO: Manejar los filtros ¿En backend o en frontend?

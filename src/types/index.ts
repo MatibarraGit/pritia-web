@@ -129,8 +129,8 @@ export type SelectedItemsType = {
   name: string;
   image: string;
   description: string;
-  sellPrice: number;
-  resellersPrice: number;
+  sellPrice?: number;
+  resellersPrice?: number;
   price?: number;
 }
 
