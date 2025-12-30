@@ -35,7 +35,7 @@ export async function GET(request: Request) {
       return NextResponse.json([]);
     }
 
-    const productsName = products.map((product) => product.product_name);
+    const productsName = products.map((product: { product_name: string; }) => product.product_name);
 
     return NextResponse.json(productsName);
   } catch {
