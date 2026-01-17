@@ -5,7 +5,7 @@ export const revalidate = 30
 export default async function sitemap() {
   const { products } = await getAllProducts()
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mddirecto.com'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pritia.com.ar';
 
   const productsSitemapData = products.map((product) => ({
     url: `${baseUrl}/product/${product.slug}`,

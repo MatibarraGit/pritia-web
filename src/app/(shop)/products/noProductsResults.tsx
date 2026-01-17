@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { NavigationMenu } from "@/layout/NavigationMenu";
 import { Button } from "@/components/ui";
 
 export const NoProductsResults = ({ category }: { category?: string }) => {
   return (
-    <div className="w-full mx-auto flex flex-col relative bg-white items-center min-h-content">
+    <div className="w-full mx-auto flex items-center flex-col relative bg-white min-h-content text-center">
       <Image
         src={"/img/product-not-found.png"}
         alt="No se encontraron resultados"
@@ -27,11 +26,13 @@ export const NoProductsResults = ({ category }: { category?: string }) => {
 
 
       <div className="mt-4 flex flex-col gap-2">
-        <Button href={`/search/${category}`} variant="primary" >
-          {`Buscar "${category}"`}
-        </Button>
+        {category && (
+          <Button href={`/search/${category}`} variant="primary" >
+            {`Buscar "${category}"`}
+          </Button>
+        )}
 
-        <Button href="/" variant="outline" >
+        <Button href="/" variant={category ? "outline" : "primary"} >
           Volver al Inicio
         </Button>
       </div>

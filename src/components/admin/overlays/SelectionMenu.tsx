@@ -49,7 +49,7 @@ export const SelectionMenu = memo(({ products, handleAction } : SelectionMenu) =
           isSelecting ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <div className="w-11/12 max-w-content mx-auto py-4 flex items-center justify-between gap-4">
+        <div className="w-11/12 max-w-content mx-auto py-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Checkbox

@@ -1,16 +1,10 @@
-### MVP
-[ ] Adaptar la url base para todo el proyecto, y en el robots.ts y el sitemap.ts
-[ ] Terminar el menú mobile:
-  [/] Agregar el logo y el nombre del negocio
-  [x] Agregar los íconos de las redes sociales
-
 ### Post Release
 [ ] Terminar el menú mobile:
   [] Agregar los enlaces del NavigationMenu
-[ ] Colocar todos los íconos, imágenes y enlaces necesarios
-  [ ] Enlazar los SocialsButtons
-  [ ] Agregar el Facebook y el Instagram 
-  [ ] Agregar el email del negocio en el footer, en la modal de contacto y en la página /help
+[] Agregar en el Menú Mobile, en la Modal de Contacto, en el Footer y en la página Help
+  [ ] Facebook 
+  [ ] Instagram  
+  [ ] Email corporativo
 
 [ ] Agregar rutas de administración comentadas en el sidebar
 [ ] Finalizar los endpoints /user

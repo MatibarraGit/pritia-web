@@ -23,6 +23,7 @@ interface ProductDataState {
   stock: number;
   description: string;
   slug: string;
+  updatedAt: string;
 }
 
 interface ProductDataActions {
@@ -52,6 +53,7 @@ export const productDataContext = create<ProductDataActions>((set) => ({
     stock: 0,
     description: "",
     slug: "",
+    updatedAt: "",
   },
 
   // ESTADO DE CARGA DEL PRODUCTO
@@ -103,8 +105,24 @@ export const productDataContext = create<ProductDataActions>((set) => ({
     try {
       const product = await getProductById(id);
       
-      if (!product) {
+      if (!product || !product.id) {
+        console.error('Producto no encontrado o inválido');
         return;
+      }
+
+      // Convertir updatedAt a formato datetime-local si existe
+      let updatedAtValue = "";
+      if (product.updatedAt) {
+        const date = new Date(product.updatedAt);
+        if (!isNaN(date.getTime())) {
+          // Formato: YYYY-MM-DDTHH:mm (datetime-local)
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          const hours = String(date.getHours()).padStart(2, '0');
+          const minutes = String(date.getMinutes()).padStart(2, '0');
+          updatedAtValue = `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
       }
 
       set({
@@ -123,7 +141,8 @@ export const productDataContext = create<ProductDataActions>((set) => ({
           inStock: product.inStock === true ? "Disponible" : "Agotado",
           stock: product.stock,
           description: product.description || "",
-          slug: product.slug
+          slug: product.slug,
+          updatedAt: updatedAtValue
         }
       });
     } catch (error) {
@@ -150,6 +169,7 @@ export const productDataContext = create<ProductDataActions>((set) => ({
       stock: 0,
       description: "",
       slug: "",
+      updatedAt: "",
     }
   }),
 }));

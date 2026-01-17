@@ -32,7 +32,7 @@ export const AdminHeader = () => {
       </div>
 
 
-      <h2 className="mx-auto text-xl font-bold text-primary hidden md:flex md:items-center">Mi Proyecto</h2>
+      <h2 className="mx-auto text-xl font-bold text-primary hidden md:flex md:items-center">Pritia</h2>
     </header>
   );
 };

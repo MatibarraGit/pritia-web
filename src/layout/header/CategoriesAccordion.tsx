@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // TODO: Manejar los filtros ¿En backend o en frontend?
 // ? Utilizar handleFilterChange cuando hay una búsqueda o una categoría, y utilizar un Link cuando es todos los productos
 "use client";
@@ -42,26 +43,29 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
     );
   }
 
-  if (categoriesList.length === 0) {
-    return (
-      <div className="w-full p-4 text-center text-sm text-gray-500">
-        No hay categorías disponibles
-      </div>
-    );
-  }
+  // if (categoriesList.length === 0) {
+  //   return (
+  //     <div className="w-full p-4 text-center text-sm text-gray-500">
+  //       No hay categorías disponibles
+  //     </div>
+  //   );
+  // }
 
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="categories">
         <AccordionTrigger 
           className={cn(
-            "flex text-base hover:text-primary rounded-md transition-colors hover:no-underline",
+            "flex items-center text-base hover:text-primary rounded-md transition-colors hover:no-underline",
             isMenuMobile 
-              ? "py-3 px-1 font-subheading text-gray-700 hover:bg-gray-50" 
-              : "p-0 font-semibold text-black"
+              ? "py-3 px-1 hover:bg-gray-50 font-body" 
+              : "p-0 font-semibold text-black font-subheading"
           )}
         >
-          Categorías
+          <div className="flex items-center gap-2">
+            <img src="/icons/categories.svg" alt="Categorías" width={24} height={24} />
+            <span>Categorías</span>
+          </div>
         </AccordionTrigger>
         <AccordionContent className="pb-3 max-h-80 overflow-y-scroll personalized-scrollbar">
           <Accordion type="multiple" className="w-full">

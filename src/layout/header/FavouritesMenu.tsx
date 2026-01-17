@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+
 import { lovedProductsContext } from "@/contexts";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { formatPrice } from "@/utils";
@@ -23,7 +24,7 @@ export const FavouritesMenu = () => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="p-2 relative left-2 cursor-pointer hover:bg-background-hover rounded-full">
+        <div className="hidden p-2 relative left-2 cursor-pointer hover:bg-background-hover rounded-full md:block">
           <Heart className="size-6" />
           {lovedProducts.length > 0 && (
             <span className="absolute top-0 right-0 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -35,7 +36,7 @@ export const FavouritesMenu = () => {
       <PopoverContent 
         align="end" 
         sideOffset={8}
-        className="w-[300px] p-0 bg-background"
+        className="w-[300px] p-0 bg-background hidden md:block"
       >
         {sortedProducts.length === 0 ? (
           <div className="text-sm p-3 text-center text-muted-foreground bg-background">

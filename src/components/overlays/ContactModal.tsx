@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -23,25 +24,25 @@ const contactMethods = [
     action: "https://wa.me/+5491131738925",
     color: "#25D366",
   },
-  {
-    name: "Facebook",
-    component: <FacebookButton />,
-    description: "Seguinos en Facebook",
-    action: "https://www.facebook.com",
-    color: "#1877F2",
-  },
-  {
-    name: "Instagram",
-    component: <InstagramButton />,
-    description: "Mirá nuestras novedades",
-    action: "https://www.instagram.com",
-    color: "#BB33A0",
-  },
+  // {
+  //   name: "Facebook",
+  //   component: <FacebookButton />,
+  //   description: "Seguinos en Facebook",
+  //   action: "https://www.facebook.com",
+  //   color: "#1877F2",
+  // },
+  // {
+  //   name: "Instagram",
+  //   component: <InstagramButton />,
+  //   description: "Mirá nuestras novedades",
+  //   action: "https://www.instagram.com",
+  //   color: "#BB33A0",
+  // },
   {
     name: "Email",
     icon: "/icons/gmail.svg",
     description: "Escribinos un correo",
-    action: "mailto:",
+    action: "mailto:matileonardo.2013@gmail.com",
     color: "#EA4335",
   },
 ];
@@ -81,7 +82,10 @@ export const ContactModal = ({ trigger }: ContactModalProps) => {
               className="flex items-center gap-3 p-3 rounded-lg border-2 transition-colors hover:bg-gray-50"
               style={{ borderColor: contact.color }}
             >
-              {contact.component}
+              <div className="w-8 h-8 center-flex">
+                {contact.component ?? <img src={contact.icon} alt="Ícono" width={20} height={20} />}
+              </div>
+
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-subheading text-gray-900">
                   {contact.name}

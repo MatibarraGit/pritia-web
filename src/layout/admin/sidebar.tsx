@@ -8,6 +8,7 @@ import { cn } from "@/libs/utils";
 
 import { adminSidebarContext } from "@/contexts";
 import { AdminSidebarLink } from "@/components";
+import { X } from "lucide-react";
 
 export const AdminSidebar = () => {
   const { sidebar, sidebarDesktop, toggleSidebar } = adminSidebarContext();
@@ -52,7 +53,7 @@ export const AdminSidebar = () => {
             className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 active:scale-95 md:hidden"
             aria-label="Cerrar menú"
           >
-            <img src="/icons/close.svg" alt="cerrar" width={20} height={20} />
+            <X size={20} />
           </button>
         </div>
 
@@ -139,7 +140,7 @@ export const AdminSidebar = () => {
 
           {/* Volver a la tienda */}
           <div className="absolute bottom-6 left-0 right-0 px-4">
-            <Link href="/" className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 p-2 hover:text-primary hover:bg-gray-100 rounded-lg transition-all duration-200">
+            <Link href="/" className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-8 p-2 hover:text-primary hover:bg-gray-100 rounded-lg transition-all duration-200 md:mb-4">
               <img src="/img/logo.png" alt="Volver a la tienda" width={32} height={32} />
               <span>Volver a la tienda</span>
             </Link>

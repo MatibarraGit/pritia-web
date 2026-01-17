@@ -15,7 +15,7 @@ export const FooterComponent = () => {
               height={180}
               className="w-45 h-45 aspect-square"
             />
-            <h1 className="absolute opacity-0">[Nombre del negocio]</h1>
+            <h1 className="absolute opacity-0">Pritia</h1>
           </div>
 
           <div className="flex flex-col md:flex-row md:gap-8 md:flex-[0_0_65%] md:w-fit md:mt-5">
@@ -111,7 +111,7 @@ export const FooterComponent = () => {
                     WhatsApp
                   </a>
                 </li>
-                <li className="max-w-62 mb-2 text-sm text-gray-600">
+                {/* <li className="max-w-62 mb-2 text-sm text-gray-600">
                   <a
                     href="https://web.facebook.com"
                     target="_blank"
@@ -130,10 +130,10 @@ export const FooterComponent = () => {
                   >
                     Instagram
                   </a>
-                </li>
+                </li> */}
                 <li className="max-w-62 mb-2 text-sm text-gray-600">
                   <a
-                    href="mailto:"
+                    href="mailto:matileonardo.2013@gmail.com"
                     className="text-gray-600 no-underline hover:text-primary transition-colors"
                   >
                     Correo
@@ -146,7 +146,7 @@ export const FooterComponent = () => {
 
         <div className="mt-6 pt-4 flex flex-col items-center border-t border-gray-300">
           <p className="mb-4 text-xs md:text-sm text-gray-600">
-            Copyright &copy; [Nombre del negocio] - Desarrollado por Matías Ibarra. Derechos reservados.
+            Copyright &copy; 2026 Pritia - Desarrollado por Matías Ibarra. Derechos reservados.
           </p>
         </div>
       </div>

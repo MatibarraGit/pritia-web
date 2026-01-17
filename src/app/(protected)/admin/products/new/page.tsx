@@ -12,8 +12,15 @@ function NewProductPageContent({ id }: { id?: number }) {
   useEffect(() => {
     resetProductData();
     if (id) {
-      loadProductById(id);
+      // Asegurar que el producto se cargue correctamente
+      const loadProduct = async () => {
+        try {
+          await loadProductById(id);
+        } finally {}
+      };
+      loadProduct();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const searchParams = useSearchParams();

@@ -387,6 +387,20 @@ export function ProductForm() {
               className="resize-none"
             />
           </div>
+
+          {/* FECHA DE ACTUALIZACIÓN */}
+          <div className="space-y-2">
+            <label htmlFor="updatedAt" className="text-sm font-medium">
+              Fecha de Actualización
+            </label>
+            <Input
+              type="datetime-local"
+              id="updatedAt"
+              name="updatedAt"
+              value={productData.updatedAt || ""}
+              onChange={(e) => handleChange("updatedAt", e.target.value)}
+            />
+          </div>
         </div>
 
         <Button type="submit" disabled={isPending} className="w-full">

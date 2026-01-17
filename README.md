@@ -1,2 +1,2 @@
 # mi-proyecto
-Mi proyecto, mi página, mi ecommerce
+Mi proyecto, mi página, mi ecommerce, Pritia

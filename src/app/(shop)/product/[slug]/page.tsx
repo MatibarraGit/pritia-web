@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   
   return { 
-    title: product.name,
+    title: { absolute: product.name },
     description: product.description || product.name,
   };
 }

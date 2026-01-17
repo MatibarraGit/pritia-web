@@ -38,6 +38,24 @@ export const InstagramButton = ({ size = "6" }: { size?: string }) => {
   );
 };
 
+export const MailButton = ({ size = "6" }: { size?: string }) => {
+  return (
+    <a
+      href="mailto:matileonardo.2013@gmail.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`w-${size} h-${size} p-1 center-flex text-white bg-[#F7F7F7] rounded-full`}
+    >
+      <Image
+        src="/icons/gmail.svg"
+        alt="Gmail"
+        width={100}
+        height={100}
+      />
+    </a>
+  );
+};
+
 export const WhatsappButton = ({ size = "6" }: { size?: string }) => {
   return (
     <a

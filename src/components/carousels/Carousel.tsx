@@ -28,7 +28,7 @@ const slides: Slide[] = [
   {
     id: 1,
     title: "TODO PARA TU HOGAR",
-    subtitle: "CATÁLOGO CON +500 PRODUCTOS",
+    subtitle: "+500 PRODUCTOS",
     description: "Electrodomésticos, muebles, decoración y más",
     buttonHref: "/products",
     buttonText: "VER PRODUCTOS",

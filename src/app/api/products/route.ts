@@ -93,6 +93,7 @@ export async function POST(req: Request) {
     const inStock = inStockString === 'Disponible' ? true : false;
     const stock = data.get('stock') as string;
     const description = data.get('description') as string;
+    const updatedAt = data.get('updatedAt') as string;
 
     // Validaciones
     if (!Array.isArray(files) || files.length < 1) {
@@ -151,7 +152,15 @@ export async function POST(req: Request) {
     }
     if (!stock || isNaN(Number(stock))) {
       return NextResponse.json(
-        { message: 'La disponibilidad es obligatoria' },
+        { message: 'El stock es obligatorio' },
+        { status: 400 }
+      );
+    }
+    // Validar que updatedAt sea una fecha válida si existe
+    const updatedAtDate = new Date(updatedAt);
+    if ((updatedAt || updatedAt.trim() !== '') && (isNaN(updatedAtDate.getTime()))) {
+      return NextResponse.json(
+        { message: 'La fecha de actualización no es válida' },
         { status: 400 }
       );
     }
@@ -196,6 +205,7 @@ export async function POST(req: Request) {
         stock: parseInt(stock),
         product_description: description || null,
         images: imagesUrls,
+        updated_at: updatedAtDate || null,
       },
       select: {
         product_slug: true,

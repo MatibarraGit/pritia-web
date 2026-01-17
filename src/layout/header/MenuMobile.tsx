@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { X } from "lucide-react";
+import { Heart, HelpCircle, ShoppingBag, Store, X } from "lucide-react";
 import { Suspense } from "react";
 
 import { menuMobileContext } from "@/contexts";
 import { CategoriesAccordion } from "./CategoriesAccordion";
-import { FacebookButton, InstagramButton, WhatsappButton } from "@/components";
+import { FacebookButton, InstagramButton, MailButton, WhatsappButton } from "@/components";
 import { cn } from "@/libs/utils";
 
 export const MenuMobile = () => {
@@ -35,7 +35,7 @@ export const MenuMobile = () => {
 
           {/* Header */}
           <h3 className="text-lg font-semibold text-gray-900">
-            Bienvenidos a Mi Proyecto!
+            Bienvenido a Pritia!
           </h3>
 
           <button
@@ -56,18 +56,20 @@ export const MenuMobile = () => {
             <li>
               <Link
                 href="/"
-                className="block py-3 px-1 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >
+                <Store size={24} />
                 Inicio
               </Link>
             </li>
             <li>
               <Link
                 href="/products"
-                className="block py-3 px-1 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >
+                <ShoppingBag size={24} />
                 Todos los productos
               </Link>
             </li>
@@ -80,13 +82,34 @@ export const MenuMobile = () => {
                 <CategoriesAccordion isMenuMobile={true} />
               </Suspense>
             </li>
+            <li>
+              <Link
+                href="/loved-products"
+                className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                <Heart size={24} />
+                Favoritos
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/help"
+                className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                <HelpCircle size={24} />
+                Ayuda
+              </Link>
+            </li>
 
             {/* Social Icons */}
             <li className="mt-4 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-4 justify-center">
                 <WhatsappButton size="8"/>
-                <FacebookButton size="8" />
-                <InstagramButton size="8" />
+                <MailButton size="8"/>
+                {/* <FacebookButton size="8" />
+                <InstagramButton size="8" /> */}
               </div>
             </li>
           </ul>

@@ -38,7 +38,7 @@ export const FiltersComponent = () => {
 
       {/* PRECIO */}
       <section className="md:px-1">
-        <span className="text-base text-black font-semibold">Precio</span> 
+        <span className="text-base font-subheading">Precio</span> 
         <div className="mt-2 space-y-4">
           <Slider
             min={0}

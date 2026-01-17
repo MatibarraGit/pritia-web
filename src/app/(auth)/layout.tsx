@@ -3,7 +3,7 @@ import "../(shop)/globals.css";
 import { type ReactNode } from "react";
 
 export const metadata = {
-  title: "Autenticación",
+  title: "Autenticación | Pritia",
   description: "",
 };
 

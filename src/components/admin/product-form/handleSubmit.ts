@@ -23,6 +23,7 @@ interface ProductData {
   stock: number;
   description: string;
   slug: string;
+  updatedAt: string;
 }
 
 export async function handleSubmit(
@@ -108,6 +109,7 @@ export async function handleSubmit(
   formData.append('inStock', productData.inStock);
   formData.append('stock', form.stock as string);
   formData.append('description', (form.description as string) || '');
+  formData.append('updatedAt', productData.updatedAt);
 
   // Petición a la base de datos
   const result = productData.id

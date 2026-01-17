@@ -10,9 +10,10 @@ interface SearchPageParams {
 export async function generateMetadata({ params }: SearchPageParams): Promise<Metadata> {
   const { search } = await params;
   const decodedSearch = decodeURIComponent(search);
+  const title = decodedSearch.charAt(0).toUpperCase() + decodedSearch.slice(1).toLowerCase();
 
   return {
-    title: `Búsqueda: ${decodedSearch}`,
+    title,
     description: `Resultados de búsqueda para: ${decodedSearch}`,
   };
 }

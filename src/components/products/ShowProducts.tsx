@@ -46,10 +46,10 @@ export const ShowProducts = ({
       <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-36">
         <div className="grid gap-4 md:w-full md:grid-cols-[230px_1fr] md:items-start">
           {/* Buscador / breadcrumbs */}
-          <div className="order-2 w-full md:order-1">
+          <div className="order-2 w-full md:order-1 px-[5%] md:px-0">
             {breadcumbs ? (
               <div className="h-fit text-wrap">
-                <Link href="/products" className="w-fit ml-[4%] pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
+                <Link href="/products" className="w-fit pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
                 {!!subcategory ? (
                   <>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>

@@ -73,14 +73,13 @@ export async function getProductById(id: number): Promise<ProductType | null> {
       },
     });
 
-    if (!response.ok) {
-      return null;
-    }
-
     const product: ProductType = await response.json();
     return product;
-  } catch {
-    return null
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(error.message)
+    }
+    return null;
   }
 }
 

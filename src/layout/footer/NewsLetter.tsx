@@ -1,5 +1,5 @@
 import { EmailForm } from "./EmailForm";
-import { FacebookButton, InstagramButton, WhatsappButton } from "@/components"
+import { FacebookButton, InstagramButton, MailButton, WhatsappButton } from "@/components"
 
 export const NewsLetter = () => {
   return (
@@ -15,8 +15,9 @@ export const NewsLetter = () => {
 
         <div className="flex justify-center items-center gap-6 md:gap-5">
           <WhatsappButton />
-          <FacebookButton />
-          <InstagramButton />
+          <MailButton size="6"/>
+          {/* <FacebookButton /> */}
+          {/* <InstagramButton /> */}
         </div>
       </div>
     </section>

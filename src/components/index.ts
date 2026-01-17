@@ -30,7 +30,7 @@ export { MagnifyingGlass } from './buttons/MagnifyingGlass'
 export { DeleteButton } from './buttons/DeleteButton'
 export { LikeButton } from './buttons/LikeButton'
 export { LogOutButton } from './buttons/LogOutButton'
-export { FacebookButton, InstagramButton, WhatsappButton } from "./buttons/SocialButtons"
+export { FacebookButton, InstagramButton, MailButton, WhatsappButton } from "./buttons/SocialButtons"
 
 // Carousels
 export { Carousel } from './carousels/Carousel'
