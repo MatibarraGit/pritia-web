@@ -78,6 +78,16 @@ export async function GET(
         total = bestSellersTotalResult[0]?.count ?? 0;
         break;
 
+      case TOPICS.NEWS:
+        productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+          ${BASE_QUERY}
+          ORDER BY RANDOM()
+          LIMIT ${PRODUCTS_PER_PAGE} 
+          OFFSET ${offset}
+        `)
+        total = PRODUCTS_PER_PAGE * 4;
+        break;
+
       default:
         return NextResponse.json(
           { message: 'Invalid Topic' },

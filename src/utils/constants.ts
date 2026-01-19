@@ -35,6 +35,7 @@ export const enum TOPICS {
   NEW_ENTRIES = 'nuevos ingresos',
   OFFERS = 'ofertas',
   BEST_SELLERS = 'más vendidos',
+  NEWS = 'novedades'
 }
 
 export const TO_OPTIONS = Object.freeze([

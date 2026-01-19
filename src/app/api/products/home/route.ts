@@ -33,21 +33,30 @@ export async function GET() {
       LIMIT 30
     `);
 
+    // TODO: Integrar más vendidos
     // Más vendidos
-    const bestSellersProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
-      ${BEST_SELLERS_QUERY}
+    // const bestSellersProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+    //   ${BEST_SELLERS_QUERY}
+    //   LIMIT 30
+    // `);
+
+    const newsProductsRaws = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+      ${BASE_QUERY}
+      ORDER BY RANDOM()
       LIMIT 30
     `);
 
     const newEntriesProducts = formatProducts(newEntriesProductsRaw);
     const productsOnOffer = formatProducts(productsOnOfferRaw);
-    const bestSellersProducts = formatProducts(bestSellersProductsRaw);
+    // const bestSellersProducts = formatProducts(bestSellersProductsRaw);
+    const newsProducts = formatProducts(newsProductsRaws);
 
     return NextResponse.json(
       {
         newEntriesProducts,
         productsOnOffer,
-        bestSellersProducts
+        // bestSellersProducts,
+        newsProducts
       },
       {
         headers: {

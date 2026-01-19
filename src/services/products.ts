@@ -15,9 +15,10 @@ export interface GetAllProductsResponse {
 }
 
 export interface HomeProductsResponse {
-  bestSellersProducts: ProductType[];
-  productsOnOffer: ProductType[];
   newEntriesProducts: ProductType[];
+  productsOnOffer: ProductType[];
+  // bestSellersProducts: ProductType[];
+  newsProducts: ProductType[];
 }
 
 export interface GetProductsByCategoryParams {
@@ -110,9 +111,10 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
 
     if (!response.ok) {
       return {
-        bestSellersProducts: [],
+        newEntriesProducts: [],
         productsOnOffer: [],
-        newEntriesProducts: []
+        // bestSellersProducts: [],
+        newsProducts: []
       };
     }
 
@@ -120,9 +122,10 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
     return data;
   } catch {
     return {
-      bestSellersProducts: [],
+      newEntriesProducts: [],
       productsOnOffer: [],
-      newEntriesProducts: []
+      // bestSellersProducts: [],
+      newsProducts: []
     };
   }
 }

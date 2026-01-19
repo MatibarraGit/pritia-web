@@ -10,7 +10,7 @@ export const DailyHighlights = ({ products }: { products: ProductType[] }) => {
         <div
           className="w-full rounded-xl overflow-hidden relative"
           style={{
-            background: "linear-gradient(145deg, #0098CE 0%, #FED90F 90%)",
+            background: "linear-gradient(145deg, #0098CE 49.5%, #F0A412 50%, #FED90F 90%)"
           }}
         >
           <div className="p-8 flex flex-col h-full justify-between">
