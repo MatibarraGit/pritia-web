@@ -16,7 +16,7 @@ export const NoProductsResults = ({ category }: { category?: string }) => {
         <p>
           No se encontraron productos para la categoría
           <strong>{` "${category}"`}</strong>
-          , intentá con otra categoría o introducila en la sección de búsqueda.
+          , intentá con otra categoría o consultanos por el producto que buscás a nuestro WhatsApp.
         </p>
       ) : (
         <p>
@@ -27,8 +27,9 @@ export const NoProductsResults = ({ category }: { category?: string }) => {
 
       <div className="mt-4 flex flex-col gap-2">
         {category && (
-          <Button href={`/search/${category}`} variant="primary" >
-            {`Buscar "${category}"`}
+          // TODO: Agregar el ícono y color de WhatsApp 
+          <Button href={`https://wa.me/+5491131738925`} variant="primary" >
+            Consultar por WhatsApp
           </Button>
         )}
 

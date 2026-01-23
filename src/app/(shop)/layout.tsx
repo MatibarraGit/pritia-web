@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Pritia",
     default: "Pritia",
   },
-  description: "Tienda de productos Pritia",
+  description: "Vení a descrubrir los más de 500 productos que tenemos para vos!",
 };
 
 export default function RootLayout({

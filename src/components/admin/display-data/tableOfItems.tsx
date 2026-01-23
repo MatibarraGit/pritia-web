@@ -285,13 +285,14 @@ function renderCellValue(item: Record<string, unknown>, mapKey: string) {
   
   if (mapKey === "images") {
     const images = Array.isArray(value) ? value : [];
+    // TODO: Agregar varias imágenes en caso de que las haya
     return (
-      <Image
+      <img
         src={images.length >= 1 ? String(images[0]) : '/img/image-icon.png'}
         alt={String(item?.name || '')}
-        width={100}
-        height={100}
-        className="object-contain"
+        width={120}
+        height={120}
+        className="object-contain w-[120px] h-[120px]"
       />
     );
   }

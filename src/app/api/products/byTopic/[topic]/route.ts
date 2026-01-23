@@ -31,7 +31,7 @@ export async function GET(
       case TOPICS.NEW_ENTRIES:
         productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
           ${BASE_QUERY}
-          ORDER BY p.created_at DESC, p.product_id
+          ORDER BY p.created_at DESC, p.product_id DESC
           LIMIT ${PRODUCTS_PER_PAGE} 
           OFFSET ${offset}
         `)

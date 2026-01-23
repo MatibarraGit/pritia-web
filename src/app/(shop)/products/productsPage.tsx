@@ -102,7 +102,7 @@ function ProductsPageContent() {
   }, [category, subcategory, topic, page]);
 
   if (isLoading) return <PageLoader text='Productos' />;
-  if (products.length === 0) return <NoProductsResults category={category || undefined} />;
+  if (products.length === 0) return <NoProductsResults category={subcategory || category || undefined} />;
 
   return (
     <ShowProducts

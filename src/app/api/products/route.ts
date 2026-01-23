@@ -28,7 +28,11 @@ export async function GET(request: Request) {
         (p.product_name ILIKE ${pattern} OR
         p.product_id::TEXT LIKE ${pattern})
       ORDER BY 
-        p.product_id DESC,
+        in_stock DESC,
+        GREATEST(
+          created_at,
+          COALESCE(updated_at, created_at)
+        ) DESC,
         CASE
           WHEN p.product_id::TEXT LIKE ${search} THEN 1
           WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2

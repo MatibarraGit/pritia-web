@@ -49,8 +49,8 @@ function AdminProducts() {
     fetchFunction: getFilterConfig 
   });
   
-  const columns = ['Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Categoría', 'Subcategoría', 'Stock', 'Actualizado', 'Creación', 'Ver/Editar', 'Desactivar', 'Eliminar'];
-  const map = ['images', 'name', 'provider', 'purchasePrice', 'price', 'resellersPrice', 'discountPercent', 'category', 'subcategory', 'inStock', 'updatedAt', 'createdAt'];
+  const columns = ['Stock', 'Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Creación', 'Actualizado', 'Categoría', 'Subcategoría', 'Ver/Editar', 'Desactivar', 'Eliminar'];
+  const map = ['inStock', 'images', 'name', 'provider', 'purchasePrice', 'price', 'resellersPrice', 'discountPercent', 'createdAt', 'updatedAt', 'category', 'subcategory'];
   
   const [opened, setOpened] = useState(false);
   const [actionType, setActionType] = useState<string>(ACTION_TYPES.DELETE);
@@ -100,12 +100,13 @@ function AdminProducts() {
     }
   }
 
-  const sortConfig: SortConfig = { 
-    "name": { enabled: true, type: "string" },
-    "price": { enabled: true, type: "number" },
-    "discountPercent": { enabled: true, type: "number" },
-    "createdAt": { enabled: true, type: "date", default: true },
-  };
+  // TODO: Agregar orden del lado del servidor
+  // const sortConfig: SortConfig = { 
+  //   "name": { enabled: true, type: "string" },
+  //   "price": { enabled: true, type: "number" },
+  //   "discountPercent": { enabled: true, type: "number" },
+  //   "createdAt": { enabled: true, type: "date", default: true },
+  // };
 
   return (
     <> 
@@ -130,7 +131,7 @@ function AdminProducts() {
           withEditButton: false,
           editLink: '/admin/products/edit',
           withDisableButton: true,
-          sortConfig: sortConfig,
+          // sortConfig: sortConfig,
           filterConfig: filterConfig || {}
         }}
         modalConfig={{
