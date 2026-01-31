@@ -30,7 +30,7 @@ const slides: Slide[] = [
     title: "BENEFICIOS EN TUS COMPRAS",
     subtitle: "Reintegros y Sorteos",
     description: "Participá con tu compra mediante la web",
-    buttonHref: "/products",
+    buttonHref: "/benefits",
     buttonText: "VER MÁS",
     image: "/img/slide-benefits.png",
   },
