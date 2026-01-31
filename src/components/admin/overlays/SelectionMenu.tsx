@@ -57,7 +57,7 @@ export const SelectionMenu = memo(({ products, handleAction } : SelectionMenu) =
                 checked={allSelected}
                 onCheckedChange={() =>
                   toggleAllItemsSelection(products.map((product) => {
-                    return { id: product.id, name: product.name, image: product.images[0], description: product.description, price: product.price };
+                    return { id: product.id, name: product.name, images: product.images, description: product.description, price: product.price };
                   }))
                 }
                 className="bg-white text-white border-none data-[state=checked]:bg-black transition-colors" 
