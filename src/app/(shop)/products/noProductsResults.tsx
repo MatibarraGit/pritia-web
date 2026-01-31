@@ -25,15 +25,19 @@ export const NoProductsResults = ({ category }: { category?: string }) => {
       )}
 
 
-      <div className="mt-4 flex flex-col gap-2">
-        {category && (
-          // TODO: Agregar el ícono y color de WhatsApp 
-          <Button href={`https://wa.me/+5491131738925`} variant="primary" >
-            Consultar por WhatsApp
-          </Button>
-        )}
+      <div className="w-10/12 max-w-72 my-6 flex flex-col gap-3">
+        <Button 
+          className="w-full flex items-center gap-2.5 bg-green-600 border-green-600 text-white hover:bg-green-600/90"
+          href={`https://wa.me/+5491131738925`}
+          variant="outline"
+        >
+          <div className="flex items-center justify-center shrink-0">
+            <Image src="/icons/whatsapp-white.svg" alt="WhatsApp" width={24} height={24} />
+          </div>
+          Consultar por WhatsApp 
+        </Button>
 
-        <Button href="/" variant={category ? "outline" : "primary"} >
+        <Button variant="outline" href='/' className="w-full mx-auto text-center">
           Volver al Inicio
         </Button>
       </div>

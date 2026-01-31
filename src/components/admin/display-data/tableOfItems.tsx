@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useMemo } from "react";
-import Image from "next/image";
 import { ChevronDown, ChevronUp, Filter, Power, Pencil } from "lucide-react";
 
 import { selectItemsContext } from "@/contexts";
@@ -45,7 +45,7 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
   const handleClickItem = (item: T) => {
     if (!isSelecting) return;
     const images = (item.images as string[] | undefined) || [];
-    const image = images.length > 0 ? images[0] : '';
+    // const image = images.length > 0 ? images[0] : '';
     const name = (item.name as string | undefined) || '';
     const description = (item.description as string | undefined) || '';
     const sellPrice = Number(item.price) || 0;
@@ -54,7 +54,7 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
     toggleItemSelection({
       id: Number(item.id),
       name,
-      image,
+      images,
       description,
       sellPrice,
       resellersPrice
@@ -285,16 +285,22 @@ function renderCellValue(item: Record<string, unknown>, mapKey: string) {
   
   if (mapKey === "images") {
     const images = Array.isArray(value) ? value : [];
-    // TODO: Agregar varias imágenes en caso de que las haya
+
     return (
-      <img
-        src={images.length >= 1 ? String(images[0]) : '/img/image-icon.png'}
-        alt={String(item?.name || '')}
-        width={120}
-        height={120}
-        className="object-contain w-[120px] h-[120px]"
-      />
-    );
+      <div className="w-full grid grid-cols-2 gap-1.5">
+        {images?.map((image) => (
+          <img
+            key={image}
+            src={image}
+            alt={String(item?.name || '')}
+            width={images.length === 1 ? 100 : 50}
+            height={images.length === 1 ? 100 : 100 / images.length + 25}
+            className={cn("object-contain cursor-pointer", images.length === 1 ? "col-span-2" : "col-span-1")} 
+            onClick={() => window.open(image, '_blank')}
+          />
+        ))}
+      </div>
+    )
   }
 
   if (mapKey === "inStock") {

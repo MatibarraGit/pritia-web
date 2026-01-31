@@ -27,6 +27,11 @@ export const FooterComponent = () => {
                     Inicio
                   </Link>
                 </li>
+                <li className="max-w-62 mb-2 text-sm text-gray-600">
+                  <Link href="/benefits" className="text-gray-600 no-underline hover:text-primary transition-colors">
+                    Beneficios
+                  </Link>
+                </li>
                 {/* <li className="max-w-62 mb-2 text-sm text-gray-600">
                   <Link href="#" className="text-gray-600 no-underline">
                     ¿Quiénes somos?

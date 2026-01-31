@@ -25,9 +25,22 @@ export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {
         <strong>{decodeURIComponent(search)}</strong>, intentá con otro término de búsqueda o
       </p>
 
-      <Button variant="primary" href='/' className="w-[clamp(150px,50%,300px)] my-6 mx-auto text-center">
-        Volver al Inicio
-      </Button>
+      <div className="w-10/12 max-w-72 my-6 flex flex-col gap-3">
+        <Button 
+          className="w-full flex items-center gap-2.5 bg-green-600 border-green-600 text-white hover:bg-green-600/90"
+          href={`https://wa.me/+5491131738925`}
+          variant="outline"
+        >
+          <div className="flex items-center justify-center shrink-0">
+            <Image src="/icons/whatsapp-white.svg" alt="WhatsApp" width={24} height={24} />
+          </div>
+          Consultar por WhatsApp 
+        </Button>
+
+        <Button variant="outline" href='/' className="w-full mx-auto text-center">
+          Volver al Inicio
+        </Button>
+      </div>
 
       <div className="w-11/12 max-w-content mx-auto">
         <h3 className="text-center">También podría interesarte</h3>

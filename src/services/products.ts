@@ -17,6 +17,7 @@ export interface GetAllProductsResponse {
 export interface HomeProductsResponse {
   newEntriesProducts: ProductType[];
   productsOnOffer: ProductType[];
+  reEntriesProducts: ProductType[];
   // bestSellersProducts: ProductType[];
   newsProducts: ProductType[];
 }
@@ -114,6 +115,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
         newEntriesProducts: [],
         productsOnOffer: [],
         // bestSellersProducts: [],
+        reEntriesProducts: [],
         newsProducts: []
       };
     }
@@ -125,6 +127,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
       newEntriesProducts: [],
       productsOnOffer: [],
       // bestSellersProducts: [],
+      reEntriesProducts: [],
       newsProducts: []
     };
   }

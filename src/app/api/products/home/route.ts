@@ -13,8 +13,8 @@ export const revalidate = 0;
 const templateSelectProductData = readFileSync(join(process.cwd(), 'prisma', 'queries', 'templateSelectProductData.sql'), 'utf8');
 const BASE_QUERY = Prisma.sql([templateSelectProductData]);
 
-const selectBestSellersProducts = readFileSync(join(process.cwd(), 'prisma', 'queries', 'selectBestSellersProducts.sql'), 'utf8');
-const BEST_SELLERS_QUERY = Prisma.sql([selectBestSellersProducts]);
+// const selectBestSellersProducts = readFileSync(join(process.cwd(), 'prisma', 'queries', 'selectBestSellersProducts.sql'), 'utf8');
+// const BEST_SELLERS_QUERY = Prisma.sql([selectBestSellersProducts]);
 
 export async function GET() {
   try {
@@ -40,6 +40,14 @@ export async function GET() {
     //   LIMIT 30
     // `);
 
+    // Reingresos
+    const reEntriesProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+      ${BASE_QUERY}
+      AND p.updated_at IS NOT NULL
+      ORDER BY p.updated_at DESC
+      LIMIT 30
+    `);
+
     const newsProductsRaws = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
       ORDER BY RANDOM()
@@ -49,6 +57,7 @@ export async function GET() {
     const newEntriesProducts = formatProducts(newEntriesProductsRaw);
     const productsOnOffer = formatProducts(productsOnOfferRaw);
     // const bestSellersProducts = formatProducts(bestSellersProductsRaw);
+    const reEntriesProducts = formatProducts(reEntriesProductsRaw);
     const newsProducts = formatProducts(newsProductsRaws);
 
     return NextResponse.json(
@@ -56,6 +65,7 @@ export async function GET() {
         newEntriesProducts,
         productsOnOffer,
         // bestSellersProducts,
+        reEntriesProducts,
         newsProducts
       },
       {

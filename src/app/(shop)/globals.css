@@ -57,9 +57,13 @@
   --color-outline-hover: #007ea820;
   
   --color-dimmed: #868e96;
-  --color-success: #00d100;
+  --color-success: #16a249; /* #00d100; */
   --color-danger: #ff0000;
   --color-danger-hover: #f10000;
+
+  /* Benefits Page Colors */
+  --color-discount-gold: #ffbf00;
+  --color-discount-bronze: #e88c30;
 
   /* Fonts */
   --font-body: "Montserrat", "Mulish", sans-serif; 

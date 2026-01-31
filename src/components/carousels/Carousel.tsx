@@ -27,6 +27,15 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
+    title: "BENEFICIOS EN TUS COMPRAS",
+    subtitle: "Reintegros y Sorteos",
+    description: "Participá con tu compra mediante la web",
+    buttonHref: "/products",
+    buttonText: "VER MÁS",
+    image: "/img/slide-benefits.png",
+  },
+  {
+    id: 2,
     title: "TODO PARA TU HOGAR",
     subtitle: "+500 PRODUCTOS",
     description: "Electrodomésticos, muebles, decoración y más",
@@ -35,7 +44,7 @@ const slides: Slide[] = [
     image: "/img/slide-home-products.png",
   },
   {
-    id: 2,
+    id: 3,
     title: "MEGA OFERTAS",
     subtitle: "PENSADAS PARA VOS",
     description: "HASTA 35% OFF y cuotas sin tarjeta",
@@ -44,7 +53,7 @@ const slides: Slide[] = [
     image: "/img/slide-offers.png",
   },
   {
-    id: 3,
+    id: 4,
     title: "ENVÍOS A TODO EL PAÍS",
     subtitle: "LLEGAMOS A TU PUERTA",
     description: "Entregas rápidas y seguras",

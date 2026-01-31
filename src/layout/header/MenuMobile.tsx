@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, HelpCircle, ShoppingBag, Store, X } from "lucide-react";
+import { DollarSign, Heart, HelpCircle, ShoppingBag, Store, X } from "lucide-react";
 import { Suspense } from "react";
 
 import { menuMobileContext } from "@/contexts";
@@ -90,6 +90,16 @@ export const MenuMobile = () => {
               >
                 <Heart size={24} />
                 Favoritos
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/benefits"
+                className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                <DollarSign size={24} />
+                Beneficios
               </Link>
             </li>
             <li>

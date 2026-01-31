@@ -67,10 +67,10 @@ export default function HelpPage() {
             rel="noopener noreferrer"
           >
             <div className="flex items-start gap-4">
+              <div className="flex-1">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center shrink-0">
                 <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
               </div>
-              <div className="flex-1">
                 <h3 className="font-semibold text-lg mb-1">WhatsApp</h3>
                 <p className="text-sm text-gray-600 mb-1">Atención inmediata</p>
                 <p className="text-gray-800 font-medium">+54 9 11 3173-8925</p>

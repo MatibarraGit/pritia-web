@@ -9,6 +9,7 @@ import { selectItemsContext, toastContext } from "@/contexts";
 import { MyLoader } from "@/components";
 import { Button } from "@/components/ui";
 import { shareProducts } from "@/services/products";
+import { cn } from "@/libs/utils";
 import { ACTION_TYPES, TO_OPTIONS } from "@/utils";
 
 interface ProductModalProps {
@@ -142,19 +143,25 @@ export const ProductModal = ({
                   key={product.id}
                   className="group max-w-[75px] cursor-pointer"
                 >
-                  <div className="relative overflow-hidden rounded-lg border border-border/50 transition-all duration-200 group-hover:border-primary/30 group-hover:shadow-md">
+                  <div className="min-h-[100px] relative overflow-hidden rounded-lg border border-border/50 transition-all duration-200 group-hover:border-primary/30 group-hover:shadow-md">
                     <Button 
                       className="w-4 h-4 absolute top-0 right-0 z-10 p-3 rounded-full bg-danger/50 transition-all duration-200 hover:bg-danger/70"
                       onClick={() => deleteItemToSelection(product)}
                     >
                       <X />
                     </Button>
-                    
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-[75px] w-[75px] object-cover transition-transform duration-200 group-hover:scale-105"
-                    />
+
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {product.images.map((image) => (            
+                        <img
+                          key={image}
+                          src={image}
+                          alt={product.name}
+                          className={cn("object-cover transition-transform duration-200 group-hover:scale-105", product.images.length === 1 ? "col-span-2" : "col-span-1")}
+                        />
+                      ))}
+                    </div>
+
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground line-clamp-2 leading-tight">
                     {product.name}

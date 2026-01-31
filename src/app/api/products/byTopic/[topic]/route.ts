@@ -58,24 +58,36 @@ export async function GET(
         total = offersTotalResult[0]?.count ?? 0;
         break;
 
-      case TOPICS.BEST_SELLERS:
-        // Obtener productos con sus ventas
+      // case TOPICS.BEST_SELLERS:
+      //   // Obtener productos ordenado por ventas 
+      //   productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+      //     ${BEST_SELLERS_QUERY}
+      //     LIMIT ${PRODUCTS_PER_PAGE} 
+      //     OFFSET ${offset}
+      //   `)
+      //   // TODO: Eliminar cuando hayan más de 240
+      //   const bestSellersTotalResult = await prisma.$queryRaw<[{ count: number }]>`
+      //     SELECT COUNT(*)::INTEGER FROM (
+      //       SELECT p.product_id
+      //       FROM purchase_order_items poi
+      //       JOIN products p ON poi.product_id = p.product_id
+      //       LEFT JOIN purchase_orders po ON poi.order_id = po.order_id
+      //       WHERE p.in_stock = TRUE AND po.order_status = 'Vendida' AND p.deleted_at IS NULL
+      //       GROUP BY p.product_id
+      //     ) AS best_sellers_count
+      //   `;
+      //   total = bestSellersTotalResult[0]?.count ?? 0;
+      //   break;
+
+      case TOPICS.RE_ENTRIES:
         productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
-          ${BEST_SELLERS_QUERY}
+          ${BASE_QUERY}
+          AND p.updated_at IS NOT NULL
+          ORDER BY p.updated_at DESC
           LIMIT ${PRODUCTS_PER_PAGE} 
           OFFSET ${offset}
         `)
-        const bestSellersTotalResult = await prisma.$queryRaw<[{ count: number }]>`
-          SELECT COUNT(*)::INTEGER FROM (
-            SELECT p.product_id
-            FROM purchase_order_items poi
-            JOIN products p ON poi.product_id = p.product_id
-            LEFT JOIN purchase_orders po ON poi.order_id = po.order_id
-            WHERE p.in_stock = TRUE AND po.order_status = 'Vendida' AND p.deleted_at IS NULL
-            GROUP BY p.product_id
-          ) AS best_sellers_count
-        `;
-        total = bestSellersTotalResult[0]?.count ?? 0;
+        total = PRODUCTS_PER_PAGE * 4;
         break;
 
       case TOPICS.NEWS:

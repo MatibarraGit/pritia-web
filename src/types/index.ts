@@ -127,7 +127,7 @@ export type ServiceType = {
 export type SelectedItemsType = {
   id: number;
   name: string;
-  image: string;
+  images: string[];
   description: string;
   sellPrice?: number;
   resellersPrice?: number;
