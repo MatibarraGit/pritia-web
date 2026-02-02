@@ -12,6 +12,7 @@ export const Header = () => {
     <>
       <CheckboxMenu />
       <header className="w-full max-w-screen h-16 mt-10 sticky top-0 left-0 z-40 bg-background">
+      {/* <header className="w-full max-w-screen h-16 fixed top-0 left-0 z-40 bg-background"> */}
         <div className="w-11/12 max-w-content h-full mx-auto flex items-center justify-between gap-12 relative">
           {/* Mobile menu button */}
           <label

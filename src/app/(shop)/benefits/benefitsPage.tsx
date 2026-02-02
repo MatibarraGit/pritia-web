@@ -57,6 +57,25 @@ const Benefits = () => {
           <BenefitsGrid />
         </section>
 
+        {/* Tutorial Section */}
+        <section className="max-w-2xl mx-auto py-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+            Tutorial de compra
+          </h2>
+
+          <div className="w-60 h-[550px] mx-auto center-flex">
+          <video  
+            // className="w-[300px] max-w-[300px] h-auto"
+            className="w-full h-auto"
+            controls
+          >
+              <source src="/video/Comprar por Pritia Finalizado(2).mp4" type="video/mp4" />
+              Tu navegador no soporta el tag de video.
+            </video>
+          </div>
+
+        </section>
+
         {/* Info Section */}
         <section className="max-w-2xl mx-auto">
           <div className="bg-gray-100/70 rounded-xl p-6 border border-border">
@@ -92,20 +111,30 @@ const Benefits = () => {
               <FileText className="w-5 h-5 text-primary" />
               Terminos y Condiciones
             </h3>
+
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <span className="text-primary font-bold">1.</span>
-                El reintegro tiene una vigencia de treinta (30) días desde el día de la primer compra, una vez transcurrido ese plazo, dejará de ser aplicable.
+                El reintegro tendrá una vigencia de 30 (treinta) días corridos desde la fecha de la primera compra. Transcurrido dicho plazo, el beneficio dejará de ser aplicable.
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary font-bold">2.</span>
-                Los tres (3) premios del sorteo se revelan al llegar a la compra número treinta (30).
+                El reintegro contará con un tope máximo de $50.000 (cincuenta mil pesos) por cada compra realizada.
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary font-bold">3.</span>
-                Una misma persona podrá participar en el sorteo con tantos números como compras haya realizado. Cada compra efectuada otorgará un (1) número de participación adicional.
+                Una misma persona podrá obtener más de un reintegro para su próxima compra, siempre que se encuentre dentro de los primeros 20 (veinte) compradores.
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary font-bold">4.</span>
+                Los 3 (tres) premios del sorteo se revelarán al alcanzarse la compra número 30 (treinta).
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary font-bold">5.</span>
+                Una misma persona podrá participar en el sorteo con tantos números como compras haya realizado. Cada compra efectuada otorgará 1 (un) número adicional de participación.
               </li>
             </ul>
+
           </div>
         </section>
       </main>

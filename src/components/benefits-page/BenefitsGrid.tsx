@@ -7,6 +7,7 @@ import BenefitCell from "./BenefitCell";
 const mockPurchases: Record<number, string> = {
   1: "Claudia",
   2: "Nazareno",
+  3: "Matías",
 };
 
 const BenefitsGrid = () => {

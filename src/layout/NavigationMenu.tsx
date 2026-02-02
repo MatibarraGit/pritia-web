@@ -4,7 +4,8 @@ import { ShippingModal, SchedulesModal, ContactModal } from "@/components";
 
 export const NavigationMenu = () => {
   return (
-    <nav className="hidden h-14 fixed top-26 left-0 right-0 z-30 bg-primary text-white shadow-md md:flex">
+    <nav className="hidden h-14 sticky top-16 left-0 right-0 z-30 bg-primary text-white shadow-md md:flex">
+    {/* <nav className="hidden h-14 fixed top-16 left-0 right-0 z-30 bg-primary text-white shadow-md md:flex"> */}
       <div className="container w-11/12 max-w-content mx-auto">
         <div className="flex items-center justify-between h-14">
           <ul className="hidden md:flex items-center gap-5">

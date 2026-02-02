@@ -39,7 +39,8 @@ export default function RootLayout({
 
         <Header />
         <NavigationMenu />
-        <main className="w-full mt-14 bg-background">{children}</main>
+        <main className="w-full mt-14 bg-background md:mt-0">{children}</main>
+        {/* <main className="w-full mt-30 bg-background">{children}</main> */}
         <Footer />
         <Toast />
       </body>
