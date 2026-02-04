@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductTabs, ProductsCarousel } from "@/components";
+import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductDescription, ProductsCarousel } from "@/components";
 import { getProductsBySubcategory } from "@/services";
 
 import type { Metadata } from "next";
@@ -147,7 +147,8 @@ export default async function ProductPage({ params }: Props) {
 
         {/* Product Details Tabs */}
         <div className="mt-12">
-          <ProductTabs description={description} />
+          {/* <ProductTabs description={description} /> */}
+          <ProductDescription description={description} />
         </div>
 
         {/* Related Products */}

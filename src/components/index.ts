@@ -64,6 +64,7 @@ export { ProductImages } from "./product/ProductImages";
 export { ProductPricing } from "./product/ProductPricing";
 export { ProductShippingInfo } from "./product/ProductShippingInfo";
 export { ProductTabs } from "./product/ProductTabs";
+export { ProductDescription } from "./product/ProductDescription";
 
 // Products
 export { ProductCard } from './products/ProductCard'
