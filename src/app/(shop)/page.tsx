@@ -13,6 +13,7 @@ import { TOPICS } from "@/utils";
 export const metadata = { title: "Pritia - Tienda Online" };
 
 export default async function HomePage() {
+  let DailyHighlightsProducts: ProductType[] = [];
   let NewEntriesProducts: ProductType[] = [];
   let ProductsOnOffer: ProductType[] = [];
   let ReEntriesProducts: ProductType[] = [];
@@ -21,13 +22,15 @@ export default async function HomePage() {
   let isLoading = true;
 
   try {
-    const { newEntriesProducts, productsOnOffer, reEntriesProducts, newsProducts } = await getHomeProducts(); // bestSellersProducts,
+    const { dailyHighlightsProducts, newEntriesProducts, productsOnOffer, reEntriesProducts, newsProducts } = await getHomeProducts(); // bestSellersProducts,
+    DailyHighlightsProducts = dailyHighlightsProducts;
     NewEntriesProducts = newEntriesProducts;
     ProductsOnOffer = productsOnOffer;
     ReEntriesProducts = reEntriesProducts;
     // BestSellersProducts = bestSellersProducts;
     NewsProducts = newsProducts;
   } catch {
+    DailyHighlightsProducts = [];
     NewEntriesProducts = [];
     ProductsOnOffer = [];
     ReEntriesProducts = [];
@@ -47,7 +50,7 @@ export default async function HomePage() {
     <>
       <Carousel />
       {/* <FeaturedFans /> */}
-      <DailyHighlights products={ProductsOnOffer.slice(0, 3)} />
+      <DailyHighlights products={DailyHighlightsProducts} />
       <ProductsCarousel title="Nuevos Productos" href={newProductsUrl} isLoading={isLoading} products={NewEntriesProducts} isAutoplay withIndicators loop />
       <ProductsCarousel title="Mejores Ofertas" href={offersUrl} isLoading={isLoading} products={ProductsOnOffer} isAutoplay withIndicators loop />
       <ProductCategories />

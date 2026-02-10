@@ -18,6 +18,14 @@ const BASE_QUERY = Prisma.sql([templateSelectProductData]);
 
 export async function GET() {
   try {
+    // Destacados del día
+    const dailyHighlightsProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+      ${BASE_QUERY}
+      AND p.stock > 0
+      ORDER BY p.stock DESC, p.sell_price DESC
+      LIMIT 3
+    `);
+
     // Nuevos ingresos
     const newEntriesProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
@@ -54,6 +62,7 @@ export async function GET() {
       LIMIT 30
     `);
 
+    const dailyHighlightsProducts = formatProducts(dailyHighlightsProductsRaw);
     const newEntriesProducts = formatProducts(newEntriesProductsRaw);
     const productsOnOffer = formatProducts(productsOnOfferRaw);
     // const bestSellersProducts = formatProducts(bestSellersProductsRaw);
@@ -62,6 +71,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
+        dailyHighlightsProducts,
         newEntriesProducts,
         productsOnOffer,
         // bestSellersProducts,

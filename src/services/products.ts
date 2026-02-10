@@ -15,6 +15,7 @@ export interface GetAllProductsResponse {
 }
 
 export interface HomeProductsResponse {
+  dailyHighlightsProducts: ProductType[];
   newEntriesProducts: ProductType[];
   productsOnOffer: ProductType[];
   reEntriesProducts: ProductType[];
@@ -112,6 +113,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
 
     if (!response.ok) {
       return {
+        dailyHighlightsProducts: [],
         newEntriesProducts: [],
         productsOnOffer: [],
         // bestSellersProducts: [],
@@ -124,6 +126,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
     return data;
   } catch {
     return {
+      dailyHighlightsProducts: [],
       newEntriesProducts: [],
       productsOnOffer: [],
       // bestSellersProducts: [],
