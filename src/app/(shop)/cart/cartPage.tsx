@@ -70,7 +70,7 @@ export default function CartPage() {
             <Button
               variant="outline"
               href="/products"
-              className="mt-4 bg-white"
+              className="w-full h-10 mt-4 border-buy text-buy hover:bg-buy-hover/10 bg-white"
             >
               Seguir comprando
             </Button>
@@ -134,11 +134,11 @@ export default function CartPage() {
             Parece que aún no has añadido ningún producto a tu carrito
           </p>
             <Button
-              variant="outline"
+              variant="primary"
               href="/products"
-              className="mt-4 bg-white"
+              className="w-full h-12 text-white" 
             >
-              Seguir comprando
+              Ir a la tienda
             </Button>
         </div>
       )}

@@ -2,12 +2,22 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
-import { LikeButton, ProductImages, ProductActions, ProductHeader, ProductPricing, ProductShippingInfo, ProductDescription, ProductsCarousel } from "@/components";
+import {
+  LikeButton,
+  ProductImages,
+  ProductActions,
+  ProductHeader,
+  ProductPricing,
+  ProductPurchaseInfo,
+  ProductDescription,
+  ProductsCarousel,
+  ProductInstallmentsSection
+} from "@/components";
 import { getProductsBySubcategory } from "@/services";
 
 import type { Metadata } from "next";
 import type { ProductType } from "@/types";
-
+import { formatDate } from "@/utils";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,24 +26,22 @@ type Props = {
 async function getProduct(slug: string): Promise<ProductType | null> {
   try {
     // En Server Components, usar URL absoluta o relativa según el entorno
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const url = `${baseUrl}/api/products/slug/${slug}`;
-    
+
     const response = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
     });
-    
+
     if (!response.ok) {
       return null;
     }
-    
+
     const data = await response.json();
     return Array.isArray(data) && data.length > 0 ? data[0] : null;
   } catch (error) {
-    console.error('Error fetching product:', error);
+    console.error("Error fetching product:", error);
     return null;
   }
 }
@@ -41,12 +49,12 @@ async function getProduct(slug: string): Promise<ProductType | null> {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
-  
+
   if (!product) {
     return { title: "Producto no encontrado" };
   }
-  
-  return { 
+
+  return {
     title: { absolute: product.name },
     description: product.description || product.name,
   };
@@ -62,29 +70,31 @@ export default async function ProductPage({ params }: Props) {
     id,
     images,
     name,
+    purchasePrice,
     price,
     originalPrice,
     discountPercent,
     category,
     subcategory,
     inStock,
-    stock,
-    description
-  } = product
-
-  // Cuotas
-  // const installmentQuantity = installmentQuantity ? installmentQuantity : 0;
-  // const installmentPrice = (finalPrice / installmentQuantity) * 1.20;
+    description,
+    createdAt,
+    updatedAt,
+  } = product;
+  
+  const lastUpdate = updatedAt ? formatDate(updatedAt).fechaMostrar : formatDate(createdAt!).fechaMostrar;
 
   // ----Productos relacionados----
-  const relatedProducts = (await getProductsBySubcategory({ subcategory })) ?? [];
-  const filteredRelatedProducts = relatedProducts?.products?.filter((p: ProductType) => String(p.id) !== String(id));
-  
+  const relatedProducts =
+    (await getProductsBySubcategory({ subcategory })) ?? [];
+  const filteredRelatedProducts = relatedProducts?.products?.filter(
+    (p: ProductType) => String(p.id) !== String(id),
+  );
 
   return (
-    <div className="w-full min-h-screen bg-gray-50">
+    <div className="w-full min-h-screen">
       {/* Breadcrumbs */}
-      <div className="bg-white border-b">
+      <div className="hidden bg-gray-50/90 md:block">
         <div className="w-11/12 max-w-content mx-auto container py-3">
           <div className="flex items-center flex-wrap text-sm text-gray-500">
             <Link href="/" className="hover:text-primary">
@@ -119,29 +129,49 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {/* Product Details */}
-      <div className="w-11/12 max-w-content mx-auto container py-8">
+      <div className="w-full max-w-content mx-auto container py-8 px-4 bg-white md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
-          <div className="relative">
+          <div className="-my-2 md:hidden">
+            <ProductHeader name={name} />
+          </div>
+          
+          <div className="flex flex-col relative">
+            <LikeButton product={product} classNames="p-2 absolute top-0 right-2 bg-gray-100 rounded-full md:right-0"/> 
             <ProductImages images={images} name={name} />
-            <LikeButton product={product} classNames="absolute top-2 right-2" />
+
+            {/* <span className="mt-4 text-gray-500">  
+              Última actualización: {lastUpdate}
+            </span> */}
           </div>
 
           {/* Product Info */}
           <div className="space-y-6">
-            <ProductHeader name={name} />
+
+            <div className="hidden md:block">
+              <ProductHeader name={name} />
+            </div>
 
             <ProductPricing
               price={price}
               originalPrice={originalPrice}
               discountPercent={discountPercent}
               inStock={inStock}
-              stock={stock}
             />
 
             <ProductActions product={product} />
 
-            <ProductShippingInfo />
+            {price >= 40000 && (
+              <ProductInstallmentsSection
+              price={price}
+              purchasePrice={purchasePrice}
+              />
+            )}
+
+            <ProductPurchaseInfo />
+            <span className=" text-gray-500">  
+              Última actualización: {lastUpdate}
+            </span>
           </div>
         </div>
 
@@ -156,7 +186,11 @@ export default async function ProductPage({ params }: Props) {
           <div className="mt-12">
             <h2 className="text-2xl font-subheading">Productos relacionados</h2>
 
-            <ProductsCarousel products={filteredRelatedProducts} isAutoplay={false} loop={false} />
+            <ProductsCarousel
+              products={filteredRelatedProducts}
+              isAutoplay={false}
+              loop={false}
+            />
           </div>
         )}
       </div>

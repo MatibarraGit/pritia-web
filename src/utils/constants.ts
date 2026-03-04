@@ -46,11 +46,6 @@ export const TO_OPTIONS = Object.freeze([
     type: 'seller'
   },
   {
-    name: 'Vicky',
-    number: 5491156188109,
-    type: 'seller'
-  },
-  {
     name: 'Morty',
     number: 5491155256122,
     type: 'seller'

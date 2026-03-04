@@ -16,7 +16,11 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
   const titleDecoded = title.charAt(0).toUpperCase() + title.slice(1);
 
-  return { title: titleDecoded };
+  return { 
+    title: titleDecoded,
+    description: ""
+
+  };
 }
 
 export default function ProductsPageForMetadata() {

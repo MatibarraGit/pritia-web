@@ -13,7 +13,7 @@ export function ProductImages({ images, name }: ProductImagesProps) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className="bg-white rounded-lg overflow-hidden">
         <Image
           src={images[selectedImage] || images[0] || "/img/image-icon.png"}
           alt={name}

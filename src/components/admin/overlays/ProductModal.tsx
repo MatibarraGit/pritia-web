@@ -175,6 +175,7 @@ export const ProductModal = ({
               <h3
                 className="w-full"
               >Compartir a</h3>
+              {/* TODO: Añadir un formulario para enviar a otro número no registrado */}
 
               <div className="flex items-center gap-4 flex-wrap">
                 {TO_OPTIONS.map((to) => (

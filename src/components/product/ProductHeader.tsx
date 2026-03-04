@@ -4,11 +4,12 @@ interface ProductHeaderProps {
 
 export function ProductHeader({ name }: ProductHeaderProps) {
   return (
-    <div>
-      <h1 className="text-2xl md:text-3xl font-subheading text-gray-900">
-        {name}
-      </h1>
-    </div>
+    <h1 
+      className="text-xl md:text-2xl"
+      style={{ fontFamily: "var(--font-subheading)" }}
+    >
+      {name}
+    </h1>
   );
 }
 

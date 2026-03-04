@@ -43,7 +43,7 @@ export const ShowProducts = ({
   return (
     <>
       {/* Encabezado */}
-      <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-16">
+      <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-8">
       {/* <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-36"> */}
         <div className="grid gap-4 md:w-full md:grid-cols-[230px_1fr] md:items-start">
           {/* Buscador / breadcrumbs */}

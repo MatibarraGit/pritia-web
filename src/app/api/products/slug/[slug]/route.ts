@@ -47,6 +47,8 @@ export async function GET(
       product_description: product.product_description || '',
       product_slug: product.product_slug || '',
       images: product.images,
+      created_at: product.created_at,
+      updated_at: product.updated_at,
     });
 
     return NextResponse.json([formattedProduct], {

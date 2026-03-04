@@ -42,38 +42,47 @@ export function ProductActions({ product }: ProductActionsProps) {
   };
 
   return (
-    <div className="-mt-3 space-y-4">
+    <div className="space-y-6">
       {/* Cantidad */}
-      <div className="flex flex-col items-start gap-2 text-sm text-green-600">
-        <div className="flex items-center border rounded-md">
-          <button
-            onClick={decreaseQuantity}
-            disabled={quantity <= 1}
-            className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
-          >
-            <Minus className="h-4 w-4" />
-          </button>
-          <span className="px-4 py-2 text-center w-12">{quantity}</span>
-          <button
-            onClick={increaseQuantity}
-            className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
-          >
-            <Plus className="h-4 w-4" />
-          </button>
+      <div className="flex flex-col items-start gap-2 text-sm">
+        <div className="flex items-center gap-3 flex-wrap">
+          <span>Cantidad: </span>
+          <div className="flex items-center border rounded-md">
+            <button
+              onClick={decreaseQuantity}
+              disabled={quantity <= 1}
+              className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
+            >
+              <Minus className="h-4 w-4" />
+            </button>
+            <span className="px-4 py-2 text-center w-12">{quantity}</span>
+            <button
+              onClick={increaseQuantity}
+              className="px-3 py-2 text-gray-600 hover:text-gray-700 disabled:opacity-50"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          </div>
+
+          {product.stock > 0 && (
+            <span className="text-gray-600">
+              ({product.stock} disponibles para entrega inmediata)
+            </span>
+          )}
         </div>
       </div>
 
       {/* Botones de acción */}
       <div className="w-full flex flex-col space-x-4 gap-2">
+        <CheckoutButton items={cartItemProduct} />
+
         <Button 
           variant="outline"
-          className="w-full"
+          className="w-full h-12 border-buy text-buy hover:bg-buy-hover/10"
           onClick={handleAddToCart}
         >
           Agregar al carrito
         </Button>
-
-        <CheckoutButton items={cartItemProduct} />
       </div>
     </div>
   );

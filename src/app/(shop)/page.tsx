@@ -10,7 +10,10 @@ import { getHomeProducts } from "@/services";
 import { ProductType } from "@/types";
 import { TOPICS } from "@/utils";
 
-export const metadata = { title: "Pritia - Tienda Online" };
+export const metadata = { 
+  title: "Pritia - Tienda Online" ,
+  description: "Vení a descrubrir los más de 600 productos que tenemos para vos!"
+};
 
 export default async function HomePage() {
   let DailyHighlightsProducts: ProductType[] = [];

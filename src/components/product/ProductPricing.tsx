@@ -6,18 +6,16 @@ interface ProductPricingProps {
   originalPrice?: number;
   discountPercent: number;
   inStock: boolean;
-  stock: number;
 }
 
 export function ProductPricing({
   price,
   originalPrice,
   discountPercent,
-  inStock,
-  stock,
+  inStock
 }: ProductPricingProps) {
   return (
-    <div className="space-y-2">
+    <div className="-mt-3">
       {discountPercent > 0 && (
         <div className="flex items-center gap-2">
           <Badge className="bg-primary text-white">
@@ -34,24 +32,23 @@ export function ProductPricing({
         </div>
       )}
 
-      <div className="text-2xl md:text-3xl font-subheading" style={{ color: "#000" }}>
-        {formatPrice(price)}
-      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-2xl md:text-3xl font-subheading" style={{ color: "#000" }}>
+          {formatPrice(price)}
+        </span>
 
-      {inStock ? (
-        <div className="mt-4 text-sm text-green-600">
-          <span className="font-medium">✓ En stock</span>
-          {stock > 0 && (
-            <span className="ml-2 text-gray-600">
-              ({stock} disponibles)
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="text-sm text-red-600">
-          <span className="font-medium">✗ Sin stock</span>
-        </div>
-      )}
+        {inStock ? (
+          <div className="px-3 py-1 text-sm text-white rounded-full bg-green-600">
+            <span className="mr-2">✓</span>
+            <span className="font-medium">En stock</span>
+          </div>
+        ) : (
+          <div className="px-3 py-1 text-sm text-white rounded-full bg-red-600">
+            <span className="mr-2">✗</span>
+            <span className="font-medium">Sin stock</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

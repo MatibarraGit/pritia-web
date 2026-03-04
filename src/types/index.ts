@@ -25,8 +25,8 @@ export type ProductType = {
   stock: number;
   description: string;
   slug: string;
-  updatedAt?: string;
-  createdAt?: string;
+  updatedAt: string | Date | null;
+  createdAt: string | Date | null;
   totalQuantitySold?: number;
 }
 
@@ -45,8 +45,8 @@ export type ProductResponseType = {
   stock: number;
   product_description: string;
   product_slug: string;
-  updated_at?: string;
-  created_at?: string;
+  updated_at: string | Date | null;
+  created_at: string | Date | null;
   total_quantity_sold?: number;
 }
 
@@ -138,3 +138,27 @@ export type ActionResponse = {
   successMessage?: string | undefined;
   errorMessage?: string | undefined;
 }
+
+// ---- Mercado Pago ----
+export type MercadoPagoIssuer = {
+  id: string | number;
+  name: string;
+  secure_thumbnail: string;
+};
+
+export type MercadoPagoPayerCost = {
+  installments: number;
+  installment_amount: number;
+  total_amount: number;
+  recommended_message: string;
+  labels: string[];
+  [key: string]: unknown;
+};
+
+export type MercadoPagoInstallment = {
+  payment_method_id: string;
+  payment_type_id: string;
+  issuer: MercadoPagoIssuer;
+  payer_costs: MercadoPagoPayerCost[];
+  [key: string]: unknown;
+};

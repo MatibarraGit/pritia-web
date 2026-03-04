@@ -39,10 +39,10 @@ export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) 
 
   return (
     <Button
-      className="w-full bg-primary hover:bg-primary/90 text-white"
+      className="w-full h-12 bg-buy hover:bg-buy-hover text-white" 
       onClick={buyNow}
     >
-      Comprar Ahora
+      Pedir por WhatsApp
     </Button>
   );
 };

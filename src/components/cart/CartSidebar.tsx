@@ -125,7 +125,7 @@ export function CartSidebar() {
               </div>
 
               <Button
-                className="w-full bg-primary hover:bg-primary/90 text-white"
+                className="w-full h-12 bg-buy hover:bg-buy-hover text-white" 
                 href="/cart"
               >
                 Finalizar compra

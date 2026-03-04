@@ -36,12 +36,12 @@ const slides: Slide[] = [
   },
   {
     id: 2,
-    title: "TODO PARA TU HOGAR",
-    subtitle: "+500 PRODUCTOS",
-    description: "Electrodomésticos, muebles, decoración y más",
-    buttonHref: "/products",
-    buttonText: "VER PRODUCTOS",
-    image: "/img/slide-home-products.png",
+    title: "ENVÍOS A TODO EL PAÍS",
+    subtitle: "LLEGAMOS A TU PUERTA",
+    description: "Entregas rápidas y seguras",
+    buttonHref: "/help",
+    buttonText: "VER MÁS",
+    image: "/img/slide-shipping.png",
   },
   {
     id: 3,
@@ -54,12 +54,12 @@ const slides: Slide[] = [
   },
   {
     id: 4,
-    title: "ENVÍOS A TODO EL PAÍS",
-    subtitle: "LLEGAMOS A TU PUERTA",
-    description: "Entregas rápidas y seguras",
-    buttonHref: "/help",
-    buttonText: "VER MÁS",
-    image: "/img/slide-shipping.png",
+    title: "TODO PARA TU HOGAR",
+    subtitle: "+700 PRODUCTOS",
+    description: "Electrodomésticos, muebles, decoración y más",
+    buttonHref: "/products",
+    buttonText: "VER PRODUCTOS",
+    image: "/img/slide-home-products.png",
   },
 ];
 
@@ -98,7 +98,7 @@ export const Carousel = () => {
           loop: true,
           align: "start",
         }}
-        plugins={[autoplay.current]}
+        // plugins={[autoplay.current]}
         className="w-full h-125 bg-primary md:h-96"
         onMouseEnter={() => autoplay.current.stop()}
         onMouseLeave={() => autoplay.current.play()}
@@ -136,9 +136,9 @@ export const Carousel = () => {
                     <Image
                       src={item.image}
                       alt={item.title}
-                      width={800}
+                      width={1200}
                       height={400}
-                      className="w-full max-w-lg max-h-50 mx-auto rounded-lg object-contain md:max-h-none"
+                      className="w-full max-w-lg max-h-50 mx-auto rounded-lg object-cover md:max-h-76"
                     />
                   </div>
                 </div>

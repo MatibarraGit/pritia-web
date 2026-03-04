@@ -21,8 +21,8 @@ export async function GET() {
     // Destacados del día
     const dailyHighlightsProductsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
-      AND p.stock > 0
-      ORDER BY p.stock DESC, p.sell_price DESC
+      AND p.stock > 0 OR p.updated_at IS NOT NULL
+      ORDER BY p.stock DESC, p.updated_at DESC, p.sell_price DESC
       LIMIT 3
     `);
 

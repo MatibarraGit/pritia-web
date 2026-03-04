@@ -44,7 +44,7 @@ function ProductsPageContent() {
           });
           productsResponse = subcategoryResponse.products;
           total = subcategoryResponse.total;
-          title.current = subcategory!;
+          title.current = category ?? subcategory;
           break;
           
         case !!isCategory:
@@ -92,7 +92,7 @@ function ProductsPageContent() {
   useEffect(() => {
     getProducts();
 
-    // TODO: Devolver desde el backend únicamente los productos que pertenecen a la subcategoría para no tener que usar los filtros del frontend para filtrar
+    // TODO: Filtrar del lado del servidor
     if (subcategory !== null) {
       handleFilterChange("subcategory", subcategory);
       return () => {

@@ -11,19 +11,19 @@ export default function HelpPage() {
   const faqs = [
     {
       pregunta: "¿Cómo puedo realizar un pedido?",
-      respuesta: "Podés realizar tu pedido navegando por nuestro catálogo, agregando productos al carrito y haciendo click en el botón 'Finalizar Compra'. Se te redirigirá a WhatsApp con el pedido armado para coordinar la entrega y confirmar cualquier detalle."
+      respuesta: "Podés realizar tu pedido navegando por nuestro catálogo, agregando productos al carrito y haciendo click en el botón 'Finalizar Compra'. Se te redirigirá a WhatsApp con el pedido armado para coordinar la entrega y despejar cualquier duda."
     },
     {
       pregunta: "¿Cuáles son los métodos de pago disponibles?",
-      respuesta: "Aceptamos transferencias bancarias y efectivo. También ofrecemos opciones de financiamiento en cuotas semanales y quincenales para compras superiores a $100.000."
+      respuesta: "Aceptamos transferencias bancarias, efectivo, tarjetas de débito y crédito. También ofrecemos opciones de financiamiento en cuotas semanales para compras superiores a $100.000."
     },
     {
       pregunta: "¿Cuánto tiempo tarda la entrega?",
-      respuesta: "Los tiempos de entrega varían según tu ubicación. En las zonas detalladas en la sección 'Información de Envíos': 24-72hs. En el resto del país: 3-7 días hábiles, dependiendo del correo. Te enviaremos el código de seguimiento una vez despachado tu pedido."
+      respuesta: "Los tiempos de entrega varían según tu ubicación. En las zonas detalladas en la sección 'Envíos por nuestra cuenta' los pedidos son entregados en el día, o entre las 24 a 72hs de realizado el pedido. En el resto del país: 3-7 días hábiles, dependiendo del correo. Te enviaremos el código de seguimiento una vez despachado tu pedido."  
     },
     {
       pregunta: "¿Puedo cambiar o devolver un producto?",
-      respuesta: "Cada producto tiene un period de prueba de entre 24 y 120hs. El producto debe estar en perfectas condiciones, con su embalaje original y etiquetas. Los gastos de envío para devoluciones corren por cuenta del cliente."
+      respuesta: "Cada producto tiene un periodo de prueba de entre 24 y 120hs. El producto debe estar en perfectas condiciones, con su embalaje original y etiquetas. Los gastos de envío para devoluciones corren por cuenta del cliente."
     },
     {
       pregunta: "¿Ofrecen garantía en los productos?",
@@ -36,10 +36,6 @@ export default function HelpPage() {
     {
       pregunta: "¿Hacen envíos a todo el país?",
       respuesta: "Sí, realizamos envíos a toda Argentina. Los costos de envío se calculan según el peso, volumen y destino. Envíos gratuitos en compras superiores a $100.000 en las zonas detalladas en la sección 'Información de Envíos'."
-    },
-    {
-      pregunta: "¿Puedo retirar mi pedido en el local?",
-      respuesta: "¡Por supuesto! Podés retirar tu pedido en nuestro local sin costo adicional. Te avisaremos cuando esté listo para retirar y necesitarás presentarte con tu DNI y con el número de pedido."
     }
   ];
 
