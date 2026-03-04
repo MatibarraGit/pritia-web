@@ -62,7 +62,7 @@ export async function GET(
       product_slug: product.product_slug || '',
       images: product.images,
       created_at: formatDate(product.created_at).fechaMostrar,
-      updated_at: product.updated_at ? product.updated_at.toISOString() : undefined,
+      updated_at: product.updated_at ? product.updated_at.toISOString() : null,
     });
 
     return NextResponse.json(formattedProduct);

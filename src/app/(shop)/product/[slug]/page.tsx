@@ -139,10 +139,6 @@ export default async function ProductPage({ params }: Props) {
           <div className="flex flex-col relative">
             <LikeButton product={product} classNames="p-2 absolute top-0 right-2 bg-gray-100 rounded-full md:right-0"/> 
             <ProductImages images={images} name={name} />
-
-            {/* <span className="mt-4 text-gray-500">  
-              Última actualización: {lastUpdate}
-            </span> */}
           </div>
 
           {/* Product Info */}
