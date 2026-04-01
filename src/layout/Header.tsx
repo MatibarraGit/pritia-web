@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "lucide-react";
 
-import { CartSidebar } from "@/components"; 
-import { CartButton, CheckboxMenu, FavouritesMenu, MenuMobile, SearchComponent } from "@/layout"
+// import { CartSidebar } from "@/components"; 
+import { CheckboxMenu, FavouritesMenu, MenuMobile, SearchComponent } from "@/layout"
 
 export const Header = () => {
   return (
