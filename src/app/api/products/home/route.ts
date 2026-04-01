@@ -56,6 +56,7 @@ export async function GET() {
       LIMIT 30
     `);
 
+    // Novedades
     const newsProductsRaws = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
       ORDER BY RANDOM()

@@ -8,10 +8,10 @@ import { ProductResponseType } from "@/types";
 import { PRODUCTS_PER_PAGE, TOPICS, formatProduct } from "@/utils";
 
 const templateSelectProductData = readFileSync(join(process.cwd(), 'prisma', 'queries', 'templateSelectProductData.sql'), 'utf8');
-const selectBestSellersProducts = readFileSync(join(process.cwd(), 'prisma', 'queries', 'selectBestSellersProducts.sql'), 'utf8');
+// const selectBestSellersProducts = readFileSync(join(process.cwd(), 'prisma', 'queries', 'selectBestSellersProducts.sql'), 'utf8');
 
 const BASE_QUERY = Prisma.sql([templateSelectProductData]);
-const BEST_SELLERS_QUERY = Prisma.sql([selectBestSellersProducts]);
+// const BEST_SELLERS_QUERY = Prisma.sql([selectBestSellersProducts]);
 
 export async function GET(
   request: Request,

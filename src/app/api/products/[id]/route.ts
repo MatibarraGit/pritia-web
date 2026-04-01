@@ -269,7 +269,7 @@ export async function PUT(
         );
       }
     }
-    console.log(error )
+    console.log(error)
     return NextResponse.json(
       { message: 'Error interno del servidor al actualizar producto' },
       { status: 500 }

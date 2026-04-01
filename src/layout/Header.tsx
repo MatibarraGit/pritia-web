@@ -30,12 +30,13 @@ export const Header = () => {
           {/* Search Bar */}
           <SearchComponent />
 
-          {/* Cart */}
+          {/* Cart & Favourites*/}
           <div className="flex items-center gap-2">
             <FavouritesMenu />
-            <CartButton />
+            {/* TODO: Agregar cuando haya checkout */}
+            {/* <CartButton /> */}
             
-            <CartSidebar />
+            {/* <CartSidebar /> */}
           </div>
         </div>
       </header>

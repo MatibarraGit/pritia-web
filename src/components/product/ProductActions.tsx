@@ -36,10 +36,11 @@ export function ProductActions({ product }: ProductActionsProps) {
     }
   };
 
-  const handleAddToCart = () => {
-    addToCart(cartItemProduct);
-    showToast("Producto agregado al carrito", "success");
-  };
+  // TODO: Agregar cuando haya checkout
+  // const handleAddToCart = () => {
+  //   addToCart(cartItemProduct);
+  //   showToast("Producto agregado al carrito", "success");
+  // };
 
   return (
     <div className="space-y-6">
@@ -76,13 +77,13 @@ export function ProductActions({ product }: ProductActionsProps) {
       <div className="w-full flex flex-col space-x-4 gap-2">
         <CheckoutButton items={cartItemProduct} />
 
-        <Button 
+        {/* <Button 
           variant="outline"
           className="w-full h-12 border-buy text-buy hover:bg-buy-hover/10"
           onClick={handleAddToCart}
         >
           Agregar al carrito
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
