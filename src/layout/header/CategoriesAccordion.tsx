@@ -11,6 +11,7 @@ import { useCategoriesMenu, useFetchData, useFiltersContext } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
 import { fetchAllCategories } from "@/services";
+import Link from "next/link";
 
 interface CategoriesAccordionProps {
   isMenuMobile?: boolean;
@@ -70,26 +71,39 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
         <AccordionContent className="pb-3 max-h-80 overflow-y-scroll personalized-scrollbar">
           <Accordion type="multiple" className="w-full">
             {categoriesList.map((categoryItem) => (
-              <div 
-                key={categoryItem.category_id}
-                className={cn(
-                  "flex flex-col",
-                  isMenuMobile ? "px-3" : "px-2"
-                )}
-              >
-                {categoryItem.subcategories?.map((subcategoryItem) => (
-                  <button 
-                    key={subcategoryItem.id}
-                    className={cn(
-                      "w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start",
-                      subcategory === subcategoryItem.name && "text-primary font-semibold"
-                    )}
-                    onClick={() => handleCategoryClick(categoryItem.category_name, subcategoryItem.name)}
-                  >
-                    {subcategoryItem.name}
-                  </button>
-                ))}
-              </div>
+              <AccordionItem key={categoryItem.category_id} value={categoryItem.category_name}>
+                <AccordionTrigger
+                  className={cn(
+                    "text-sm hover:text-primary hover:no-underline",
+                    isMenuMobile ? "px-3 py-2" : "px-2 py-2"
+                  )}
+                >
+                  {categoryItem.category_name}
+                </AccordionTrigger>
+                <AccordionContent className={cn("pb-1", isMenuMobile ? "px-3" : "px-2")}>
+                  <div className="flex flex-col">
+                    {categoryItem.subcategories?.map((subcategoryItem) => (
+                      <button
+                        key={subcategoryItem.id}
+                        className={cn(
+                          "w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start",
+                          subcategory === subcategoryItem.name && "text-primary font-semibold"
+                        )}
+                        onClick={() => handleCategoryClick(categoryItem.category_name, subcategoryItem.name)}
+                      >
+                        {subcategoryItem.name}
+                      </button>
+                    ))}
+                    <button
+                      className="w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start"
+                      onClick={() => handleCategoryClick(categoryItem.category_name)}
+                    >
+                      Ver todo
+                    </button>
+
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </AccordionContent>

@@ -59,6 +59,11 @@ function AdminProducts() {
     name: "",
     slug: ""
   });
+  const modalTitle = 
+    actionType === ACTION_TYPES.DISABLE ? `¿Desea desactivar el producto ${productToAction.name}?`
+    : actionType === ACTION_TYPES.DELETE ? `¿Seguro que desea eliminar el producto ${productToAction.name}?`
+    : actionType === ACTION_TYPES.SHARE ? `Compartir productos`
+    : "";
 
   const handleAction = (action: string, item: ProductType | null = null) => {
     switch (action) {
@@ -100,7 +105,7 @@ function AdminProducts() {
     }
   }
 
-  // TODO: Agregar orden del lado del servidor
+  // TODO: Agregar ordenamiento del lado del servidor
   // const sortConfig: SortConfig = { 
   //   "name": { enabled: true, type: "string" },
   //   "price": { enabled: true, type: "number" },
@@ -135,9 +140,7 @@ function AdminProducts() {
           filterConfig: filterConfig || {}
         }}
         modalConfig={{
-          modalTitle: actionType === ACTION_TYPES.DISABLE 
-            ? `¿Desea desactivar el producto ${productToAction.name}?`
-            : `¿Seguro que desea eliminar el producto ${productToAction.name}?`, 
+          modalTitle, 
           modalContent: (
             <ProductModal 
               type={actionType} 

@@ -224,27 +224,25 @@ export async function createProduct(formData: FormData): Promise<ActionResponse 
 export async function shareProducts(products: SelectedItemsType[], to: number): Promise<ActionResponse> {
   let errorMessage: string = "";
   async function postToWebhook(product: SelectedItemsType) {
+    const webhookUrl = "https://n8n-automations.pritia.com.ar/webhook/share-products";
     try {
-      const response = await fetch(
-        `https://n8n-personal-n8n.b1o0vq.easypanel.host/webhook/share-products`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ product, to }),
-        }
-      );
-      const json = await response.json()
-  
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product, to }),
+      });
+      const json = await response.json();
+
       if (!json.ok) {
         return errorMessage += `${product.name}. `;
       }
     } catch (error) {
-      console.error(error);
-      return errorMessage +=  `${product.name}. `;
+      console.error("[shareProducts webhook]", error);
+      return errorMessage += `${product.name}. `;
     }
-  }    
+  }
 
   // Función para pausar
   function delay(ms: number) {

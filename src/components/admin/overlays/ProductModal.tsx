@@ -7,7 +7,19 @@ import { CheckCircle, AlertTriangle, Plus, Copy, Eye, ArrowLeft, Send, X } from 
 
 import { selectItemsContext, toastContext } from "@/contexts";
 import { MyLoader } from "@/components";
-import { Button } from "@/components/ui";
+import {
+  Button,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui";
 import { shareProducts } from "@/services/products";
 import { cn } from "@/libs/utils";
 import { ACTION_TYPES, TO_OPTIONS } from "@/utils";
@@ -30,6 +42,9 @@ export const ProductModal = ({
   handleConfirmProductAction = async () => {},
 }: ProductModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  
+  /** Tipo de destinatario en el formulario manual (Select controlado). */
+  const [shareRecipientType, setShareRecipientType] = useState("seller");
 
   if (error !== "") {
     return (
@@ -87,7 +102,7 @@ export const ProductModal = ({
 
           <div className="border-t my-2"></div>
 
-          <Link href={`/product/${slug}`} className="block">
+          <Link href={`/producto/${slug}`} className="block">
             <Button variant="ghost" className="w-full justify-start gap-2">
               <Eye size={20} />
               Ver página del producto
@@ -131,6 +146,27 @@ export const ProductModal = ({
       }
     };
 
+    // Función del formulario para compartir manualmente
+    const handleShareManually = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const numberRaw = String(formData.get("number") ?? "").trim();
+      const recipientType = String(formData.get("type") ?? "").trim();
+
+      if (!recipientType) {
+        showToast("Selecciona un tipo de destinatario", "error");
+        return;
+      }
+
+      const toNumber = Number(549 + numberRaw.replace(/\D/g, ""));
+      if (!Number.isFinite(toNumber) || toNumber <= 0) {
+        showToast("Introduce un número de teléfono válido", "error");
+        return;
+      }
+      
+      void onConfirmShare(toNumber, recipientType);
+    };
+
     return (
 
       <div>
@@ -170,27 +206,89 @@ export const ProductModal = ({
               ))}
             </div>
     
-            {/* Buttons */}
             <div className="mt-8 flex flex-col gap-4">
-              <h3
-                className="w-full"
-              >Compartir a</h3>
-              {/* TODO: Añadir un formulario para enviar a otro número no registrado */}
+              <h3 className="w-full text-base font-semibold leading-none">
+                Compartir a
+              </h3>
 
-              <div className="flex items-center gap-4 flex-wrap">
-                {TO_OPTIONS.map((to) => (
-                  <Button
-                    key={to.number}
-                    variant={to.type === 'seller' ? "primary" : "outline"}
-                    size="lg"
-                    onClick={() => onConfirmShare(to.number, to.type)}
-                    className="md:w-auto"
+              <Tabs defaultValue="presets" className="w-full gap-4">
+                <TabsList className="grid h-auto w-full grid-cols-2 p-1 sm:inline-flex sm:w-fit sm:grid-cols-none bg-gray-200">
+                  <TabsTrigger value="presets" className="gap-1.5">
+                    Predeterminados
+                  </TabsTrigger>
+                  <TabsTrigger value="manual" className="gap-1.5">
+                    Manual
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="presets" className="mt-0 flex flex-col gap-4">
+                  <div className="flex flex-wrap items-center gap-4">
+                    {TO_OPTIONS.map((to) => (
+                      <Button
+                        key={to.number}
+                        variant={to.type === "seller" ? "primary" : "outline"}
+                        size="lg"
+                        type="button"
+                        onClick={() => void onConfirmShare(to.number, to.type)}
+                        className="md:w-auto"
+                      >
+                        <Send className="h-4 w-4" />
+                        {to.name}
+                      </Button>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="manual" className="mt-0 flex flex-col gap-4">
+                  <form
+                    className="flex flex-col gap-4"
+                    onSubmit={handleShareManually}
                   >
-                    <Send className="h-4 w-4" />
-                    {to.name}
-                  </Button>
-                ))}
-              </div>
+                    <div className="flex gap-4">
+                      <input type="hidden" name="type" value={shareRecipientType} />
+
+                      <Select
+                        value={shareRecipientType}
+                        onValueChange={setShareRecipientType}
+                      >
+                        <SelectTrigger
+                          id="share-recipient-type"
+                          className="w-full"
+                        >
+                          <SelectValue placeholder="Tipo de destinatario" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="seller">Cliente</SelectItem>
+                          <SelectItem value="reseller">Revendedor</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <label className="w-fit text-nowrap" htmlFor="share-manual-phone">
+                        +54 9
+                      </label>
+                      <Input
+                        id="share-manual-phone"
+                        placeholder="Número de teléfono"
+                        type="tel"
+                        name="number"
+                        required
+                      />
+                    </div>
+
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      type="submit"
+                      className="md:w-auto"
+                    >
+                      <Send className="h-4 w-4" />
+                      Compartir
+                    </Button>
+                  </form>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
     );
