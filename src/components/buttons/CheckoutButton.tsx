@@ -27,7 +27,7 @@ export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) 
         namesAndQuantitys = `- ${items.name} (x${items.quantity}) ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/producto/${items.slug}`
       }
 
-      const message = `¡Hola! Vengo desde la web y quiero hacer un pedido:\n\n${namesAndQuantitys}\n\n¿Cuándo llegará a mi domicilio?`;
+      const message = `¡Hola! Vengo desde la web y quiero hacer un pedido:\n\n${namesAndQuantitys}\n\n¿Cuándo llega a mi domicilio?`;
 
       const urlMessage = `https://wa.me/+5491131738925?text=${encodeURIComponent(message)}`;
       

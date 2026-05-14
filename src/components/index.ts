@@ -34,6 +34,7 @@ export { FacebookButton, InstagramButton, MailButton, WhatsappButton } from "./b
 
 // Carousels
 export { Carousel } from './carousels/Carousel'
+export { CarouselIndicators } from './carousels/CarouselIndicators'
 export { ProductsCarousel } from './carousels/ProductsCarousel'
 
 // Cart
@@ -69,9 +70,9 @@ export { ProductDescription } from "./product/ProductDescription";
 // Product / intallaments section
 // export { CreditCardSection } from "./product/installments-section/CreditCardSection";
   // export { CreditOptionsModal } from "./product/installments-section/CreditOptionsModal";
-export { ProductInstallmentsSection } from "./product/installments-section/ProductInstallmentsSection";
-export { TwoPayments } from "./product/installments-section/TwoPayments";
-export { WeeklyInstallments } from "./product/installments-section/WeeklyInstallments";
+// export { ProductInstallmentsSection } from "./product/installments-section/ProductInstallmentsSection";
+// export { TwoPayments } from "./product/installments-section/TwoPayments";
+// export { WeeklyInstallments } from "./product/installments-section/WeeklyInstallments";
 
 // Products
 export { ProductCard } from './products/ProductCard'

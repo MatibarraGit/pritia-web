@@ -44,7 +44,7 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
       switch (true) {
         case !!isSubcategory:
           const subcategoryResponse = await getProductsBySubcategory({
-            subcategory: subcategorySlug!,
+            subcategorySlug,
             page,
           });
           productsResponse = subcategoryResponse.products;
@@ -56,7 +56,7 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
           
         case !!isCategory:
           const categoryResponse = await getProductsByCategory({
-            category: categorySlug!,
+            categorySlug,
             page,
           });
           productsResponse = categoryResponse.products;

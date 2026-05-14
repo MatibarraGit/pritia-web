@@ -24,12 +24,12 @@ export interface HomeProductsResponse {
 }
 
 export interface GetProductsByCategoryParams {
-  category: string;
+  categorySlug: string;
   page?: number;
 }
 
 export interface GetProductsBySubcategoryParams {
-  subcategory: string;
+  subcategorySlug: string;
   page?: number;
 }
 
@@ -137,12 +137,12 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
 }
 
 // GET - Obtener productos por categoría
-export async function getProductsByCategory({ category, page = 1 }: GetProductsByCategoryParams): Promise<GetAllProductsResponse> {
+export async function getProductsByCategory({ categorySlug, page = 1 }: GetProductsByCategoryParams): Promise<GetAllProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
 
-    const response = await fetch(`${baseUrl}/api/products/byCategory/${encodeURIComponent(category)}?${params.toString()}`, {
+    const response = await fetch(`${baseUrl}/api/products/byCategory/${encodeURIComponent(categorySlug)}?${params.toString()}`, {
       cache: 'no-store'
     });
     const json: { products: ProductType[], total: number } = await response.json();
@@ -154,12 +154,12 @@ export async function getProductsByCategory({ category, page = 1 }: GetProductsB
 }
 
 // GET - Obtener productos por subcategoría
-export async function getProductsBySubcategory({ subcategory, page }: GetProductsBySubcategoryParams): Promise<GetAllProductsResponse> {
+export async function getProductsBySubcategory({ subcategorySlug, page }: GetProductsBySubcategoryParams): Promise<GetAllProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
 
-    const response = await fetch(`${baseUrl}/api/products/bySubcategory/${encodeURIComponent(subcategory)}?${params.toString()}`, 
+    const response = await fetch(`${baseUrl}/api/products/bySubcategory/${encodeURIComponent(subcategorySlug)}?${params.toString()}`, 
       { cache: 'no-store' }
     );
     const json: { products: ProductType[], total: number } = await response.json();

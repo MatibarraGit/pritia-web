@@ -11,7 +11,7 @@ import {
   ProductPurchaseInfo,
   ProductDescription,
   ProductsCarousel,
-  ProductInstallmentsSection
+  // ProductInstallmentsSection
 } from "@/components";
 import { getProductsBySubcategory } from "@/services";
 
@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: Props) {
 
   // ----Productos relacionados----
   const relatedProducts =
-    (await getProductsBySubcategory({ subcategory })) ?? [];
+    (await getProductsBySubcategory({ subcategorySlug: toSlug(subcategory) })) ?? []
   const filteredRelatedProducts = relatedProducts?.products?.filter(
     (p: ProductType) => String(p.id) !== String(id),
   );
@@ -157,12 +157,13 @@ export default async function ProductPage({ params }: Props) {
 
             <ProductActions product={product} />
 
-            {price >= 40000 && (
+            {/* TODO: Implementar cuando reactive los créditos personales */}
+            {/* {price >= 40000 && (
               <ProductInstallmentsSection
               price={price}
               purchasePrice={purchasePrice}
               />
-            )}
+            )} */}
 
             <ProductPurchaseInfo />
             <span className=" text-gray-500">  
