@@ -28,7 +28,7 @@ export const FooterComponent = () => {
                   </Link>
                 </li>
                 <li className="max-w-62 mb-2 text-sm text-gray-600">
-                  <Link href="/benefits" className="text-gray-600 no-underline hover:text-primary transition-colors">
+                  <Link href="/beneficios" className="text-gray-600 no-underline hover:text-primary transition-colors">
                     Beneficios
                   </Link>
                 </li>
@@ -50,7 +50,7 @@ export const FooterComponent = () => {
                   />
                 </li>
                 <li className="max-w-62 mb-2 text-sm text-gray-600">
-                  <Link href="/help" className="text-gray-600 no-underline hover:text-primary transition-colors">
+                  <Link href="/ayuda" className="text-gray-600 no-underline hover:text-primary transition-colors">
                     Ayuda
                   </Link>
                 </li>

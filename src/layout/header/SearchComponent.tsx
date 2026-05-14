@@ -72,7 +72,7 @@ export const SearchComponent = () => {
     }
 
     setShowSuggestions(false);
-    router.push(`/search/${encodeURIComponent(valueToSearch)}`);
+    router.push(`/busqueda/${encodeURIComponent(valueToSearch)}`);
   };
 
   const handleSuggestionClick = (suggestion: string) => {

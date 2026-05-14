@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { useCategoriesMenu, useFetchData } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
+import { toSlug } from "@/utils";
 import { fetchAllCategories } from "@/services";
 
 export const CategoriesDropdown = () => {
@@ -65,7 +66,7 @@ export const CategoriesDropdown = () => {
               >
                 <div className="w-full flex items-center justify-between">
                   <Link
-                    href={`/products?category=${encodeURIComponent(category.category_name)}`}
+                    href={`/productos/${toSlug(category.category_name)}`}
                     className="font-medium text-gray-700 transition-all duration-200 group-hover:text-primary group-hover:translate-x-1 no-underline"
                   >
                     {category.category_name}
@@ -88,7 +89,7 @@ export const CategoriesDropdown = () => {
                         {category.subcategories.map((subcategory) => (
                           <Link
                             key={subcategory.id}
-                            href={`/products?category=${encodeURIComponent(category.category_name)}&subcategory=${encodeURIComponent(subcategory.name)}`}
+                            href={`/productos/${toSlug(category.category_name)}/${toSlug(subcategory.name)}`}
                             className="w-full px-4 py-2 group/subcategory text-gray-700 font-medium text-start no-underline border-b border-gray-100 transition-all duration-200 hover:bg-gray-50 hover:text-primary shrink-0"
                           >
                             <span className="inline-block transition-transform duration-200 group-hover/subcategory:translate-x-1">
@@ -98,7 +99,7 @@ export const CategoriesDropdown = () => {
                         ))}
                       </div>
                       <Link
-                        href={`/products?category=${encodeURIComponent(category.category_name)}`}
+                        href={`/productos/${toSlug(category.category_name)}`}
                         className="w-full px-4 py-2.5 text-primary font-semibold no-underline border-t border-gray-200 transition-all duration-200 hover:bg-gray-50 shrink-0"
                       >
                         <span className="inline-block transition-transform duration-200 hover:translate-x-1">

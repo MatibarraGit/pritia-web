@@ -25,8 +25,8 @@ export function useSearch () {
   const pathname = usePathname()
 
   useEffect(() => {
-    const wasInSearchResults = prevPathnameRef.current.includes('/search-results/')
-    const isInSearchResults = pathname.includes('/search-results/')
+    const wasInSearchResults = prevPathnameRef.current.includes('/busqueda/')
+    const isInSearchResults = pathname.includes('/busqueda/')
     
     // Solo resetear si salimos de una ruta de búsqueda
     // Usamos startTransition para evitar renders en cascada

@@ -65,7 +65,7 @@ export const MenuMobile = () => {
             </li>
             <li>
               <Link
-                href="/products"
+                href="/productos"
                 className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >
@@ -84,7 +84,7 @@ export const MenuMobile = () => {
             </li>
             <li>
               <Link
-                href="/loved-products"
+                href="/productos-favoritos"
                 className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >
@@ -94,7 +94,7 @@ export const MenuMobile = () => {
             </li>
             <li>
               <Link
-                href="/benefits"
+                href="/beneficios"
                 className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >
@@ -104,7 +104,7 @@ export const MenuMobile = () => {
             </li>
             <li>
               <Link
-                href="/help"
+                href="/ayuda"
                 className="py-3 px-1 flex items-center gap-2 text-base text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
                 onClick={closeMenu}
               >

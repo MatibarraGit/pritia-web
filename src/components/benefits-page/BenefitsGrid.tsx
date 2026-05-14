@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BenefitCell from "./BenefitCell";
 
 // Datos de ejemplo - esto lo conectarás con tu backend
@@ -11,11 +11,28 @@ const mockPurchases: Record<number, string> = {
   4: "Reina",
   5: "Matías",
   6: "Claudia",
+  7: "Claudia",
+  8: "Claudia",
 };
 
 const BenefitsGrid = () => {
   const [openNumber, setOpenNumber] = useState(0);
   const cells = Array.from({ length: 50 }, (_, i) => i + 1);
+
+  // Efecto para cerrar el tooltip cuando se hace click fuera de la celda
+  useEffect(() => {
+    const handleOutsideCellClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isBenefitCellClick = !!target?.closest("[data-benefit-cell='true']");
+
+      if (!isBenefitCellClick) setOpenNumber(0);
+    };
+
+    document.addEventListener("click", handleOutsideCellClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideCellClick);
+    };
+  }, []);
 
   return (
     <div 

@@ -8,6 +8,8 @@ export {
   TOPICS,
   TO_OPTIONS,
   ORDER_PARAMETERS,
+  ACCENT_CATEGORIES,
+  ACCENT_SUBCATEGORIES
 } from "./constants";
 export { confirmAction } from './confirmAction';
 export { countProducts } from './countProducts';
@@ -15,10 +17,12 @@ export { filterFinancingByBank } from './filterFinancingByBank';
 export { formatDate } from './formatDate';
 export { formatPrice } from './formatPrice';
 export { formatProduct, formatProducts } from './formatProduct';
+export { formatSlugTitle } from './formatSlugTitle';
 export { getErrorMessage } from './authErrors';
 export { getFilterName } from './getFilterName';
 export { getOrderStatusColor } from './getOrderStatusColor';
 export { normalizeText } from './normalize-text';
 export { convertImageToBuffer, getPublicIdFromUrl } from "./processImage";
 export { calculateTwoPayments, calculateWeeklyInstallments } from './productInstallmentPricing'
+export { toSlug } from './toSlug';
 export { validateAuthForm } from './validateAuthForm';

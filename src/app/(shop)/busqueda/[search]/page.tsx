@@ -15,6 +15,10 @@ export async function generateMetadata({ params }: SearchPageParams): Promise<Me
   return {
     title,
     description: `Resultados de búsqueda para: ${decodedSearch}`,
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 

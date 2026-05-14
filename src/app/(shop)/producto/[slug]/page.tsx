@@ -17,7 +17,7 @@ import { getProductsBySubcategory } from "@/services";
 
 import type { Metadata } from "next";
 import type { ProductType } from "@/types";
-import { formatDate } from "@/utils";
+import { formatDate, toSlug } from "@/utils";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -101,12 +101,12 @@ export default async function ProductPage({ params }: Props) {
               Inicio
             </Link>
             <ChevronRight className="h-4 w-4 mx-2" />
-            <Link href="/products" className="hover:text-primary">
+            <Link href="/productos" className="hover:text-primary">
               Productos
             </Link>
             <ChevronRight className="h-4 w-4 mx-2" />
             <Link
-              href={`/products?category=${category}`}
+              href={`/productos/${toSlug(category)}`}
               className="hover:text-primary"
             >
               {category}
@@ -115,7 +115,7 @@ export default async function ProductPage({ params }: Props) {
               <>
                 <ChevronRight className="h-4 w-4 mx-2" />
                 <Link
-                  href={`/products?subcategory=${subcategory}`}
+                  href={`/productos/${toSlug(category)}/${toSlug(subcategory)}`}
                   className="hover:text-primary"
                 >
                   {subcategory}

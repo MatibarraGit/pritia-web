@@ -63,6 +63,7 @@ const BenefitCell = ({ number, buyerName, isPurchased, openNumber, setOpenNumber
     <Tooltip open={openNumber === number}>
       <TooltipTrigger asChild >
         <div
+          data-benefit-cell="true"
           className={getCellClasses()}
           onClick={handleClick}
           role="button"

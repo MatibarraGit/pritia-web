@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} antialiased font-body`} suppressHydrationWarning>
         {/* Aviso de Beneficios por compra */}
         <Link 
-          href="/benefits"
+          href="/beneficios"
           className="absolute top-0 left-0 w-full h-10 flex items-center justify-center text-white font-subheading text-center text-sm md:text-md"
           style={{
             background: "linear-gradient(145deg, #F0A412 0%, #FED90F 90%)"

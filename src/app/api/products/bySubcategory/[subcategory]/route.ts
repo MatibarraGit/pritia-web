@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/libs/prisma";
 import type { ProductResponseType } from "@/types";
-import { formatProducts } from "@/utils";
+import { formatProducts, toSlug } from "@/utils";
 
 const templateSelectProductData = readFileSync(join(process.cwd(), 'prisma', 'queries', 'templateSelectProductData.sql'), 'utf8');
 const BASE_QUERY = Prisma.sql([templateSelectProductData]);
@@ -19,7 +19,7 @@ export async function GET(
 
     const productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
-      AND sc.subcategory_name = ${subcategory}
+      AND sc.subcategory_slug = ${subcategory}
       ORDER BY p.product_name ASC, p.product_id ASC
     `);
 
@@ -34,7 +34,7 @@ export async function GET(
       WHERE p.in_stock = TRUE 
         AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
         AND p.deleted_at IS NULL
-        AND sc.subcategory_name = ${subcategory}
+        AND sc.subcategory_slug = ${toSlug(subcategory)}
     `;
 
     const total = totalResult[0]?.count ?? 0;
@@ -57,10 +57,3 @@ export async function GET(
     );
   }
 }
-
-
-
-
-
-
-

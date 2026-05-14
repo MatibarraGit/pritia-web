@@ -34,7 +34,7 @@ export interface GetProductsBySubcategoryParams {
 }
 
 export interface GetProductsByTopicParams {
-  topic: string;
+  section: string;
   page?: number;
 }
 
@@ -171,12 +171,12 @@ export async function getProductsBySubcategory({ subcategory, page }: GetProduct
 }
 
 // GET - Obtener productos por tópico
-export async function getProductsByTopic({ topic, page = 1 }: GetProductsByTopicParams): Promise<GetAllProductsResponse> {
+export async function getProductsByTopic({ section, page = 1 }: GetProductsByTopicParams): Promise<GetAllProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
 
-    const response = await fetch(`${baseUrl}/api/products/byTopic/${encodeURIComponent(topic)}?${params.toString()}`, {
+    const response = await fetch(`${baseUrl}/api/products/byTopic/${encodeURIComponent(section)}?${params.toString()}`, {
       cache: 'no-store'
     });
     const json: { products: ProductType[], total: number } = await response.json();

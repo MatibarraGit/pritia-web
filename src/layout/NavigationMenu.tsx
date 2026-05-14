@@ -10,9 +10,9 @@ export const NavigationMenu = () => {
         <div className="flex items-center justify-between h-14">
           <ul className="hidden md:flex items-center gap-5">
             <NavigationItem href="/" label="Inicio" />
-            <NavigationItem href="/products" label="Todos los productos" />
+            <NavigationItem href="/productos" label="Todos los productos" />
             <CategoriesDropdown />
-            <NavigationItem href="/benefits" label="Beneficios" /> 
+            <NavigationItem href="/beneficios" label="Beneficios" /> 
           </ul>
           
           {/* Additional links */}
@@ -26,7 +26,7 @@ export const NavigationMenu = () => {
             <li className="list-none">
               <ContactModal />
             </li>
-            <NavigationItem href="/help" label="Ayuda" />
+            <NavigationItem href="/ayuda" label="Ayuda" />
           </div>
         </div>
       </div>

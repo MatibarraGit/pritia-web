@@ -17,7 +17,7 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
 
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={`/producto/${product.slug}`}
       className={`bg-white rounded-xl overflow-hidden border ${classNames}`}
     >
       <div className="flex justify-center">

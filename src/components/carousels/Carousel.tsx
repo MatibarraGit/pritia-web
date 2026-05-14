@@ -30,7 +30,7 @@ const slides: Slide[] = [
     title: "BENEFICIOS EN TUS COMPRAS",
     subtitle: "Reintegros y Sorteos",
     description: "Participá con tu compra mediante la web",
-    buttonHref: "/benefits",
+    buttonHref: "/beneficios",
     buttonText: "VER MÁS",
     image: "/img/slide-benefits.png",
   },
@@ -39,16 +39,16 @@ const slides: Slide[] = [
     title: "ENVÍOS A TODO EL PAÍS",
     subtitle: "LLEGAMOS A TU PUERTA",
     description: "Entregas rápidas y seguras",
-    buttonHref: "/help",
+    buttonHref: "/ayuda",
     buttonText: "VER MÁS",
     image: "/img/slide-shipping.png",
-  },
-  {
+    },
+    {
     id: 3,
     title: "MEGA OFERTAS",
     subtitle: "PENSADAS PARA VOS",
     description: "HASTA 35% OFF y cuotas sin tarjeta",
-    buttonHref: "/products?topic=ofertas",
+    buttonHref: "/productos?seccion=ofertas",
     buttonText: "VER OFERTAS",
     image: "/img/slide-offers.png",
   },
@@ -57,7 +57,7 @@ const slides: Slide[] = [
     title: "TODO PARA TU HOGAR",
     subtitle: "+700 PRODUCTOS",
     description: "Electrodomésticos, muebles, decoración y más",
-    buttonHref: "/products",
+    buttonHref: "/productos",
     buttonText: "VER PRODUCTOS",
     image: "/img/slide-home-products.png",
   },
@@ -98,7 +98,7 @@ export const Carousel = () => {
           loop: true,
           align: "start",
         }}
-        // plugins={[autoplay.current]}
+        plugins={[autoplay.current]}
         className="w-full h-125 bg-primary md:h-96"
         onMouseEnter={() => autoplay.current.stop()}
         onMouseLeave={() => autoplay.current.play()}

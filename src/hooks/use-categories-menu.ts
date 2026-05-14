@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { toSlug } from "@/utils";
 
 export const useCategoriesMenu = ({ closeMenuOnClick, closeMenu }: { closeMenuOnClick?: boolean, closeMenu: () => void }) => {
   const router = useRouter()
@@ -8,8 +9,8 @@ export const useCategoriesMenu = ({ closeMenuOnClick, closeMenu }: { closeMenuOn
       closeMenu();
     }
 
-    if (!subcategoryName) router.push(`/products?category=${encodeURIComponent(categoryName)}`);
-    else router.push(`/products?category=${encodeURIComponent(categoryName)}&subcategory=${encodeURIComponent(subcategoryName)}`);
+    if (!subcategoryName) router.push(`/productos/${toSlug(categoryName)}`);
+    else router.push(`/productos/${toSlug(categoryName)}/${toSlug(subcategoryName)}`);
   };
   
   return { handleCategoryClick }

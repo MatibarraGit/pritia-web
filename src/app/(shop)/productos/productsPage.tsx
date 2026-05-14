@@ -1,35 +1,40 @@
 "use client";
 
-import { useEffect, useState, useRef, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { NoProductsResults } from "./noProductsResults";
 import { PageLoader, ShowProducts } from "@/components";
-import { useFiltersContext, useOrderContext } from "@/hooks";
+import { useOrderContext } from "@/hooks";
 import { TOPICS } from "@/utils";
 import { ProductType } from "@/types";
 import { getAvailableProducts, getProductsByCategory, getProductsBySubcategory, getProductsByTopic } from "@/services/products";
 
-function ProductsPageContent() {
+interface ProductsPageContentProps {
+  categorySlug?: string;
+  subcategorySlug?: string;
+}
+
+function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageContentProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
-  const title = useRef<string>('');
+  const title = useRef<string>("");
+  const currentCategory = useRef<string>("");
+  const currentSubcategory = useRef<string>("");
 
   const params = useSearchParams();
-  const category = params.get("category");
-  const subcategory = params.get("subcategory");
-  const topic = params.get("topic");
+  const section = params.get("seccion");
 
-  const isCategory = category !== null;
-  const isTopic = topic !== null;
+  const isCategory = typeof categorySlug === "string" && categorySlug.length > 0;
+  const isSubcategory = typeof subcategorySlug === "string" && subcategorySlug.length > 0;
+  const isTopic = section !== null && !isCategory && !isSubcategory;
 
   const page = params.get("page") ? parseInt(params.get("page")!) : 1;
 
-  const { handleFilterChange, resetFilters } = useFiltersContext();
   const { handleSort } = useOrderContext();
 
-  async function getProducts() {
+  const getProducts = useCallback(async () => {
     setProducts([]);
     setIsLoading(true);
     try {
@@ -37,36 +42,42 @@ function ProductsPageContent() {
       let total = 0;
 
       switch (true) {
-        case !!subcategory:
+        case !!isSubcategory:
           const subcategoryResponse = await getProductsBySubcategory({
-            subcategory: subcategory!,
-            page
+            subcategory: subcategorySlug!,
+            page,
           });
           productsResponse = subcategoryResponse.products;
           total = subcategoryResponse.total;
-          title.current = category ?? subcategory;
+          currentCategory.current = productsResponse[0]?.category ?? "";
+          currentSubcategory.current = productsResponse[0]?.subcategory ?? "";
+          title.current = currentSubcategory.current
           break;
           
         case !!isCategory:
           const categoryResponse = await getProductsByCategory({
-            category: category!,
-            page
+            category: categorySlug!,
+            page,
           });
           productsResponse = categoryResponse.products;
           total = categoryResponse.total;
-          title.current = category!;
+          currentCategory.current = productsResponse[0]?.category ?? categorySlug ?? "";
+          currentSubcategory.current = "";
+          title.current = currentCategory.current
           break;
 
         case !!isTopic:
           const topicResponse = await getProductsByTopic({
-            topic: topic!,
+            section: section!,
             page
           });
           productsResponse = topicResponse.products;
           total = topicResponse.total;
-          title.current = topic!;
+          title.current = section!;
+          currentCategory.current = "";
+          currentSubcategory.current = "";
 
-          if (topic === TOPICS.BEST_SELLERS) {
+          if (section === TOPICS.BEST_SELLERS) {
             handleSort('totalQuantitySold', 'desc');
           }
           break;
@@ -75,7 +86,9 @@ function ProductsPageContent() {
           const availableResponse = await getAvailableProducts({ page });
           productsResponse = availableResponse.products;
           total = availableResponse.total;
-          title.current = 'Todos los Productos';
+          title.current = "Todos los Productos";
+          currentCategory.current = "";
+          currentSubcategory.current = "";
       }
 
       setProducts(productsResponse || []);
@@ -87,38 +100,35 @@ function ProductsPageContent() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [categorySlug, subcategorySlug, handleSort, isCategory, isSubcategory, isTopic, page, section]);
 
   useEffect(() => {
     getProducts();
-
-    // TODO: Filtrar del lado del servidor
-    if (subcategory !== null) {
-      handleFilterChange("subcategory", subcategory);
-      return () => {
-        resetFilters();
-      };
-    }
-  }, [category, subcategory, topic, page]);
+  }, [isCategory, isSubcategory, section, page]);
 
   if (isLoading) return <PageLoader text='Productos' />;
-  if (products.length === 0) return <NoProductsResults category={subcategory || category || undefined} />;
+  if (products.length === 0) return <NoProductsResults category={title.current || undefined} />;
 
   return (
     <ShowProducts
       products={products}
       totalProducts={totalProducts}
       search={title.current}
-      breadcumbs={isCategory}
-      subcategory={subcategory || undefined}
+      category={currentCategory.current}
+      subcategory={currentSubcategory.current} 
     />
   );
 }
 
-export default function ProductsPage() {
+interface ProductsPageProps {
+  categorySlug?: string;
+  subcategorySlug?: string;
+}
+
+export default function ProductsPage({ categorySlug, subcategorySlug }: ProductsPageProps) {
   return (
     <Suspense fallback={<PageLoader text='Productos' />}>
-      <ProductsPageContent />
+      <ProductsPageContent categorySlug={categorySlug} subcategorySlug={subcategorySlug} />
     </Suspense>
   );
 }

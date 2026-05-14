@@ -69,7 +69,7 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
       {/* Imagen y nombre del producto */}
       <Link
         className="flex flex-col items-center gap-2.5 min-w-0 md:flex-row md:items-center md:gap-4"
-        href={`/product/${product.slug}`}
+        href={`/producto/${product.slug}`}
       >
         <div className="relative w-32 h-32 shrink-0 md:w-28 md:h-28">
           <Image

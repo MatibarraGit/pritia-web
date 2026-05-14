@@ -22,7 +22,7 @@ export const CartItem = ({
       {/* Imagen del producto */}
       <Link 
         className="h-20 w-20 shrink-0 bg-gray-100 rounded-lg overflow-hidden"
-        href={`/product/${slug}`}
+        href={`/producto/${slug}`}
       >
         {image ? (
           <Image 
@@ -41,7 +41,7 @@ export const CartItem = ({
 
       {/* Información del producto */}
       <div className="flex-1 flex flex-col justify-between">
-        <Link href={`/product/${slug}`} className="hover:text-primary transition-colors">
+        <Link href={`/producto/${slug}`} className="hover:text-primary transition-colors">
           <span className="font-medium text-sm block mb-1">{name}</span>
 
           <div className="flex items-center gap-2 text-sm">

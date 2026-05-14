@@ -17,6 +17,7 @@ import { useFetchData, useMediaQuery } from '@/hooks';
 import { fetchAllCategories } from "@/services";
 import { CategoryType } from "@/types";
 import Image from "next/image";
+import { toSlug } from "@/utils";
 
 export const ProductCategories = () => {
   const { data: categories, isLoading } = useFetchData<CategoryType[]>({ fetchFunction: fetchAllCategories });
@@ -90,7 +91,7 @@ export const ProductCategories = () => {
             {categories.map((category) => (
               <CarouselItem key={category.category_id} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
                 <Link
-                  href={`/products?category=${category.category_name}`}
+                  href={`/productos/${toSlug(category.category_name)}`}
                   className={cn(
                     "group relative overflow-hidden rounded-lg shadow-md transition-transform hover:transform hover:scale-105 bg-linear-to-br from-primary/20 to-secondary/20 block"
                   )}

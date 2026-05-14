@@ -48,7 +48,7 @@ export const FavouritesMenu = () => {
               {sortedProducts.map((product) => (
                 <Link
                   key={product.id}
-                  href={`/product/${product.slug}`}
+                  href={`/producto/${product.slug}`}
                   onClick={() => setOpen(false)}
                   className={cn(
                     "flex gap-2.5 p-2.5 hover:bg-background-hover transition-colors",
@@ -79,7 +79,7 @@ export const FavouritesMenu = () => {
             </div>
             <div className="border-t p-2 flex items-center justify-center shadow-[0_-1px_8px_rgba(0,0,0,0.1)] bg-background rounded-b-lg">
               <Link
-                href="/loved-products"
+                href="/productos-favoritos"
                 onClick={() => setOpen(false)}
                 className="text-sm text-primary hover:underline w-full text-center"
               >

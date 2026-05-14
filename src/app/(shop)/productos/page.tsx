@@ -1,15 +1,12 @@
 import ProductsPage from "./productsPage";
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ topic?: string; category?: string }> }) {
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ seccion?: string }> }) {
   const params = await searchParams;
-  const topic = params.topic;
-  const category = params.category;
+  const section = params.seccion;
   let title = '';
 
-  if (!!topic) {
-    title = decodeURIComponent(topic);
-  } else if (!!category) {
-    title = decodeURIComponent(category);
+  if (!!section) {
+    title = section;
   } else {
     title = 'Todos los productos';
   }

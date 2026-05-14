@@ -22,12 +22,13 @@ export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) 
     } else {
       
       if(Array.isArray(items)) {
-        namesAndQuantitys = items.map(item => `- ${item.name} (x${item.quantity}) ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/product/${item.slug}`).join('\n\n');
+        namesAndQuantitys = items.map(item => `- ${item.name} (x${item.quantity}) ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/producto/${item.slug}`).join('\n\n');
       } else {
-        namesAndQuantitys = `- ${items.name} (x${items.quantity}) ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/product/${items.slug}`
+        namesAndQuantitys = `- ${items.name} (x${items.quantity}) ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/producto/${items.slug}`
       }
 
-      const message = `Hola! Vengo desde la web para realizar un pedido \n\n${namesAndQuantitys}`;
+      const message = `¡Hola! Vengo desde la web y quiero hacer un pedido:\n\n${namesAndQuantitys}\n\n¿Cuándo llegará a mi domicilio?`;
+
       const urlMessage = `https://wa.me/+5491131738925?text=${encodeURIComponent(message)}`;
       
       // const orderData = { items }
@@ -46,7 +47,3 @@ export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) 
     </Button>
   );
 };
-
-
-
-

@@ -43,11 +43,11 @@ export default async function HomePage() {
     isLoading = false;
   }
 
-  const newProductsUrl = `/products?topic=${encodeURIComponent(TOPICS.NEW_ENTRIES)}`;
-  const offersUrl = `/products?topic=${encodeURIComponent(TOPICS.OFFERS)}`;
-  // const bestSellersUrl = `/products?topic=${encodeURIComponent(TOPICS.BEST_SELLERS)}`;
-  const reEntriesUrl = `/products?topic=${encodeURIComponent(TOPICS.RE_ENTRIES)}`;
-  const newsProductsUrl = `/products?topic=${encodeURIComponent(TOPICS.NEWS)}`;
+  const newProductsUrl = `/productos?seccion=${encodeURIComponent(TOPICS.NEW_ENTRIES)}`;
+  const offersUrl = `/productos?seccion=${encodeURIComponent(TOPICS.OFFERS)}`;
+  // const bestSellersUrl = `/productos?seccion=${encodeURIComponent(TOPICS.BEST_SELLERS)}`;
+  const reEntriesUrl = `/productos?seccion=${encodeURIComponent(TOPICS.RE_ENTRIES)}`;
+  const newsProductsUrl = `/productos?seccion=${encodeURIComponent(TOPICS.NEWS)}`;
 
   return (
     <>

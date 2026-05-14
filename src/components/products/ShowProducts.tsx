@@ -8,14 +8,14 @@ import { FilterIcon } from "lucide-react";
 import { ListProducts } from "./ListProducts";
 import { FiltersComponent, OrderComponent } from "@/components";
 import { useFiltersContext, useOrderContext } from "@/hooks";
-import { PRODUCTS_PER_PAGE } from "@/utils";
+import { PRODUCTS_PER_PAGE, toSlug } from "@/utils";
 import { ProductType } from "@/types";
 
 interface ShowProductsProps {
   products: ProductType[];
   totalProducts?: number | null;
   search?: string;
-  breadcumbs?: boolean;
+  category?: string;
   subcategory?: string;
 }
 
@@ -23,7 +23,7 @@ export const ShowProducts = ({
   products,
   totalProducts = null,
   search = "",
-  breadcumbs = false,
+  category = "",
   subcategory = "",
 }: ShowProductsProps) => {
   const totalPages = Math.ceil(totalProducts ? totalProducts / PRODUCTS_PER_PAGE : (products.length) / PRODUCTS_PER_PAGE);
@@ -46,22 +46,26 @@ export const ShowProducts = ({
       <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-8">
       {/* <div className="w-full max-w-content md:w-11/12 h-fit mb-5 mx-auto relative md:mt-36"> */}
         <div className="grid gap-4 md:w-full md:grid-cols-[230px_1fr] md:items-start">
-          {/* Buscador / breadcrumbs */}
+
+          {/* Breadcrumbs */}
           <div className="order-2 w-full md:order-1 px-[5%] md:px-0">
-            {breadcumbs ? (
+            {/* Si hay categoría, muestra breadcrumbs */}
+            {category ? (
               <div className="h-fit text-wrap">
-                <Link href="/products" className="w-fit pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
+                <Link href="/productos" className="w-fit pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
+                {/* Si hay subcategoría, muestra categoría y subcategoría */}
                 {!!subcategory ? (
                   <>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
-                    <Link href={`/products?category=${search}`} className="w-fit pr-2.5 inline text-wrap text-[15px] underline md:no-underline hover:underline">{search}</Link>
+                    <Link href={`/productos/${toSlug(category)}`} className="w-fit pr-2.5 inline text-wrap text-[15px] underline md:no-underline hover:underline">{category}</Link>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
                     <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{subcategory}</h2>
                   </>
                 ) : (
+                  // Si no hay subcategoría, muestra solo la categoría
                   <>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
-                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{search}</h2>
+                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{category}</h2>
                   </>
                 )}
               </div>

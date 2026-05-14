@@ -8,19 +8,12 @@ export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pritia.com.ar';
 
   const productsSitemapData = products.map((product) => ({
-    url: `${baseUrl}/product/${product.slug}`,
+    url: `${baseUrl}/producto/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: "daily",
     priority: 0.8
   }))
 
-  const searchResultsSitemapData = products.map((product) => ({
-    url: `${baseUrl}/search-results/${product.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.5
-  }))
-  
   return [
     {
       url: `${baseUrl}/`,
@@ -29,32 +22,18 @@ export default async function sitemap() {
       priority: 1
     },
     {
-      url: `${baseUrl}/products`,
+      url: `${baseUrl}/productos`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8
     },
     {
-      url: `${baseUrl}/cart`,
+      url: `${baseUrl}/productos-favoritos`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.3
-    },
-    {
-      url: `${baseUrl}/loved-products`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.3
-    },
-    {
-      url: `${baseUrl}/auth/login`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
       priority: 0.3
     },
     
-    ...productsSitemapData,
-    ...searchResultsSitemapData
-
+    ...productsSitemapData
   ]
 }
