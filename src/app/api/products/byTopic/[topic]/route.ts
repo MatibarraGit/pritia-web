@@ -42,11 +42,12 @@ export async function GET(
         productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
           ${BASE_QUERY}
           AND p.discount_percent > 0
-          ORDER BY p.discount_percent DESC, p.product_id ASC
+          ORDER BY p.stock DESC, p.discount_percent DESC, p.product_id ASC
           LIMIT ${PRODUCTS_PER_PAGE} 
           OFFSET ${offset}
         `)
-        const offersTotalResult = await prisma.$queryRaw<[{ count: number }]>`          SELECT COUNT(*)::INTEGER
+        const offersTotalResult = await prisma.$queryRaw<[{ count: number }]>`
+          SELECT COUNT(*)::INTEGER
           FROM products p
           LEFT JOIN categories c ON p.category_id = c.category_id
           LEFT JOIN subcategories sc ON sc.subcategory_id = p.subcategory_id

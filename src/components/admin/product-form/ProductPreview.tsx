@@ -1,3 +1,4 @@
+// TODO: Sincronizar con vista actual
 "use client";
 
 import { ProductImages, ProductHeader, ProductPricing, ProductTabs } from "@/components";
@@ -41,9 +42,6 @@ export function ProductPreview({ productData }: ProductPreviewProps) {
 
   // Crear objeto producto para ProductImages
   const productName = productData.name || "NOMBRE DEL PRODUCTO";
-
-  // Convertir inStock de string a boolean
-  const inStock = productData.inStock === "Disponible";
 
   return (
     <div className="w-full bg-gray-50 rounded-lg border p-4 md:p-6">

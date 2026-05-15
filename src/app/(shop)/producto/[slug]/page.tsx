@@ -74,7 +74,6 @@ export default async function ProductPage({ params }: Props) {
     discountPercent,
     category,
     subcategory,
-    inStock,
     description,
     createdAt,
     updatedAt,

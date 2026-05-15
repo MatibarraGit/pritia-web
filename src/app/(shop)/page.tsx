@@ -65,11 +65,11 @@ export default async function HomePage() {
       {/* <FeaturedFans /> */}
       <DailyHighlights products={DailyHighlightsProducts} />
       <ProductsCarousel title="Hot Sale 🔥" href={hotSaleProductsUrl} isLoading={isLoading} products={ProductsOnOffer} isAutoplay withIndicators loop />
-      <ProductsCarousel title="Nuevos Productos" href={newProductsUrl} isLoading={isLoading} products={NewEntriesProducts} isAutoplay withIndicators loop />
+      <ProductsCarousel title="Novedades" href={newsProductsUrl} isLoading={isLoading} products={NewsProducts} isAutoplay withIndicators loop />
       {/* <ProductsCarousel title="Ofertas" href={offersUrl} isLoading={isLoading} products={ProductsOnOffer} isAutoplay withIndicators loop /> */}
       <ProductCategories />
+      <ProductsCarousel title="Nuevos Productos" href={newProductsUrl} isLoading={isLoading} products={NewEntriesProducts} isAutoplay withIndicators loop />
       <ProductsCarousel title="Reingresos" href={reEntriesUrl} isLoading={isLoading} products={ReEntriesProducts} isAutoplay withIndicators loop />
-      <ProductsCarousel title="Novedades" href={newsProductsUrl} isLoading={isLoading} products={NewsProducts} isAutoplay withIndicators loop />
       <ServicesHighlight />
     </>
   );

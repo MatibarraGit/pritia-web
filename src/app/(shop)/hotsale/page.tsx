@@ -5,7 +5,7 @@ import { EVENTS } from "@/utils";
 
 export async function generateMetadata() {
   return { 
-    title: "Hot Sale 2026 | Pritia",
+    title: "Hot Sale 2026",
     description: ""
 
   };

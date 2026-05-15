@@ -57,7 +57,7 @@ export const ProductCategories = () => {
   }
   
   return (
-    <section className="w-11/12 max-w-content py-8 mx-auto">
+    <section className="w-11/12 max-w-content py-8 -mt-8 mx-auto">
       <h2 className="font-subheading text-2xl text-center mb-4 md:text-3xl">Comprá por Categoría</h2>
       <div className="mx-auto">
         <Carousel

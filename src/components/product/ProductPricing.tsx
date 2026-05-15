@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
-import { EVENTS, formatPrice, DEADLINE, TOTAL_DURATION, pad } from "@/utils";
+import { EVENTS, formatPrice, DEADLINE, pad } from "@/utils";
 import { TimeLeft } from "@/types";
-
-const isHotSale = EVENTS.IS_HOT_SALE;
 
 interface ProductPricingProps {
   price: number;

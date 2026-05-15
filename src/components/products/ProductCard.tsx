@@ -13,6 +13,7 @@ type ProductCardProps = {
 
 export const ProductCard = ({ product, classNames }: ProductCardProps) => {
 
+  // TODO: Eliminar al finalizar HotSale
   const hasDiscount = product.discountPercent > 0 && product.originalPrice;
   const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
   const savings = hasDiscount ? product.originalPrice! - product.price : 0;
