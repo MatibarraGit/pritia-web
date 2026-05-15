@@ -79,9 +79,20 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
         )}
 
         {hasDiscount && (
-          <span className="text-sm line-through text-gray-500">
-            {formatPrice(product.originalPrice!)}
-          </span>
+          <div className="flex flex-col justify-center gap-1">
+            <span className="text-sm line-through text-gray-500">
+              {formatPrice(product.originalPrice!)}
+            </span>
+
+            <span
+              className={cn(
+                "w-fit text-xs font-subheading text-white px-1.5 py-0.5 rounded",
+                isHotSale ? "bg-orange-500" : "bg-primary"
+              )}
+              >
+              {product.discountPercent}% OFF
+            </span>
+          </div>
         )}
 
         <div className={cn(
@@ -90,20 +101,9 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           // installmentQuantity === 0 &&
         )}>
           <div className="flex flex-col">
-            <div className="flex items-center gap-2 mb-1 mt-auto">
-              <span className="text-xl font-subheading">
-                {formatPrice(product.price)}
-              </span>
-
-              <span
-                className={cn(
-                  "text-xs font-subheading text-white px-1.5 py-0.5 rounded",
-                  isHotSale ? "bg-orange-500" : "bg-primary"
-                )}
-              >
-                {product.discountPercent}% OFF
-              </span>
-            </div>
+            <span className="text-xl font-subheading">
+              {formatPrice(product.price)}
+            </span>
 
             {/* Ahorro en pesos */}
             {hasDiscount && (
