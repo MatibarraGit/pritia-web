@@ -8,6 +8,11 @@ export const enum ACTION_TYPES {
   SHARE = 'SHARE'
 };
 
+// TODO: Poner false al finalizar HotSale
+export const EVENTS = {
+  IS_HOT_SALE: true
+} as const;
+
 export const enum PURCHASE_ORDER_STATUS {
   UNCONFIRMED = 'Sin confirmar',
   PURCHASE_PENDING = 'Pendiente de compra',

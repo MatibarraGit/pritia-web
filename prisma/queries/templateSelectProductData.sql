@@ -9,6 +9,8 @@ SELECT
   p.sell_price,
   p.discount_percent,
   p.in_stock,
+  -- TODO: Eliminar al finalizar HotSale
+  p.stock,
   p.product_slug,
   c.category_name,
   sc.subcategory_name,

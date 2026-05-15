@@ -1,6 +1,7 @@
 export { compareValues } from './compareValues';
 export {
   ACTION_TYPES,
+  EVENTS,
   PURCHASE_ORDER_STATUS,
   PAYMENT_METHODS,
   PAYMENT_STATUS,
@@ -21,6 +22,11 @@ export { formatSlugTitle } from './formatSlugTitle';
 export { getErrorMessage } from './authErrors';
 export { getFilterName } from './getFilterName';
 export { getOrderStatusColor } from './getOrderStatusColor';
+export {
+  DEADLINE,
+  TOTAL_DURATION,
+  pad
+} from "./hotSaleCountDown";
 export { normalizeText } from './normalize-text';
 export { convertImageToBuffer, getPublicIdFromUrl } from "./processImage";
 export { toSlug } from './toSlug';

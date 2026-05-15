@@ -90,6 +90,13 @@ export type SaleItem = {
   quantity: number;
 }
 
+export type TimeLeft = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 export type UserType = {
   id: number;
   name: string;

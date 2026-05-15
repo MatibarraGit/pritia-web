@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/libs/utils";
-import { LikeButton } from "@/components";
+import { CheckoutButton, LikeButton } from "@/components";
 import { ProductType } from "@/types";
-import { formatPrice } from "@/utils";
+import { EVENTS, formatPrice } from "@/utils";
 
 type ProductCardProps = {
   product: ProductType;
@@ -12,15 +12,29 @@ type ProductCardProps = {
 };
 
 export const ProductCard = ({ product, classNames }: ProductCardProps) => {
+
+  const hasDiscount = product.discountPercent > 0 && product.originalPrice;
+  const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
+  const savings = hasDiscount ? product.originalPrice! - product.price : 0;
+  
   // Imagen - las imágenes vienen como array de strings con URLs de Cloudinary
   const image = product?.images?.[0] || "/img/image-icon.png";
+
+  const productToCheckout = !isHotSale ? undefined : {
+    id: product.id,
+    image: product.images[0] || "/img/image-icon.png",
+    name: product.name,
+    price: product.price,
+    quantity: 1,
+    slug: product.slug,
+  };
 
   return (
     <Link
       href={`/producto/${product.slug}`}
       className={`bg-white rounded-xl overflow-hidden border ${classNames}`}
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center relative">
         <Image
           src={image}
           alt={product.name}
@@ -28,8 +42,19 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           height={250}
           className="object-contain h-40"
         />
+
+        {/* Badge Hot Sale */}
+        {isHotSale && (
+          <span className="absolute top-2 left-2 flex items-center gap-1 bg-orange-500 text-white text-xs font-medium px-2 py-0.5 rounded">
+            🔥 Hot Sale
+          </span>
+        )}
       </div>
-      <div className="p-4 border-t h-52 flex flex-col">
+
+      <div className={cn(
+        "p-4 border-t flex flex-col",
+        isHotSale ? "h-auto" : "h-52"
+        )}>
         <h3 className="font-medium text-lg mb-1 line-clamp-2 overflow-hidden">{product.name}</h3>
         <p className="text-sm text-gray-600 mb-3">{product.category}</p>
 
@@ -45,15 +70,25 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           </div>
         )} */}
 
-        {product.discountPercent > 0 && product.originalPrice && (
+        {/* Stock */}
+        {(product.stock > 0 && product.stock < 10) && (
+          <div className="flex items-center gap-1.5 text-xs font-medium px-2 py-1 rounded mb-4 w-fit bg-orange-100 text-orange-700">
+            ⚠ ¡Solo queda{product.stock === 1 ? ' 1 unidad!' : `n ${product.stock} unidades!`} 
+          </div>
+        )}
+
+        {hasDiscount && (
           <div className={cn("flex items-center gap-2 mb-1 mt-auto")}>
             <span
-              className="text-xs font-subheading text-white px-1.5 py-0.5 rounded bg-primary"
+              className={cn(
+                "text-xs font-subheading text-white px-1.5 py-0.5 rounded",
+                isHotSale ? "bg-orange-500" : "bg-primary"
+              )}
             >
               {product.discountPercent}% OFF
             </span>
             <span className="text-sm line-through text-gray-500">
-              {formatPrice(product.originalPrice)}
+              {formatPrice(product.originalPrice!)}
             </span>
           </div>
         )}
@@ -63,14 +98,39 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           (product.discountPercent === 0 || !product.category) && "mt-auto",
           // installmentQuantity === 0 &&
         )}>
-          <span className="text-xl font-subheading">
-            {formatPrice(product.price)}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-xl font-subheading">
+              {formatPrice(product.price)}
+            </span>
+
+            {/* Ahorro en pesos */}
+            {hasDiscount && (
+              <div className="mt-1 mb-3 flex flex-col gap-2 text-xs text-green-600">
+                <div className="center-flex gap-1"> 
+                  <strong>Ahorrás</strong>
+                  <span>{formatPrice(savings)}</span>
+                </div>
+
+                <span className="center-flex gap-1 rounded-lg bg-green-400/20"> 
+                  Envío 
+                  <strong>GRATIS</strong>
+                </span>
+              </div>
+            )}
+          </div>
 
           <LikeButton product={product} />
         </div>
+
+        {/* Envío gratis + CTA Hot Sale */}
+        {isHotSale && (
+          <CheckoutButton 
+            items={productToCheckout!}
+            text="Aprovechar oferta"
+            classname="w-full bg-orange-500 hover:bg-orange-600 transition-colors text-white text-sm font-medium py-2 rounded-lg"
+          />
+        )}
       </div>
     </Link>
   );
 };
-

@@ -10,12 +10,15 @@ import { TOPICS } from "@/utils";
 import { ProductType } from "@/types";
 import { getAvailableProducts, getProductsByCategory, getProductsBySubcategory, getProductsByTopic } from "@/services/products";
 
-interface ProductsPageContentProps {
+// TODO: Eliminar lógica de hotsale al finalizar HotSale
+
+interface ProductsPageProps {
   categorySlug?: string;
   subcategorySlug?: string;
+  isHotSale?: boolean;
 }
 
-function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageContentProps) {
+function ProductsPageContent({ categorySlug, subcategorySlug, isHotSale }: ProductsPageProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +31,7 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
 
   const isCategory = typeof categorySlug === "string" && categorySlug.length > 0;
   const isSubcategory = typeof subcategorySlug === "string" && subcategorySlug.length > 0;
-  const isTopic = section !== null && !isCategory && !isSubcategory;
+  const isTopic = section !== null && !isCategory && !isSubcategory && !isHotSale;
 
   const page = params.get("page") ? parseInt(params.get("page")!) : 1;
 
@@ -42,6 +45,15 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
       let total = 0;
 
       switch (true) {
+        case !!isHotSale:
+          const offersResponse = await getProductsByTopic({ page, section: TOPICS.OFFERS });
+          productsResponse = offersResponse.products;
+          total = offersResponse.total;
+          title.current = "Hot Sale 2026";
+          currentCategory.current = "";
+          currentSubcategory.current = "";
+          break;
+
         case !!isSubcategory:
           const subcategoryResponse = await getProductsBySubcategory({
             subcategorySlug,
@@ -89,6 +101,7 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
           title.current = "Todos los Productos";
           currentCategory.current = "";
           currentSubcategory.current = "";
+          break;
       }
 
       setProducts(productsResponse || []);
@@ -120,15 +133,10 @@ function ProductsPageContent({ categorySlug, subcategorySlug }: ProductsPageCont
   );
 }
 
-interface ProductsPageProps {
-  categorySlug?: string;
-  subcategorySlug?: string;
-}
-
-export default function ProductsPage({ categorySlug, subcategorySlug }: ProductsPageProps) {
+export default function ProductsPage({ categorySlug, subcategorySlug, isHotSale }: ProductsPageProps) {
   return (
     <Suspense fallback={<PageLoader text='Productos' />}>
-      <ProductsPageContent categorySlug={categorySlug} subcategorySlug={subcategorySlug} />
+      <ProductsPageContent categorySlug={categorySlug} subcategorySlug={subcategorySlug} isHotSale={isHotSale} />
     </Suspense>
   );
 }

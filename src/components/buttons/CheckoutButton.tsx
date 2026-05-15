@@ -9,9 +9,12 @@ import { Button } from "@/components/ui";
 interface CheckoutButtonProps {
   disableCheckout?: { disable: boolean; message: string };
   items: CartItemType[] | CartItemType ;
+  // TODO: Eliminar al finalizar HotSale
+  classname?: string;
+  text?: string;
 }
 
-export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) => {
+export const CheckoutButton = ({ disableCheckout, items, text, classname }: CheckoutButtonProps) => {
   const { showToast } = toastContext()
 
   function buyNow() {
@@ -40,10 +43,14 @@ export const CheckoutButton = ({ disableCheckout, items }: CheckoutButtonProps) 
 
   return (
     <Button
-      className="w-full h-12 bg-buy hover:bg-buy-hover text-white" 
-      onClick={buyNow}
+      className={classname ?? "w-full h-12 bg-buy hover:bg-buy-hover text-white" }
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        buyNow();
+      }}
     >
-      Pedir por WhatsApp
+      {text ?? "Pedir por WhatsApp"}
     </Button>
   );
 };

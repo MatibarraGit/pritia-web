@@ -10,8 +10,7 @@ import {
   ProductPricing,
   ProductPurchaseInfo,
   ProductDescription,
-  ProductsCarousel,
-  // ProductInstallmentsSection
+  ProductsCarousel
 } from "@/components";
 import { getProductsBySubcategory } from "@/services";
 
@@ -70,7 +69,6 @@ export default async function ProductPage({ params }: Props) {
     id,
     images,
     name,
-    purchasePrice,
     price,
     originalPrice,
     discountPercent,
@@ -86,7 +84,7 @@ export default async function ProductPage({ params }: Props) {
 
   // ----Productos relacionados----
   const relatedProducts =
-    (await getProductsBySubcategory({ subcategorySlug: toSlug(subcategory) })) ?? []
+    (await getProductsBySubcategory({ subcategorySlug: toSlug(subcategory) })) ?? [];
   const filteredRelatedProducts = relatedProducts?.products?.filter(
     (p: ProductType) => String(p.id) !== String(id),
   );
@@ -152,12 +150,11 @@ export default async function ProductPage({ params }: Props) {
               price={price}
               originalPrice={originalPrice}
               discountPercent={discountPercent}
-              inStock={inStock}
             />
 
             <ProductActions product={product} />
 
-            {/* TODO: Implementar cuando reactive los créditos personales */}
+            {/* TODO: Implementar nuevamente cuando reactive los créditos personales */}
             {/* {price >= 40000 && (
               <ProductInstallmentsSection
               price={price}

@@ -26,7 +26,16 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    id: 1,
+    id: 1, // ajustá el id según corresponda
+    title: "HOT SALE 🔥",
+    subtitle: "Las mejores ofertas del año",
+    description: "Aprovechá los descuentos exclusivos por tiempo limitado",
+    buttonHref: "/hotsale",
+    buttonText: "VER OFERTAS",
+    image: "/img/slide-hotsale3.png",
+  },
+  {
+    id: 2,
     title: "BENEFICIOS EN TUS COMPRAS",
     subtitle: "Reintegros y Sorteos",
     description: "Participá con tu compra mediante la web",
@@ -35,23 +44,23 @@ const slides: Slide[] = [
     image: "/img/slide-benefits.png",
   },
   {
-    id: 2,
+    id: 3,
     title: "ENVÍOS A TODO EL PAÍS",
     subtitle: "LLEGAMOS A TU PUERTA",
     description: "Entregas rápidas y seguras",
     buttonHref: "/ayuda",
     buttonText: "VER MÁS",
     image: "/img/slide-shipping.png",
-    },
-    {
-    id: 3,
-    title: "MEGA OFERTAS",
-    subtitle: "PENSADAS PARA VOS",
-    description: "HASTA 35% OFF y cuotas sin tarjeta",
-    buttonHref: "/productos?seccion=ofertas",
-    buttonText: "VER OFERTAS",
-    image: "/img/slide-offers.png",
   },
+  // {
+  //   id: 4,
+  //   title: "MEGA OFERTAS",
+  //   subtitle: "PENSADAS PARA VOS",
+  //   description: "HASTA 35% OFF",
+  //   buttonHref: "/productos?seccion=ofertas",
+  //   buttonText: "VER OFERTAS",
+  //   image: "/img/slide-offers.png",
+  // },
   {
     id: 4,
     title: "TODO PARA TU HOGAR",
@@ -107,9 +116,11 @@ export const Carousel = () => {
       >
         <CarouselContent className="m-auto">
           {slides.map((item) => (
-            <CarouselItem key={item.id} className="m-auto basis-full pl-0">
+            <CarouselItem 
+              key={item.id} 
+              className="m-auto basis-full pl-0">
               <div className="py-4 my-auto relative">
-                <div className="w-11/12 max-w-6xl h-110 mx-auto flex flex-col text-white md:h-80 md:flex-row md:gap-12 md:items-center">
+                <div className="w-11/12 max-w-6xl h-110 mx-auto flex flex-col md:h-80 md:flex-row md:gap-12 md:items-center text-white">
                   {/* Text Content */}
                   <div className="flex-1 text-center md:text-left order-1">
                     <h2 className="text-3xl md:text-5xl font-heading! text-carousel-text mb-2">
@@ -125,7 +136,10 @@ export const Carousel = () => {
                       variant="secondary"
                       size="lg"
                       href={item.buttonHref}
-                      className="w-fit self-center mt-auto font-subheading tracking-wide bg-white text-primary hover:bg-gray-100"
+                      className={cn(
+                        "w-fit self-center mt-auto font-subheading tracking-wide",
+                        item.id === 1 ? "bg-orange-500 hover:bg-orange-500 text-white" : "bg-white hover:bg-gray-100 text-primary" 
+                      )}
                     >
                       {item.buttonText}
                     </Button>

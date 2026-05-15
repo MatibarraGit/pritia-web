@@ -67,7 +67,6 @@ export function ProductPreview({ productData }: ProductPreviewProps) {
             price={displayPrice}
             originalPrice={originalPrice}
             discountPercent={productData.discountPercent}
-            inStock={inStock}
           />
 
           {/* Categoría */}

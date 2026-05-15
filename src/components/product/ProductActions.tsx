@@ -1,11 +1,12 @@
 "use client";
+// TODO: Agregar lógica de carrito cuando haya checkout
 
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
-import { Button } from "@/components/ui";
+// import { Button } from "@/components/ui";
 import { CheckoutButton } from "@/components"
-import { cartContext, toastContext } from "@/contexts";
+// import { cartContext, toastContext } from "@/contexts";
 import { ProductType } from "@/types";
 
 interface ProductActionsProps {
@@ -14,8 +15,8 @@ interface ProductActionsProps {
 
 export function ProductActions({ product }: ProductActionsProps) {
   const [quantity, setQuantity] = useState(1);
-  const { addToCart } = cartContext();
-  const { showToast } = toastContext();
+  // const { addToCart } = cartContext();
+  // const { showToast } = toastContext();
 
   const cartItemProduct = {
     id: product.id,
@@ -36,14 +37,26 @@ export function ProductActions({ product }: ProductActionsProps) {
     }
   };
 
-  // TODO: Agregar cuando haya checkout
   // const handleAddToCart = () => {
   //   addToCart(cartItemProduct);
   //   showToast("Producto agregado al carrito", "success");
   // };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2">
+      {/* Disponibilidad */}
+      {product.inStock ? (
+        <div className="w-fit px-3 py-1 mt-4 text-sm text-white rounded-full bg-green-600">
+          <span className="mr-2">✓</span>
+          <span className="font-medium">En stock</span>
+        </div>
+      ) : (
+        <div className="w-fit px-3 py-1 text-sm text-white rounded-full bg-red-600">
+          <span className="mr-2">✗</span>
+          <span className="font-medium">Sin stock</span>
+        </div>
+      )}
+
       {/* Cantidad */}
       <div className="flex flex-col items-start gap-2 text-sm">
         <div className="flex items-center gap-3 flex-wrap">
@@ -64,17 +77,23 @@ export function ProductActions({ product }: ProductActionsProps) {
               <Plus className="h-4 w-4" />
             </button>
           </div>
-
-          {product.stock > 0 && (
-            <span className="text-gray-600">
-              ({product.stock} disponibles para entrega inmediata)
-            </span>
-          )}
         </div>
-      </div>
 
+        {(product.stock > 0 && product.stock < 10) && (
+          <div className="flex items-center gap-1.5 text-md font-medium mt-2 px-2 py-1 rounded bg-orange-200 text-orange-800">
+            ⚠ ¡Solo queda{product.stock === 1 ? ' 1 unidad!' : `n ${product.stock} unidades!`} 
+          </div>
+        )}
+
+        {product.stock >= 10 && (
+          <div className="text-gray-600">
+            {product.stock} disponibles para entrega inmediata
+          </div>
+        )}
+
+      </div>
       {/* Botones de acción */}
-      <div className="w-full flex flex-col space-x-4 gap-2">
+      <div className="w-full mt-6 flex flex-col space-x-4 gap-2">
         <CheckoutButton items={cartItemProduct} />
 
         {/* <Button 
