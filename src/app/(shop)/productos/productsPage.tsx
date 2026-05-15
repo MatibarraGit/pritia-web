@@ -113,11 +113,11 @@ function ProductsPageContent({ categorySlug, subcategorySlug, isHotSale }: Produ
     } finally {
       setIsLoading(false);
     }
-  }, [categorySlug, subcategorySlug, handleSort, isCategory, isSubcategory, isTopic, page, section]);
+  }, [categorySlug, subcategorySlug, handleSort, isCategory, isSubcategory, isTopic, page, section, isHotSale]);
 
   useEffect(() => {
     getProducts();
-  }, [isCategory, isSubcategory, section, page]);
+  }, [isCategory, isSubcategory, section, page, isHotSale]);
 
   if (isLoading) return <PageLoader text='Productos' />;
   if (products.length === 0) return <NoProductsResults category={title.current || undefined} />;

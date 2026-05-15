@@ -56,7 +56,7 @@ export function ProductPricing({
     <div 
       className="-mt-3"
       style={{
-        background: "linear-gradient(to bottom, #ffffff, #ffc346)"
+        background: "linear-gradient(to bottom, #ffffff, #ffba6f)"
       }}    
     >
       {discountPercent > 0 && (
@@ -69,7 +69,7 @@ export function ProductPricing({
             <div 
               className="w-full flex items-center justify-center flex-col gap-2 text-lg leading-none tracking-tight text-black px-2 py-2 md:flex-row gap md:justify-between"
               style={{
-                background: "linear-gradient(90deg, #ff4356 20%, #f71316 100%)"
+                background: "linear-gradient(90deg, #ffa356 20%, #f71316 100%)"
               }}  
             > 
               <strong className="text-white italic">LA OFERTA FINALIZA EN</strong>
