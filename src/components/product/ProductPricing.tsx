@@ -56,7 +56,7 @@ export function ProductPricing({
     <div 
       className="-mt-3"
       style={{
-        background: "linear-gradient(to bottom, #ffffff, #ffba6f)"
+        background: `${discountPercent > 0 && isHotSale && "linear-gradient(to bottom, #ffffff, #ffba6f)"}`
       }}    
     >
       {discountPercent > 0 && (
@@ -102,9 +102,11 @@ export function ProductPricing({
             {formatPrice(price)}
           </span>
 
-          <Badge className={`text-white ${isHotSale ? 'bg-orange-500' : 'bg-primary'}`}>
-            {discountPercent}% OFF
-          </Badge>
+          {discountPercent > 0 && (
+            <Badge className={`text-white ${isHotSale ? 'bg-orange-500' : 'bg-primary'}`}>
+              {discountPercent}% OFF
+            </Badge>
+          )}
         </div>
 
         <div className="my-1 flex flex-col gap-2 text-xs text-green-600">

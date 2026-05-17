@@ -60,17 +60,19 @@ export async function GET(request: Request) {
       )
       ORDER BY 
         CASE 
-          -- Busca una coincidencia de palabra completa dentro del texto (ej: "Cama" o "Cama de...")
-          WHEN unaccent(p.product_name) ~* ('\\m' || unaccent(${search}) || '\\M') THEN 1
           -- El product_name entero es igual al search
-          WHEN unaccent(p.product_name) ILIKE unaccent(${search}) THEN 2 
-          -- Subcategoría coincide (solo aplica si la longitud del término de búsqueda es mayor o igual a 4)
-          WHEN unaccent(sc.subcategory_name) ILIKE unaccent(${pattern}) THEN 3
+          WHEN unaccent(p.product_name) ILIKE unaccent(${search}) THEN 1 
+          -- Busca una coincidencia de palabra completa dentro del texto (ej: "Cama" o "Cama de...")
+          WHEN unaccent(p.product_name) ~* ('\\m' || unaccent(${search}) || '\\M') THEN 2
           -- Contiene el término buscado en cualquier parte del product_name
-          WHEN unaccent(p.product_name) ILIKE unaccent(${pattern}) THEN 4
+          WHEN unaccent(p.product_name) ILIKE unaccent(${pattern}) THEN 3
+          -- Subcategoría coincide (solo aplica si la longitud del término de búsqueda es mayor o igual a 4)
+          WHEN unaccent(sc.subcategory_name) ILIKE unaccent(${pattern}) THEN 4
           ELSE 5
         END,
-        WORD_SIMILARITY(unaccent(p.product_name), unaccent(${search})) DESC
+        COALESCE(p.updated_at, p.created_at) DESC,
+        WORD_SIMILARITY(unaccent(p.product_name), unaccent(${search})) DESC,
+        p.product_id DESC
     `);
 
     // Si no hay productos, devolver productos aleatorios

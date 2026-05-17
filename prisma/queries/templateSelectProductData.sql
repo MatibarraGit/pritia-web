@@ -12,6 +12,8 @@ SELECT
   -- TODO: Eliminar al finalizar HotSale
   p.stock,
   p.product_slug,
+  p.created_at,
+  p.updated_at,
   c.category_name,
   sc.subcategory_name,
   p.images
