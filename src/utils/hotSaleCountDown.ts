@@ -1,14 +1,4 @@
-function getNextSunday(): Date {
-  const now = new Date();
-  const day = now.getDay();
-  const daysUntilSunday = day === 0 ? 7 : 7 - day;
-  const target = new Date(now);
-  target.setDate(now.getDate() + daysUntilSunday);
-  target.setHours(23, 59, 59, 0);
-  return target;
-}
-
-export const DEADLINE = getNextSunday();
+export const DEADLINE = new Date(2026, 4, 17, 23, 59, 59, 0);
 const SALE_START = new Date(DEADLINE);
 SALE_START.setDate(SALE_START.getDate() - 7);
 

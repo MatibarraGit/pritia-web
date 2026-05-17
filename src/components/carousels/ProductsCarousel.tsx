@@ -38,27 +38,21 @@ export const ProductsCarousel = memo(
     withIndicators = false,
     loop = false,
   }: ProductsCarouselProps) => {
-
-    const isMobile = useMediaQuery("(min-width: 375px)");
-    const isTablet = useMediaQuery("(min-width: 620px) and (max-width: 768px)");
-    const isSmallDesktop = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
-    const isDesktop = useMediaQuery("(min-width: 1024px)");
-
     const [api, setApi] = useState<CarouselApi>();
-    const [slidesPerView, setSlidesPerView] = useState(1);
+    const [totalIndicators, setTotalIndicators] = useState(0);
 
-    /* Plugins memoizados */
+    const isTouchViewport = useMediaQuery("(max-width: 767px)");
+    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+    const canAutoplay = isAutoplay && !isTouchViewport && !prefersReducedMotion;
+
     const plugins = useMemo(() => {
-      if (!isAutoplay) return [];
-    
+      if (!canAutoplay) return [];
+
       return [
         Autoplay({
           delay: 4000,
           stopOnInteraction: false,
           breakpoints: {
-            "(min-width: 375px)": {
-              delay: 5000,
-            },
             "(min-width: 620px)": {
               delay: 6000,
             },
@@ -68,54 +62,52 @@ export const ProductsCarousel = memo(
           },
         }),
       ];
-    }, [isAutoplay]);
+    }, [canAutoplay]);
 
-    /* Breakpoints memoizados */
     const breakpoints = useMemo(() => ({
-      "(min-width: 375px)": { slidesToScroll: 2 },
-      "(min-width: 620px)": { slidesToScroll: 3 },
-      "(min-width: 768px)": { slidesToScroll: 4 },
-      "(min-width: 1024px)": { slidesToScroll: 5 },
+      "(min-width: 620px)": { slidesToScroll: 2 },
+      "(min-width: 768px)": { slidesToScroll: 3 },
+      "(min-width: 1024px)": { slidesToScroll: 4 },
     }), []);
 
-    /* Opciones memoizadas */
     const carouselOpts = useMemo(() => ({
       loop,
       align: "start" as const,
       slidesToScroll: 1,
+      duration: isTouchViewport ? 20 : 30,
       breakpoints,
-    }), [loop, breakpoints]);
+    }), [loop, isTouchViewport, breakpoints]);
 
-    /* Slides por viewport */  
     useEffect(() => {
-      if (isDesktop) setSlidesPerView(5);
-      else if (isSmallDesktop) setSlidesPerView(4);
-      else if (isTablet) setSlidesPerView(3);
-      else if (isMobile) setSlidesPerView(2);
-      else setSlidesPerView(1);
-    }, [isMobile, isTablet, isSmallDesktop, isDesktop]);
+      if (!api) return;
 
-    /* Mouse handlers estables */
+      const updateSnapCount = () => {
+        setTotalIndicators(api.scrollSnapList().length);
+      };
+
+      updateSnapCount();
+      api.on("reInit", updateSnapCount);
+
+      return () => {
+        api.off("reInit", updateSnapCount);
+      };
+    }, [api, products.length]);
+
     const autoplay = api?.plugins()?.autoplay;
 
     const handleMouseEnter = useCallback(() => {
-      if (!isAutoplay || !api) return;
+      if (!canAutoplay || !api) return;
 
       autoplay?.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [api, isAutoplay]);
-    
+    }, [api, canAutoplay]);
+
     const handleMouseLeave = useCallback(() => {
-      if (!isAutoplay || !api) return;
+      if (!canAutoplay || !api) return;
 
       autoplay?.play();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [api, isAutoplay]);
-
-    /* ✅ Indicadores calculados */
-    const totalIndicators = useMemo(() => {
-      return Math.ceil(products.length / slidesPerView);
-    }, [products.length, slidesPerView]);
+    }, [api, canAutoplay]);
 
     if (products.length === 0) {
       return null;
@@ -160,11 +152,10 @@ export const ProductsCarousel = memo(
               )}
             </h2>
 
-            {withIndicators && (
+            {withIndicators && !isTouchViewport && (
               <CarouselIndicators
                 api={api}
                 totalIndicators={totalIndicators}
-                isMobile={isMobile}
               />
             )}
           </div>
@@ -177,11 +168,11 @@ export const ProductsCarousel = memo(
             opts={carouselOpts}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onTouchStart={handleMouseEnter}
-            onTouchEnd={handleMouseLeave}
             plugins={plugins}
           >
-            <CarouselContent>
+            <CarouselContent
+              className="will-change-transform transform-gpu"
+            >
               {products.map((product) => (
                 <CarouselItem
                   key={product.id}
@@ -191,6 +182,7 @@ export const ProductsCarousel = memo(
                     <ProductCard
                       product={product}
                       classNames="border-none"
+                      imageSizes="(max-width: 374px) 92vw, (max-width: 619px) 46vw, (max-width: 767px) 30vw, (max-width: 1023px) 23vw, 18vw"
                     />
                   </div>
                 </CarouselItem>

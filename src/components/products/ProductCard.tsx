@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,15 +10,19 @@ import { EVENTS, formatPrice } from "@/utils";
 type ProductCardProps = {
   product: ProductType;
   classNames?: string;
+  imageSizes?: string;
 };
 
-export const ProductCard = ({ product, classNames }: ProductCardProps) => {
-
+export const ProductCard = memo(function ProductCard({
+  product,
+  classNames,
+  imageSizes = "(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 250px",
+}: ProductCardProps) {
   // TODO: Eliminar al finalizar HotSale
   const hasDiscount = product.discountPercent > 0 && product.originalPrice;
   const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
   const savings = hasDiscount ? product.originalPrice! - product.price : 0;
-  
+
   // Imagen - las imágenes vienen como array de strings con URLs de Cloudinary
   const image = product?.images?.[0] || "/img/image-icon.png";
 
@@ -41,7 +46,11 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
           alt={product.name}
           width={250}
           height={250}
-          className="object-contain h-40"
+          sizes={imageSizes}
+          // loading="lazy"
+          quality={70}
+          className="object-contain h-40 select-none"
+          draggable={false}
         />
 
         {/* Badge Hot Sale */}
@@ -135,4 +144,6 @@ export const ProductCard = ({ product, classNames }: ProductCardProps) => {
       </div>
     </Link>
   );
-};
+});
+
+ProductCard.displayName = "ProductCard";

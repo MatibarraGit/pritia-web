@@ -130,6 +130,9 @@ button {
 
 .product-carousel-item {
   flex-basis: 100%;
+  content-visibility: auto;
+  contain: layout paint style;
+  contain-intrinsic-size: 360px 430px;
 
   @media (min-width: 375px) {
     flex-basis: calc(100% / 2);
