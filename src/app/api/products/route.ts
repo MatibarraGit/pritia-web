@@ -24,15 +24,11 @@ export async function GET(request: Request) {
       LEFT JOIN categories c ON p.category_id = c.category_id
       LEFT JOIN subcategories sc on sc.subcategory_id = p.subcategory_id
       WHERE 
-        p.deleted_at IS NULL AND
         (p.product_name ILIKE ${pattern} OR
         p.product_id::TEXT LIKE ${pattern})
       ORDER BY 
         in_stock DESC,
-        GREATEST(
-          created_at,
-          COALESCE(updated_at, created_at)
-        ) DESC,
+        COALESCE(updated_at, created_at) DESC,
         CASE
           WHEN p.product_id::TEXT LIKE ${search} THEN 1
           WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2
@@ -52,8 +48,7 @@ export async function GET(request: Request) {
       SELECT COUNT(*)::INTEGER
       FROM products p
       WHERE 
-        p.deleted_at IS NULL
-        AND (p.product_name ILIKE ${pattern} OR p.product_id::TEXT LIKE ${pattern})
+        (p.product_name ILIKE ${pattern} OR p.product_id::TEXT LIKE ${pattern})
     `;
 
     return NextResponse.json({ 
@@ -241,6 +236,5 @@ export async function POST(req: Request) {
     );
   }
 }
-
 
 

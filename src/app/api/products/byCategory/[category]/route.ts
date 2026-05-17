@@ -25,7 +25,7 @@ export async function GET(
     const productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
       AND c.category_slug = ${category}
-      ORDER BY p.product_name ASC, p.product_id ASC
+      ORDER BY COALESCE(updated_at, created_at) DESC,
       LIMIT ${PRODUCTS_PER_PAGE} 
       OFFSET ${offset}
     `);
@@ -39,8 +39,7 @@ export async function GET(
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.category_id
       WHERE p.in_stock = TRUE 
-        AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
-        AND p.deleted_at IS NULL
+        AND p.sell_price > 0 
         AND c.category_slug = ${toSlug(category)}
     `;
 

@@ -18,6 +18,6 @@ FROM purchase_order_items poi
 JOIN products p ON poi.product_id = p.product_id
 LEFT JOIN categories c ON p.category_id = c.category_id
 LEFT JOIN purchase_orders po ON poi.order_id = po.order_id
-WHERE p.in_stock = TRUE AND po.order_status = 'Vendida' AND p.deleted_at IS NULL
+WHERE p.in_stock = TRUE AND po.order_status = 'Vendida'
 GROUP BY p.product_id, c.category_name
 ORDER BY total_quantity_sold DESC

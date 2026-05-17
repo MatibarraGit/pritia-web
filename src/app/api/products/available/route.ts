@@ -24,15 +24,7 @@ export async function GET(request: Request) {
       ${BASE_QUERY}
       AND (p.product_name ILIKE ${pattern} OR
       p.product_id::TEXT LIKE ${pattern})
-      ORDER BY 
-        p.product_id DESC,
-        CASE
-          WHEN p.product_id::TEXT LIKE ${search} THEN 1
-          WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2
-          WHEN p.product_id::TEXT LIKE ${pattern} THEN 3
-          WHEN p.product_name ILIKE ${pattern} THEN 4
-          ELSE 5
-        END
+      ORDER BY COALESCE(updated_at, created_at) DESC,
       LIMIT ${PRODUCTS_PER_PAGE} 
       OFFSET ${offset}
     `);
@@ -46,8 +38,7 @@ export async function GET(request: Request) {
       FROM products p
       WHERE 
         p.in_stock = TRUE 
-        AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) 
-        AND p.deleted_at IS NULL
+        AND p.sell_price > 0 
         AND (p.product_name ILIKE ${pattern} OR p.product_id::TEXT LIKE ${pattern})
     `;
 

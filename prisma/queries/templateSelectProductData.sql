@@ -18,4 +18,4 @@ SELECT
 FROM products p
 LEFT JOIN categories c ON p.category_id = c.category_id
 LEFT JOIN subcategories sc on sc.subcategory_id = p.subcategory_id
-WHERE p.in_stock = TRUE AND (p.sell_price > 0 AND p.sell_price IS NOT NULL) AND p.deleted_at IS NULL
+WHERE p.in_stock = TRUE AND p.sell_price > 0
