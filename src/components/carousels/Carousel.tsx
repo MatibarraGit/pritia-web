@@ -26,16 +26,7 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    id: 1, // ajustá el id según corresponda
-    title: "HOT SALE 🔥",
-    subtitle: "Las mejores ofertas del año",
-    description: "Aprovechá los descuentos exclusivos por tiempo limitado",
-    buttonHref: "/hotsale",
-    buttonText: "VER OFERTAS",
-    image: "/img/slide-hotsale3.png",
-  },
-  {
-    id: 2,
+    id: 1,
     title: "BENEFICIOS EN TUS COMPRAS",
     subtitle: "Reintegros y Sorteos",
     description: "Participá con tu compra mediante la web",
@@ -44,7 +35,7 @@ const slides: Slide[] = [
     image: "/img/slide-benefits.png",
   },
   {
-    id: 3,
+    id: 2,
     title: "ENVÍOS A TODO EL PAÍS",
     subtitle: "LLEGAMOS A TU PUERTA",
     description: "Entregas rápidas y seguras",
@@ -52,15 +43,15 @@ const slides: Slide[] = [
     buttonText: "VER MÁS",
     image: "/img/slide-shipping.png",
   },
-  // {
-  //   id: 4,
-  //   title: "MEGA OFERTAS",
-  //   subtitle: "PENSADAS PARA VOS",
-  //   description: "HASTA 35% OFF",
-  //   buttonHref: "/productos?seccion=ofertas",
-  //   buttonText: "VER OFERTAS",
-  //   image: "/img/slide-offers.png",
-  // },
+  {
+    id: 3,
+    title: "MEGA OFERTAS",
+    subtitle: "PENSADAS PARA VOS",
+    description: "HASTA 35% OFF",
+    buttonHref: "/productos?seccion=ofertas",
+    buttonText: "VER OFERTAS",
+    image: "/img/slide-offers.png",
+  },
   {
     id: 4,
     title: "TODO PARA TU HOGAR",

@@ -62,8 +62,8 @@ export const ProductCard = memo(function ProductCard({
       </div>
 
       <div className={cn(
-        "p-4 border-t flex flex-col",
-        isHotSale ? "h-auto" : "h-52"
+        "p-4 border-t flex flex-col h-auto",
+        // isHotSale ? "h-auto" : "h-52"
         )}>
         <h3 className="font-medium text-lg mb-1 line-clamp-2 overflow-hidden">{product.name}</h3>
         <p className="text-sm text-gray-600 mb-3">{product.category}</p>

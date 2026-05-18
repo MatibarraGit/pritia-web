@@ -10,7 +10,7 @@ export const enum ACTION_TYPES {
 
 // TODO: Poner false al finalizar HotSale
 export const EVENTS = {
-  IS_HOT_SALE: true
+  IS_HOT_SALE: false
 } as const;
 
 export const enum PURCHASE_ORDER_STATUS {
