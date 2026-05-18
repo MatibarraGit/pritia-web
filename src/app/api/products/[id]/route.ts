@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { auth } from "@/libs/auth";
 import { prisma, cloudinary } from "@/libs";
 import { convertImageToBuffer, getPublicIdFromUrl, formatProduct, formatDate } from "@/utils";
-import type { ProductType } from "@/types";
+import type { ProductInlinePatchPayload, ProductType } from "@/types";
 
 export async function GET(
   req: Request,
@@ -30,11 +30,6 @@ export async function GET(
             subcategory_name: true,
           },
         },
-        providers: {
-          select: {
-            provider_name: true
-          }
-        },
       },
     });
 
@@ -46,10 +41,24 @@ export async function GET(
     }
 
     // Formatear el producto al formato estándar
+    const providers = await prisma.providers.findMany({
+      where: {
+        provider_id: {
+          in: getProductProviderIds(product),
+        },
+      },
+      select: {
+        provider_name: true,
+      },
+      orderBy: {
+        provider_name: "asc",
+      },
+    });
+
     const formattedProduct: ProductType = formatProduct({
       product_id: product.product_id,
       product_name: product.product_name,
-      provider_name: product.providers?.provider_name || '',
+      provider_names: providers.map((provider) => provider.provider_name),
       purchase_price: product.purchase_price,
       sell_price: product.sell_price ?? 0,
       resellers_price: product.resellers_price ?? 0,
@@ -236,7 +245,7 @@ export async function PUT(
       },
       data: {
         product_name: name,
-        provider_id: parseInt(provider),
+        ...({ provider_ids: [parseInt(provider)] } as Record<string, number[]>),
         purchase_price: parseFloat(purchasePrice),
         sell_price: parseFloat(price),
         resellers_price: parseFloat(resellersPrice),
@@ -294,20 +303,246 @@ export async function PATCH(
   const { id } = await params;
 
   try {
-    await prisma.products.update({
+    const body = await req.json() as Partial<ProductInlinePatchPayload>;
+    const data: {
+      product_name?: string;
+      provider_ids?: number[];
+      purchase_price?: number;
+      sell_price?: number;
+      resellers_price?: number;
+      discount_percent?: number;
+      in_stock?: boolean;
+      stock?: number;
+      category_id?: number;
+      subcategory_id?: number | null;
+      created_at?: Date;
+      updated_at?: Date | null;
+    } = {};
+
+    // Validaciones
+    if ("name" in body) {
+      if (!body.name || body.name.trim() === "") {
+        return NextResponse.json({ message: "El nombre del producto es obligatorio" }, { status: 400 });
+      }
+      data.product_name = body.name.trim();
+    }
+
+    if ("providerIds" in body) {
+      if (!Array.isArray(body.providerIds) || body.providerIds.some((providerId) => !Number.isInteger(providerId))) {
+        return NextResponse.json({ message: "Los proveedores seleccionados son inválidos" }, { status: 400 });
+      }
+      const providerIds = [...new Set(body.providerIds)];
+      data.provider_ids = providerIds;
+    }
+
+    if ("purchasePrice" in body) {
+      if (!Number.isFinite(body.purchasePrice) || Number(body.purchasePrice) < 1000) {
+        return NextResponse.json({ message: "Se requiere un precio de compra mayor o igual a 1000" }, { status: 400 });
+      }
+      data.purchase_price = Number(body.purchasePrice);
+    }
+
+    if ("price" in body) {
+      if (!Number.isFinite(body.price) || Number(body.price) < 1000) {
+        return NextResponse.json({ message: "Se requiere un precio de venta mayor o igual a 1000" }, { status: 400 });
+      }
+      data.sell_price = Number(body.price);
+    }
+
+    if ("resellersPrice" in body) {
+      if (!Number.isFinite(body.resellersPrice) || Number(body.resellersPrice) < 1000) {
+        return NextResponse.json({ message: "Se requiere un precio para revendedores mayor o igual a 1000" }, { status: 400 });
+      }
+      data.resellers_price = Number(body.resellersPrice);
+    }
+
+    if ("discountPercent" in body) {
+      if (!Number.isFinite(body.discountPercent) || Number(body.discountPercent) < 0 || Number(body.discountPercent) > 100) {
+        return NextResponse.json({ message: "El descuento debe estar entre 0 y 100" }, { status: 400 });
+      }
+      data.discount_percent = Number(body.discountPercent);
+    }
+
+    if ("inStock" in body) {
+      if (typeof body.inStock !== "boolean") {
+        return NextResponse.json({ message: "La disponibilidad es inválida" }, { status: 400 });
+      }
+      data.in_stock = body.inStock;
+    }
+
+    if ("stock" in body) {
+      if (!Number.isInteger(body.stock) || Number(body.stock) < 0) {
+        return NextResponse.json({ message: "El stock debe ser un número entero mayor o igual a 0" }, { status: 400 });
+      }
+      data.stock = Number(body.stock);
+    }
+
+    if ("categoryId" in body) {
+      if (!body.categoryId || !Number.isInteger(body.categoryId)) {
+        return NextResponse.json({ message: "La categoría es obligatoria" }, { status: 400 });
+      }
+      data.category_id = body.categoryId;
+    }
+
+    if ("subcategoryId" in body) {
+      if (body.subcategoryId !== null && (!body.subcategoryId || !Number.isInteger(body.subcategoryId))) {
+        return NextResponse.json({ message: "La subcategoría es inválida" }, { status: 400 });
+      }
+      data.subcategory_id = body.subcategoryId;
+    }
+
+    if ("createdAt" in body) {
+      if (!body.createdAt) {
+        return NextResponse.json({ message: "La fecha de creación es obligatoria" }, { status: 400 });
+      }
+      const createdAtDate = new Date(body.createdAt);
+      if (isNaN(createdAtDate.getTime())) {
+        return NextResponse.json({ message: "La fecha de creación no es válida" }, { status: 400 });
+      }
+      data.created_at = createdAtDate;
+    }
+
+    if ("updatedAt" in body) {
+      if (body.updatedAt === null || body.updatedAt === "") {
+        data.updated_at = null;
+      } else {
+        const updatedAtDate = new Date(body.updatedAt as string);
+        if (isNaN(updatedAtDate.getTime())) {
+          return NextResponse.json({ message: "La fecha de actualización no es válida" }, { status: 400 });
+        }
+        data.updated_at = updatedAtDate;
+      }
+    }
+
+    if (!("updated_at" in data)) {
+      data.updated_at = new Date();
+    }
+
+    if (Object.keys(data).length === 0) {
+      return NextResponse.json({ message: "No se proporcionaron campos para actualizar" }, { status: 400 });
+    }
+
+    // // Modificar el producto en la base de datos
+    // const product = await prisma.products.update({
+    //   where: {
+    //     product_id: parseInt(id),
+    //   },
+    //   data: {
+    //     ...data,
+    //   },
+    //   include: {
+    //     categories: {
+    //       select: {
+    //         category_name: true,
+    //       },
+    //     },
+    //     subcategories: {
+    //       select: {
+    //         subcategory_name: true,
+    //       },
+    //     },
+    //     providers: {
+    //       select: {
+    //         provider_name: true,
+    //       },
+    //     },
+    //   },
+    // });
+
+    // const formattedProduct: ProductType = formatProduct({
+    //   product_id: product.product_id,
+    //   product_name: product.product_name,
+    //   provider_name: product.providers?.provider_name || '',
+    //   purchase_price: product.purchase_price,
+    //   sell_price: product.sell_price ?? 0,
+    //   resellers_price: product.resellers_price ?? 0,
+    //   discount_percent: product.discount_percent ?? 0,
+    //   category_name: product.categories?.category_name || '',
+    //   subcategory_name: product.subcategories?.subcategory_name || '',
+    //   in_stock: product.in_stock,
+    //   stock: product.stock ?? 0,
+    //   product_description: product.product_description || '',
+    //   product_slug: product.product_slug || '',
+    //   images: product.images,
+    //   created_at: product.created_at,
+    //   updated_at: product.updated_at,
+    // });
+
+    // return NextResponse.json({ message: "Producto actualizado con éxito", success: true, product: formattedProduct });
+    const product = await prisma.products.update({
       where: {
         product_id: parseInt(id),
       },
       data: {
-        deleted_at: new Date(),
+        ...(data as Record<string, unknown>),
+      },
+      include: {
+        categories: {
+          select: {
+            category_name: true,
+          },
+        },
+        subcategories: {
+          select: {
+            subcategory_name: true,
+          },
+        },
       },
     });
 
-    return NextResponse.json({ message: "Producto deshabilitado con éxito", success: true });
+    const providers = await prisma.providers.findMany({
+      where: {
+        provider_id: {
+          in: getProductProviderIds(product),
+        },
+      },
+      select: {
+        provider_name: true,
+      },
+      orderBy: {
+        provider_name: "asc",
+      },
+    });
+
+    const formattedProduct: ProductType = formatProduct({
+      product_id: product.product_id,
+      product_name: product.product_name,
+      provider_names: providers.map((provider) => provider.provider_name),
+      purchase_price: product.purchase_price,
+      sell_price: product.sell_price ?? 0,
+      resellers_price: product.resellers_price ?? 0,
+      discount_percent: product.discount_percent ?? 0,
+      category_name: product.categories?.category_name || '',
+      subcategory_name: product.subcategories?.subcategory_name || '',
+      in_stock: product.in_stock,
+      stock: product.stock ?? 0,
+      product_description: product.product_description || '',
+      product_slug: product.product_slug || '',
+      images: product.images,
+      created_at: product.created_at,
+      updated_at: product.updated_at,
+    });
+
+    return NextResponse.json({ message: "Producto actualizado con éxito", success: true, product: formattedProduct });
   } catch (error) {
+    if (error && typeof error === 'object' && 'name' in error && error?.name === 'PrismaClientKnownRequestError') {
+      const prismaError = error as PrismaClientKnownRequestError;
+      if (prismaError.code === 'P2002') {
+        return NextResponse.json(
+          { message: 'El nombre del producto ya existe, por favor intentá con otro' },
+          { status: 400 }
+        );
+      }
+      if (prismaError.code === 'P2003') {
+        return NextResponse.json(
+          { message: 'El proveedor, categoría o subcategoría seleccionada no existe' },
+          { status: 400 }
+        );
+      }
+    }
     console.log(error);
     return NextResponse.json(
-      { message: 'Error interno del servidor al deshabilitar producto' },
+      { message: 'Error interno del servidor al actualizar producto' },
       { status: 500 }
     );
   }
@@ -365,5 +600,6 @@ export async function DELETE(
   }
 }
 
-
-
+function getProductProviderIds(product: { provider_ids?: number[]; provider_id?: number[] }) {
+  return product.provider_ids || product.provider_id || [];
+}
