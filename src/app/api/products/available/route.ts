@@ -24,7 +24,7 @@ export async function GET(request: Request) {
       ${BASE_QUERY}
       AND (p.product_name ILIKE ${pattern} OR
       p.product_id::TEXT LIKE ${pattern})
-      ORDER BY COALESCE(updated_at, created_at) DESC,
+      ORDER BY COALESCE(updated_at, created_at) DESC
       LIMIT ${PRODUCTS_PER_PAGE} 
       OFFSET ${offset}
     `);
@@ -47,7 +47,8 @@ export async function GET(request: Request) {
       products,
       total: total[0].count
      });
-  } catch {
+  } catch (e) {
+    console.log(e)
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos disponibles' },
       { status: 500 }

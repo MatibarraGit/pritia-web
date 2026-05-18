@@ -25,7 +25,7 @@ export async function GET(
     const productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
       AND c.category_slug = ${category}
-      ORDER BY COALESCE(updated_at, created_at) DESC,
+      ORDER BY COALESCE(updated_at, created_at) DESC
       LIMIT ${PRODUCTS_PER_PAGE} 
       OFFSET ${offset}
     `);

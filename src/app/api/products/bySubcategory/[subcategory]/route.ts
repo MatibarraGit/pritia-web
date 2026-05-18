@@ -20,7 +20,7 @@ export async function GET(
     const productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
       ${BASE_QUERY}
       AND sc.subcategory_slug = ${subcategory}
-      ORDER BY COALESCE(updated_at, created_at) DESC,
+      ORDER BY COALESCE(updated_at, created_at) DESC
     `);
 
     if (productsRaw.length === 0) {
