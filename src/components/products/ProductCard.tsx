@@ -122,10 +122,10 @@ export const ProductCard = memo(function ProductCard({
                   <span>{formatPrice(savings)}</span>
                 </div>
 
-                <span className="center-flex gap-1 rounded-lg bg-green-400/20"> 
+                {/* <span className="center-flex gap-1 rounded-lg bg-green-400/20"> 
                   Envío 
                   <strong>GRATIS</strong>
-                </span>
+                </span> */}
               </div>
             )}
           </div>
