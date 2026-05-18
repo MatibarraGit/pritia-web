@@ -11,7 +11,7 @@ export function formatProduct(p: ProductResponseType): ProductType {
   return {
     id: p.product_id,
     name: p.product_name,
-    provider: p.provider_name,
+    providers: p.provider_names || [],
     purchasePrice: p.purchase_price,
     price,
     originalPrice,

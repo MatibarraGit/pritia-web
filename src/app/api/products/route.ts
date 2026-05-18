@@ -18,14 +18,19 @@ export async function GET(request: Request) {
     const pattern = `%${search}%`;
 
     const products = await prisma.$queryRaw<Array<ProductResponseType>>`
-      SELECT *
+      SELECT 
+        p.*, 
+        COALESCE(array_agg(pr.provider_name ORDER BY pr.provider_name) FILTER (WHERE pr.provider_name IS NOT NULL), ARRAY[]::text[]) AS provider_names,
+        c.category_name, 
+        sc.subcategory_name
       FROM products p
-      LEFT JOIN providers pr ON pr.provider_id = p.provider_id
+      LEFT JOIN providers pr ON pr.provider_id = ANY(p.provider_ids)
       LEFT JOIN categories c ON p.category_id = c.category_id
       LEFT JOIN subcategories sc on sc.subcategory_id = p.subcategory_id
       WHERE 
         (p.product_name ILIKE ${pattern} OR
         p.product_id::TEXT LIKE ${pattern})
+      GROUP BY p.product_id, c.category_name, sc.subcategory_name
       ORDER BY 
         in_stock DESC,
         COALESCE(updated_at, created_at) DESC,
@@ -193,7 +198,7 @@ export async function POST(req: Request) {
     const product = await prisma.products.create({
       data: {
         product_name: name,
-        provider_id: parseInt(provider),
+        ...({ provider_ids: [parseInt(provider)] } as Record<string, number[]>),
         purchase_price: parseInt(purchasePrice),
         sell_price: parseInt(price),
         resellers_price: parseInt(resellersPrice),
@@ -236,5 +241,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-

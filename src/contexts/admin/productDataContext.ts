@@ -131,7 +131,7 @@ export const productDataContext = create<ProductDataActions>((set) => ({
           initialImages: product.images,
           images: product.images,
           name: product.name,
-          provider: product.provider || "", 
+          provider: product.providers?.[0] || "", 
           purchasePrice: product.purchasePrice,
           price: product.originalPrice || product.price,
           resellersPrice: product.resellersPrice || 0,

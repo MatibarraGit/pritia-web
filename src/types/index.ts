@@ -13,7 +13,7 @@ export type ProductType = {
   id: number;
   images: string[];
   name: string;
-  provider?: string;
+  providers?: string[];
   purchasePrice: number;
   price: number;
   originalPrice?: number;
@@ -34,7 +34,7 @@ export type ProductResponseType = {
   product_id: number;
   images: string[];
   product_name: string;
-  provider_name?: string;
+  provider_names?: string[];
   purchase_price: number;
   sell_price: number;
   resellers_price?: number;
@@ -144,6 +144,21 @@ export type SelectedItemsType = {
 export type ActionResponse = {
   successMessage?: string | undefined;
   errorMessage?: string | undefined;
+}
+
+export type ProductInlinePatchPayload = {
+  name?: string;
+  providerIds?: number[];
+  purchasePrice?: number;
+  price?: number;
+  resellersPrice?: number;
+  discountPercent?: number;
+  inStock?: boolean;
+  stock?: number;
+  categoryId?: number;
+  subcategoryId?: number | null;
+  createdAt?: string;
+  updatedAt?: string | null;
 }
 
 // ---- Mercado Pago ----

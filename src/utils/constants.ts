@@ -47,7 +47,7 @@ export const enum TOPICS {
 export const TO_OPTIONS = Object.freeze([
   {
     name: 'Número secundario',
-    number: 5491140226227,
+    number: 5491130069853,
     type: 'seller'
   },
   {

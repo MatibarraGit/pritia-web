@@ -31,12 +31,12 @@ model products {
   purchase_price      Int
   sell_price          Int?
   resellers_price     Int?
-  discount_percent    Int       @default(0)
-  category_id         Int?
-  subcategory_id      Int?
+  discount_percent    Int       @default(0) @db.SmallInt
+  category_id         Int?      @db.SmallInt
+  subcategory_id      Int?      @db.SmallInt
   in_stock            Boolean   @default(true)
   stock               Int       @default(0) @db.SmallInt
-  provider_id         Int?
+  provider_ids        Int[]     @db.SmallInt 
   product_description String?
   images              String[]
   product_slug        String?
@@ -46,7 +46,6 @@ model products {
 
   categories           categories?            @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_category")
   subcategories        subcategories?         @relation(fields: [subcategory_id], references: [subcategory_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_subcategory")
-  providers            providers?             @relation(fields: [provider_id], references: [provider_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products_provider")
   purchase_order_items purchase_order_items[]
 }
 
@@ -54,7 +53,6 @@ model providers {
   provider_id   Int    @id @default(autoincrement())
   provider_name String @unique(map: "unique_provider_name") @db.VarChar(255)
 
-  products      products[]
 }
 
 model purchase_order_items {
