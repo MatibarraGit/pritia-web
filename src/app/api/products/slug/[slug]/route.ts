@@ -58,7 +58,8 @@ export async function GET(
         'Expires': '0',
       },
     });
-  } catch {
+  } catch (e) {
+    console.log(e)
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener producto' },
       { status: 500 }

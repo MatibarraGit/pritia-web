@@ -59,7 +59,7 @@ export function ProductPricing({
         background: `${discountPercent > 0 && isHotSale && "linear-gradient(to bottom, #ffffff, #ffba6f)"}`
       }}    
     >
-      {discountPercent > 0 && (
+      {/* {discountPercent > 0 && (
         <div className="flex flex-col justify-center-center gap-2">
           {(isHotSale && isExpired) ? (
             <span className="font-black text-lg leading-none tracking-tight text-gray-900">
@@ -86,7 +86,7 @@ export function ProductPricing({
             </div>
           )}
         </div>
-      )}
+      )} */}
 
       <div className="p-2">
         {originalPrice && (
@@ -118,12 +118,12 @@ export function ProductPricing({
             </div>
           )}
 
-          {isHotSale && (
+          {/* {isHotSale && (
             <span className="w-fit px-2 flex gap-1 rounded-lg bg-green-400/20"> 
               Envío 
               <strong>GRATIS</strong>
             </span>
-          )}
+          )} */}
         </div>
       </div>
     </div>
