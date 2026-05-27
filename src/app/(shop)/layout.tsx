@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
 import Link from "next/link";
 import { Geist } from "next/font/google";
 import "./globals.css";
@@ -26,6 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} antialiased font-body`} suppressHydrationWarning>
+        <Analytics />
+
         {/* Aviso de Beneficios por compra */}
         <Link 
           href="/beneficios"

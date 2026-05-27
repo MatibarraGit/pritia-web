@@ -306,6 +306,7 @@ export async function PATCH(
     const body = await req.json() as Partial<ProductInlinePatchPayload>;
     const data: {
       product_name?: string;
+      product_description?: string | null;
       provider_ids?: number[];
       purchase_price?: number;
       sell_price?: number;
@@ -320,6 +321,14 @@ export async function PATCH(
     } = {};
 
     // Validaciones
+    if ("description" in body) {
+      if (body.description !== null && typeof body.description !== "string") {
+        return NextResponse.json({ message: "La descripción es inválida" }, { status: 400 });
+      }
+      const trimmed = typeof body.description === "string" ? body.description.trim() : "";
+      data.product_description = trimmed.length > 0 ? trimmed : null;
+    }
+
     if ("name" in body) {
       if (!body.name || body.name.trim() === "") {
         return NextResponse.json({ message: "El nombre del producto es obligatorio" }, { status: 400 });
@@ -414,61 +423,11 @@ export async function PATCH(
       }
     }
 
-    if (!("updated_at" in data)) {
-      data.updated_at = new Date();
-    }
-
     if (Object.keys(data).length === 0) {
       return NextResponse.json({ message: "No se proporcionaron campos para actualizar" }, { status: 400 });
     }
 
-    // // Modificar el producto en la base de datos
-    // const product = await prisma.products.update({
-    //   where: {
-    //     product_id: parseInt(id),
-    //   },
-    //   data: {
-    //     ...data,
-    //   },
-    //   include: {
-    //     categories: {
-    //       select: {
-    //         category_name: true,
-    //       },
-    //     },
-    //     subcategories: {
-    //       select: {
-    //         subcategory_name: true,
-    //       },
-    //     },
-    //     providers: {
-    //       select: {
-    //         provider_name: true,
-    //       },
-    //     },
-    //   },
-    // });
-
-    // const formattedProduct: ProductType = formatProduct({
-    //   product_id: product.product_id,
-    //   product_name: product.product_name,
-    //   provider_name: product.providers?.provider_name || '',
-    //   purchase_price: product.purchase_price,
-    //   sell_price: product.sell_price ?? 0,
-    //   resellers_price: product.resellers_price ?? 0,
-    //   discount_percent: product.discount_percent ?? 0,
-    //   category_name: product.categories?.category_name || '',
-    //   subcategory_name: product.subcategories?.subcategory_name || '',
-    //   in_stock: product.in_stock,
-    //   stock: product.stock ?? 0,
-    //   product_description: product.product_description || '',
-    //   product_slug: product.product_slug || '',
-    //   images: product.images,
-    //   created_at: product.created_at,
-    //   updated_at: product.updated_at,
-    // });
-
-    // return NextResponse.json({ message: "Producto actualizado con éxito", success: true, product: formattedProduct });
+    // Modificar el producto en la base de datos
     const product = await prisma.products.update({
       where: {
         product_id: parseInt(id),

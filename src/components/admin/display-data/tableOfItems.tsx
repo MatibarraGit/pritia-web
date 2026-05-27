@@ -57,7 +57,8 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
       images,
       description,
       sellPrice,
-      resellersPrice
+      resellersPrice,
+      originalPrice: Number(item.originalPrice) || null,
     });
   }
 

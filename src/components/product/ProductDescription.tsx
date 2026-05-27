@@ -5,7 +5,7 @@ interface ProductDescriptionProps {
 export const ProductDescription = ({ description }: ProductDescriptionProps) => {
   const specs =
     (description ?? "")
-      .split("*")
+      .split("\n")
       .map((item) => item.trim())
       .filter((item) => item.length > 0);
 
@@ -18,7 +18,16 @@ export const ProductDescription = ({ description }: ProductDescriptionProps) => 
       {hasSpecs ? (
         <ul className="list-disc space-y-1 pl-5 text-gray-700 text-sm md:text-base">
           {specs.map((spec, index) => (
-            <li key={index}>{spec}</li>
+            spec.startsWith("*") ? (
+              <li key={index}>{spec.slice(1)}</li>
+            ) : (
+              <li 
+                key={index} 
+                className={`list-none pl-0 ${index !== 0 ? "mt-6" : ""}`}
+              >
+                <span className="font-subheading">{spec}</span>
+              </li>      
+            )
           ))}
         </ul>
       ) : (

@@ -27,20 +27,28 @@ export async function GET(request: Request) {
       LEFT JOIN providers pr ON pr.provider_id = ANY(p.provider_ids)
       LEFT JOIN categories c ON p.category_id = c.category_id
       LEFT JOIN subcategories sc on sc.subcategory_id = p.subcategory_id
-      WHERE 
-        (p.product_name ILIKE ${pattern} OR
-        p.product_id::TEXT LIKE ${pattern})
+      WHERE (
+        unaccent(p.product_name) ILIKE unaccent(${pattern})
+        OR WORD_SIMILARITY(unaccent(p.product_name), unaccent(${search})) > 0.45
+        OR p.product_id::TEXT LIKE ${pattern}
+      )
       GROUP BY p.product_id, c.category_name, sc.subcategory_name
       ORDER BY 
         in_stock DESC,
-        COALESCE(updated_at, created_at) DESC,
         CASE
           WHEN p.product_id::TEXT LIKE ${search} THEN 1
           WHEN p.product_id::TEXT LIKE '%' || ${search} THEN 2
           WHEN p.product_id::TEXT LIKE ${pattern} THEN 3
-          WHEN p.product_name ILIKE ${pattern} THEN 4
-          ELSE 5
-        END
+          -- El product_name entero es igual al search
+          WHEN unaccent(p.product_name) ILIKE unaccent(${search}) THEN 4
+          -- Busca una coincidencia de palabra completa dentro del texto (ej: "Cama" o "Cama de...")
+          WHEN unaccent(p.product_name) ~* ('\\m' || unaccent(${search}) || '\\M') THEN 5
+          -- Contiene el término buscado en cualquier parte del product_name
+          WHEN unaccent(p.product_name) ILIKE unaccent(${pattern}) THEN 6
+          ELSE 7
+        END,
+        COALESCE(updated_at, created_at) DESC,
+        WORD_SIMILARITY(unaccent(p.product_name), unaccent(${search})) DESC
       LIMIT ${PRODUCTS_PER_PAGE} 
       OFFSET ${offset}
     `
@@ -60,7 +68,8 @@ export async function GET(request: Request) {
       products: formatProducts(products),
       total: total[0].count
      });
-  } catch {
+  } catch (e) {
+    console.log(e)
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos' },
       { status: 500 }

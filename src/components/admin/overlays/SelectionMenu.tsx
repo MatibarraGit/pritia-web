@@ -2,7 +2,7 @@
 "use client";
 
 import { memo, useMemo } from "react";
-import { PointerIcon, PointerOff, Pencil, Power } from "lucide-react";
+import { PointerIcon, PointerOff, Trash2 } from "lucide-react";
 import { cn } from "@/libs/utils";
 
 import { selectItemsContext } from "@/contexts";
@@ -14,12 +14,19 @@ import { ACTION_TYPES } from "@/utils";
 type SelectionMenu = {
   products: ProductType[]
   handleAction: (action: string, item?: ProductType | null) => void;
+  customToggleSelecting?: () => void;
 };
 
-export const SelectionMenu = memo(({ products, handleAction } : SelectionMenu) => {
+export const SelectionMenu = memo(({ products, handleAction, customToggleSelecting } : SelectionMenu) => {
   const { isSelecting, toggleSelecting, selectedItems, toggleAllItemsSelection } = selectItemsContext();
   const allSelected = selectedItems.length === products.length && products.length > 0;
   const selectedCount = useMemo(() => selectedItems?.length || 0, [selectedItems]);
+
+  // Función customizada para añadir funcionalidad a la hora de activar/desactivar el modo de selección
+  function handleToggleSelecting() {
+    if (customToggleSelecting) customToggleSelecting();
+    else toggleSelecting();
+  }
 
   return (
     <>
@@ -32,7 +39,7 @@ export const SelectionMenu = memo(({ products, handleAction } : SelectionMenu) =
             ? "bg-danger hover:bg-danger-hover text-white bottom-20 "
             : "bg-primary hover:bg-primary-hover text-white bottom-6"
         )}
-        onClick={() => toggleSelecting()}
+        onClick={() => handleToggleSelecting()}
         aria-label={isSelecting ? "Cerrar modo selección" : "Activar modo selección"}
       >
         {isSelecting ? (
@@ -90,30 +97,11 @@ export const SelectionMenu = memo(({ products, handleAction } : SelectionMenu) =
             <Button
               variant="ghost"
               size="icon"
-              className="border border-primary bg-white text-primary hover:bg-primary/20"
-              disabled={selectedCount !== 1}
-              // onClick={() => handleAction(ACTION_TYPES.UPDATE)}
-            >
-              <Pencil className="size-5" />
-            </Button>
-        
-            {/* <Button
-              variant="ghost"
-              size="icon"
               className="border border-danger bg-white text-danger hover:bg-danger/20"
               disabled={selectedCount !== 1}
-              // onClick={() => handleAction(ACTION_TYPES.DELETE)}
+              onClick={() => handleAction(ACTION_TYPES.DELETE)}
             >
               <Trash2 className="size-5" />
-            </Button> */}
-            <Button
-              variant="secondary"
-              size="icon"
-              className="border border-danger bg-white text-danger hover:bg-danger/20"
-              disabled={selectedCount !== 1}
-              // onClick={() => handleAction(ACTION_TYPES.DISABLE, item)}
-            >
-              <Power size={18}  />
             </Button>
           </div>
 

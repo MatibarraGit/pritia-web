@@ -139,6 +139,7 @@ export type SelectedItemsType = {
   sellPrice?: number;
   resellersPrice?: number;
   price?: number;
+  originalPrice?: number | null;
 }
 
 export type ActionResponse = {
@@ -148,6 +149,7 @@ export type ActionResponse = {
 
 export type ProductInlinePatchPayload = {
   name?: string;
+  description?: string | null;
   providerIds?: number[];
   purchasePrice?: number;
   price?: number;

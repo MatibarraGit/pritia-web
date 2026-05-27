@@ -293,40 +293,6 @@ export const ProductModal = ({
           </div>
     );
   }
-  
-  if (type === ACTION_TYPES.DISABLE) {
-    const handleDisable = async () => {
-      setIsLoading(true);
-      await handleConfirmProductAction();
-      setIsLoading(false);
-    };
-    
-    return (
-      <div className={`space-y-4 relative ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}>
-        {isLoading && <MyLoader />}
-        
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-yellow-100 rounded-full">
-            <AlertTriangle size={32} className="text-yellow-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold">Desactivar Producto</h2>
-            <p className="text-gray-600">
-              El producto dejará de estar disponible para la venta, pero se mantendrá en el sistema y podrás reactivarlo más tarde.
-            </p>
-          </div>
-        </div>
-        <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={() => close()}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={() => handleDisable()}>
-            Desactivar
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   if (type === ACTION_TYPES.DELETE) {
     const handleDelete = async () => {
