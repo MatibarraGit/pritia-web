@@ -33,6 +33,7 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
   const [opened, setOpened] = useState(false);
   const [actionType, setActionType] = useState<string>(ACTION_TYPES.SHARE);
+  const [isModalActionLoading, setIsModalActionLoading] = useState(false);
   const committedProductsRef = useRef<ProductType[]>(products);
 
   // Contexto de selección de items
@@ -55,17 +56,27 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
   const params = useMemo(() => new URLSearchParams(searchParams.toString()), [searchParams]);
   const search = params.get("search") || "";
   const showToast = toastContext((state) => state.showToast);
-  const modalTitle = actionType === ACTION_TYPES.SHARE ? "Compartir productos" : "";
+  const modalTitle =
+    actionType === ACTION_TYPES.DELETE ? "Eliminar productos seleccionados"
+    : actionType === ACTION_TYPES.SHARE ? "Compartir productos"
+    : "";
 
   const closeDialog = useCallback(() => {
     setOpened(false);
   }, []);
 
   const handleAction = useCallback((action: string) => {
-    if (action !== ACTION_TYPES.SHARE) return;
+    if (action !== ACTION_TYPES.SHARE && action !== ACTION_TYPES.DELETE) return;
 
     setActionType(action);
     setOpened(true);
+  }, []);
+
+  const handleProductsDeleted = useCallback((deletedProductIds: number[]) => {
+    setLocalProducts((current) => current.filter((product) => !deletedProductIds.includes(product.id)));
+    committedProductsRef.current = committedProductsRef.current.filter(
+      (product) => !deletedProductIds.includes(product.id)
+    );
   }, []);
 
   useEffect(() => {
@@ -212,7 +223,7 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <Dialog open={opened} onOpenChange={(open) => !open && closeDialog()}>
+      <Dialog open={opened} onOpenChange={(open) => !open && !isModalActionLoading && closeDialog()}>
         <DialogContent
           onKeyDown={(event) => {
             if (event.key === "Enter") {
@@ -220,22 +231,33 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
               event.stopPropagation();
             }
           }}
+          onEscapeKeyDown={(event) => {
+            if (isModalActionLoading) event.preventDefault();
+          }}
+          onInteractOutside={(event) => {
+            if (isModalActionLoading) event.preventDefault();
+          }}
           showCloseButton={false}
         >
           <DialogHeader>
             <DialogTitle>{modalTitle}</DialogTitle>
           </DialogHeader>
           <ProductModal
+            key={`${actionType}-${opened ? "open" : "closed"}`}
             type={actionType}
+            isBulkDelete={actionType === ACTION_TYPES.DELETE}
+            onProductsDeleted={handleProductsDeleted}
+            onActionLoadingChange={setIsModalActionLoading}
             close={closeDialog}
           />
         </DialogContent>
       </Dialog>
 
       <SelectionMenu 
-        products={products} 
+        products={sortedProducts} 
         handleAction={handleAction}
         customToggleSelecting={handleToggleSelecting}  
+        allowBulkDelete
       />
 
       <ProductsTableToolbar

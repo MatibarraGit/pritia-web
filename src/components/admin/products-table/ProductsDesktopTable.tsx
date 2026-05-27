@@ -97,7 +97,7 @@ export function ProductsDesktopTable({
                   column.key === "name" && "sticky left-40 z-20 shadow-[6px_0_12px_-10px_rgba(0,0,0,0.25)]",
                   column.key === "description" && "justify-start text-left",
                   isModified && "bg-blue-50",
-                  selectedIds.includes(Number(product.id)) && "bg-secondary/30 group-hover:bg-secondary/50",
+                  selectedIds.includes(Number(product.id)) && "bg-[#fff09d]",
                 )}
                 onClick={() => handleClickItem(product)}
               >

@@ -15,12 +15,14 @@ type SelectionMenu = {
   products: ProductType[]
   handleAction: (action: string, item?: ProductType | null) => void;
   customToggleSelecting?: () => void;
+  allowBulkDelete?: boolean;
 };
 
-export const SelectionMenu = memo(({ products, handleAction, customToggleSelecting } : SelectionMenu) => {
+export const SelectionMenu = memo(({ products, handleAction, customToggleSelecting, allowBulkDelete = false } : SelectionMenu) => {
   const { isSelecting, toggleSelecting, selectedItems, toggleAllItemsSelection } = selectItemsContext();
   const allSelected = selectedItems.length === products.length && products.length > 0;
   const selectedCount = useMemo(() => selectedItems?.length || 0, [selectedItems]);
+  const canDelete = allowBulkDelete ? selectedCount > 0 : selectedCount === 1;
 
   // Función customizada para añadir funcionalidad a la hora de activar/desactivar el modo de selección
   function handleToggleSelecting() {
@@ -106,7 +108,7 @@ export const SelectionMenu = memo(({ products, handleAction, customToggleSelecti
               variant="ghost"
               size="icon"
               className="border border-danger bg-white text-danger hover:bg-danger/20"
-              disabled={selectedCount !== 1}
+              disabled={!canDelete}
               onClick={() => handleAction(ACTION_TYPES.DELETE)}
             >
               <Trash2 className="size-5" />
