@@ -1,14 +1,29 @@
+import type { ColumnConfig } from "@/types";
+
 export const enum ACTION_TYPES {
   CREATE = 'CREATE',
   UPDATE = 'UPDATE',
-  UPDATE_MANY = 'UPDATE_MANY',
   DELETE = 'DELETE',
-  DISABLE = 'DISABLE',
-  DISABLE_MANY = 'DISABLE_MANY',
   SHARE = 'SHARE'
 };
 
-// TODO: Poner false al finalizar HotSale
+export const COLUMNS: ColumnConfig[] = [
+  { key: "inStock", label: "Stock", type: "boolean", editable: true, width: "minmax(120px, 0.7fr)" },
+  { key: "images", label: "Imagen", type: "image", editable: false, width: "minmax(120px, 0.8fr)" },
+  { key: "name", label: "Nombre", type: "text", editable: true, width: "minmax(240px, 2fr)" },
+  { key: "description", label: "Descripción", type: "textarea", editable: true, width: "minmax(280px, 320px)" },
+  { key: "providers", label: "Proveedores", type: "multiselect", editable: true, width: "minmax(220px, 320px)" },
+  { key: "purchasePrice", label: "P/Compra", type: "currency", editable: true, width: "minmax(130px, 0.8fr)" },
+  { key: "price", label: "P/Venta", type: "currency", editable: true, width: "minmax(130px, 0.8fr)" },
+  { key: "resellersPrice", label: "P/Revendedores", type: "currency", editable: true, width: "minmax(150px, 0.9fr)" },
+  { key: "discountPercent", label: "Descuento", type: "percentage", editable: true, width: "minmax(120px, 0.7fr)" },
+  { key: "createdAt", label: "Creación", type: "datetime", editable: true, width: "minmax(170px, 1fr)" },
+  { key: "updatedAt", label: "Actualizado", type: "datetime", editable: true, width: "minmax(170px, 1fr)" },
+  { key: "stock", label: "Inventario", type: "number", editable: true, width: "minmax(120px, 0.7fr)" },
+  { key: "category", label: "Categoría", type: "select", editable: true, width: "minmax(190px, 1fr)" },
+  { key: "subcategory", label: "Subcategoría", type: "select", editable: true, width: "minmax(220px, 1.2fr)" },
+];
+
 export const EVENTS = {
   IS_HOT_SALE: false
 } as const;

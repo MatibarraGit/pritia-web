@@ -19,6 +19,14 @@ export { DragImage } from './admin/product-form/DragImage'
 export { ProductForm } from './admin/product-form/ProductForm'
 export { ProductPreview } from './admin/product-form/ProductPreview'
 
+// Admin / Products Table
+export { CustomTable } from './admin/products-table/CustomTable'
+export { EditableCell } from './admin/products-table/EditableCell'
+export { MobileProductRow } from './admin/products-table/MobileProductRow'
+export { ProductsDesktopTable } from './admin/products-table/ProductsDesktopTable'
+export { ProductsTableToolbar } from './admin/products-table/ProductsTableToolbar'
+export { ProductTableCell } from './admin/products-table/ProductTableCell'
+
 // Admin
 export { AdminReturnButton, AdminSidebarLink } from './admin/adminButtons'
 export { AdminMainWrapper } from './admin/AdminMainWrapper'

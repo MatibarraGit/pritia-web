@@ -1,5 +1,5 @@
 import { apiRequest } from "./api-client";
-import type { ProductType, ActionResponse, SelectedItemsType } from "@/types";
+import type { ProductType, ActionResponse, SelectedItemsType, ProductInlinePatchPayload } from "@/types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -270,13 +270,15 @@ export async function updateProduct(id: number, formData: FormData): Promise<Act
   });
 }
 
-// PATCH - Deshabilitar producto
-export async function disableProduct(id: number): Promise<ActionResponse> {
-  return apiRequest({
+// PATCH - Actualizar campos parciales de producto
+export async function patchProduct(id: number, changes: Partial<ProductInlinePatchPayload>): Promise<ActionResponse & { product?: ProductType }> {
+  return apiRequest<{ product?: ProductType }>({
     endpoint: `/api/products/${id}`,
     method: 'PATCH',
-    successMessage: "Producto deshabilitado",
-    errorMessage: 'Error al deshabilitar el producto',
+    body: changes,
+    successMessage: "Producto actualizado",
+    errorMessage: 'Error al actualizar el producto',
+    transformResponse: (data) => ({ product: (data as { product?: ProductType })?.product }),
   });
 }
 

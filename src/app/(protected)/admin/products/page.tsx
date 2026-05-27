@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 import { AdminDisplayData, SelectionMenu, Pagination, PageLoader, ProductModal } from "@/components";
 import { useFetchData } from "@/hooks";
-import { getAllProducts, fetchAllCategories, fetchAllProviders, deleteProduct, disableProduct } from "@/services";
+import { getAllProducts, fetchAllCategories, fetchAllProviders, deleteProduct } from "@/services";
 import { ACTION_TYPES, PRODUCTS_PER_PAGE, confirmAction } from "@/utils";
 
 import type { SortConfig } from "@/hooks";
@@ -60,14 +60,12 @@ function AdminProducts() {
     slug: ""
   });
   const modalTitle = 
-    actionType === ACTION_TYPES.DISABLE ? `¿Desea desactivar el producto ${productToAction.name}?`
-    : actionType === ACTION_TYPES.DELETE ? `¿Seguro que desea eliminar el producto ${productToAction.name}?`
+    actionType === ACTION_TYPES.DELETE ? `¿Seguro que desea eliminar el producto ${productToAction.name}?`
     : actionType === ACTION_TYPES.SHARE ? `Compartir productos`
     : "";
 
   const handleAction = (action: string, item: ProductType | null = null) => {
     switch (action) {
-      case ACTION_TYPES.DISABLE:
       case ACTION_TYPES.DELETE:
         if (item) {
           setProductToAction({ id: item.id, name: item.name, slug: item.slug });
@@ -85,7 +83,7 @@ function AdminProducts() {
 
   async function handleConfirmProductAction() {
     if (!productToAction.id) return;
-    const productAction = actionType === ACTION_TYPES.DISABLE ? disableProduct : deleteProduct;
+    const productAction = deleteProduct;
     
     const result = await confirmAction({ 
       actionType: actionType,

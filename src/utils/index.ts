@@ -1,6 +1,7 @@
 export { compareValues } from './compareValues';
 export {
   ACTION_TYPES,
+  COLUMNS,
   EVENTS,
   PURCHASE_ORDER_STATUS,
   PAYMENT_METHODS,
@@ -29,5 +30,14 @@ export {
 } from "./hotSaleCountDown";
 export { normalizeText } from './normalize-text';
 export { convertImageToBuffer, getPublicIdFromUrl } from "./processImage";
+export {
+  applyProductChange,
+  buildPatchPayload,
+  fetchProductTableOptions,
+  formatCellValue,
+  getSelectOptions,
+  splitProviderNames, 
+  toDateTimeInputValue
+} from "./productTableUtils"
 export { toSlug } from './toSlug';
 export { validateAuthForm } from './validateAuthForm';

@@ -186,3 +186,50 @@ export type MercadoPagoInstallment = {
   payer_costs: MercadoPagoPayerCost[];
   [key: string]: unknown;
 };
+
+// ---- Product Table ----
+export type ColumnType =
+  | "boolean"
+  | "currency"
+  | "datetime"
+  | "image"
+  | "multiselect"
+  | "number"
+  | "percentage"
+  | "select"
+  | "text"
+  | "textarea";
+  
+export interface ColumnConfig {
+  key: ProductColumnKey;
+  label: string;
+  type: ColumnType;
+  editable: boolean;
+  width: string;
+}
+
+export type EditableCellValue = string | number | boolean | string[];
+
+export type EditableProductField =
+  | "inStock"
+  | "name"
+  | "description"
+  | "providers"
+  | "purchasePrice"
+  | "price"
+  | "originalPrice"
+  | "resellersPrice"
+  | "discountPercent"
+  | "createdAt"
+  | "updatedAt"
+  | "stock"
+  | "category"
+  | "subcategory";
+
+export type ProductColumnKey = EditableProductField | "images";
+
+export interface OptionsCache {
+  providers: Provider[];
+  categories: CategoryType[];
+}
+

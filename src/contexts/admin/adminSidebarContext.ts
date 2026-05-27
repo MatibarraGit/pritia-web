@@ -9,7 +9,7 @@ interface AdminSidebarState {
 
 export const adminSidebarContext = create<AdminSidebarState>((set) => ({
   sidebar: false,
-  sidebarDesktop: true, // Por defecto visible en desktop
+  sidebarDesktop: false,
   toggleSidebar: (value: boolean) => {
     set({ sidebar: value });
     if (value === true) {

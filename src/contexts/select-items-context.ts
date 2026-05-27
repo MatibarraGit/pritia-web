@@ -25,8 +25,11 @@ export const selectItemsContext = create<SelectItemsState>((set, get) => ({
   toggleSelecting: (value?: boolean) => {
     const { isSelecting } = get();
 
-    if (value !== undefined) {
-      set({ isSelecting: value });
+    if (value === true) {
+      set({ isSelecting: true });
+      return;
+    } else if (value === false) {
+      set({ isSelecting: false, selectedItems: [], selectedIds: [] });
       return;
     }
 
