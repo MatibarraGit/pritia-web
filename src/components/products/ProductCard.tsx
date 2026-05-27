@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,7 +42,7 @@ export const ProductCard = memo(function ProductCard({
       className={`bg-white rounded-xl overflow-hidden border ${classNames}`}
     >
       <div className="flex justify-center relative">
-        <Image
+        {/* <Image
           src={image}
           alt={product.name}
           width={250}
@@ -49,6 +50,18 @@ export const ProductCard = memo(function ProductCard({
           sizes={imageSizes}
           // loading="lazy"
           quality={70}
+          className="object-contain h-40 select-none"
+          draggable={false}
+        /> */}
+
+        <img
+          src={image}
+          alt={product.name}
+          width={250}
+          height={250}
+          sizes={imageSizes}
+          // loading="lazy"
+          // quality={70}
           className="object-contain h-40 select-none"
           draggable={false}
         />
