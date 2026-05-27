@@ -64,7 +64,15 @@ export const SelectionMenu = memo(({ products, handleAction, customToggleSelecti
                 checked={allSelected}
                 onCheckedChange={() =>
                   toggleAllItemsSelection(products.map((product) => {
-                    return { id: product.id, name: product.name, images: product.images, description: product.description, price: product.price };
+                    return {
+                      id: product.id,
+                      name: product.name,
+                      images: product.images,
+                      description: product.description,
+                      sellPrice: Number(product.price) || 0,
+                      resellersPrice: Number(product.resellersPrice) || 0,
+                      originalPrice: Number(product.originalPrice) || null,
+                    };
                   }))
                 }
                 className="bg-white text-white border-none data-[state=checked]:bg-black transition-colors" 

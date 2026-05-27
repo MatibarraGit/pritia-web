@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { ChevronDown, ChevronUp, Filter, Power, Pencil } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, Pencil } from "lucide-react";
 
 import { selectItemsContext } from "@/contexts";
 import { DeleteButton, TableLoader } from "@/components";
@@ -19,7 +19,6 @@ interface TableOfItemsProps<T> {
   withEditButton?: boolean;
   editLink?: string | undefined;
   handleAction: (action: string, item: T) => void;
-  withDisableButton?: boolean;
   withDeleteButton?: boolean;
   sortConfig?: SortConfig;
   filterConfig?: Record<string, { enabled: boolean; options: Array<{ value: string | boolean; label: string }> }>;
@@ -33,7 +32,6 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
   withEditButton = true,
   editLink,
   handleAction,
-  withDisableButton = false,
   withDeleteButton = true,
   sortConfig = {},
   filterConfig = {}
@@ -234,17 +232,6 @@ export function TableOfItems<T extends Record<string, unknown> & { id: number | 
                   href={`${editLink}/${item.id}`}
                 >
                   <Pencil size={18} />
-                </Button>
-              </div>
-            )}
-
-            {withDisableButton === true && (
-              <div className="group/button min-w-full w-max max-w-75 p-4 flex items-center justify-center text-center whitespace-normal wrap-break-words border-b border-gray-100 transition-all overflow-hidden group-hover:bg-gray-50">
-                <Button
-                  variant="secondary"
-                  onClick={() => handleAction(ACTION_TYPES.DISABLE, item)}
-                >
-                  <Power size={18}  />
                 </Button>
               </div>
             )}

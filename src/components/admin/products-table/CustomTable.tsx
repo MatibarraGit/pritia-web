@@ -7,14 +7,16 @@ import {
   MobileProductRow, 
   ProductsDesktopTable,
   ProductsTableToolbar,
+  ProductModal,
   SelectionMenu,
   TableLoader
 } from "@/components";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { selectItemsContext, toastContext } from "@/contexts";
 import { useBatchedChanges, type BatchedChanges } from "@/hooks";
 import { patchProduct } from "@/services";
 import type { EditableCellValue, EditableProductField, OptionsCache, ProductColumnKey, ProductType } from "@/types";
-import { applyProductChange, buildPatchPayload, fetchProductTableOptions } from "@/utils";
+import { ACTION_TYPES, applyProductChange, buildPatchPayload, fetchProductTableOptions } from "@/utils";
 
 interface CustomTableProps {
   products: ProductType[];
@@ -29,10 +31,12 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [options, setOptions] = useState<OptionsCache>({ providers: [], categories: [] });
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
+  const [opened, setOpened] = useState(false);
+  const [actionType, setActionType] = useState<string>(ACTION_TYPES.SHARE);
   const committedProductsRef = useRef<ProductType[]>(products);
 
   // Contexto de selección de items
-  const { isSelecting, toggleSelecting } = selectItemsContext(); 
+  const { toggleSelecting } = selectItemsContext(); 
 
   // Función para cambiar el estado de isSelecting a la vez que cambia el estado de isEditMode
   function handleToggleSelecting() {
@@ -44,47 +48,25 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
     }
   }
 
-  // Función para compartir y eliminar productos desde la modal
-  // const handleAction = (action: string, item: ProductType | null = null) => {
-  //   switch (action) {
-  //     case ACTION_TYPES.DELETE:
-  //       if (item) {
-  //       }
-  //       break
-
-  //     default:
-  //       setActionType(action);
-  //       setOpened(true);
-  //       break
-  //   }
-  // };
-
-  // async function handleConfirmDeleteProducts() {    
-  //   const result = await confirmAction({ 
-  //     actionType: actionType,
-  //     productToAction: productToAction, 
-  //     handleProductAction: productAction, 
-  //     args: productToAction.id,
-  //     close: () => setOpened(false)
-  //   });
-
-  //   if(result.errorMessage) return;
-    
-  //   if (data) {
-  //     setData({ 
-  //       products: products.filter((product) => product.id !== productToAction.id), 
-  //       total: totalProducts - 1 
-  //     });
-  //   }
-  // }
-
-  // Declaración de funciones y variables para la tabla
+  // Table handlers and URL state
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = useMemo(() => new URLSearchParams(searchParams.toString()), [searchParams]);
   const search = params.get("search") || "";
   const showToast = toastContext((state) => state.showToast);
+  const modalTitle = actionType === ACTION_TYPES.SHARE ? "Compartir productos" : "";
+
+  const closeDialog = useCallback(() => {
+    setOpened(false);
+  }, []);
+
+  const handleAction = useCallback((action: string) => {
+    if (action !== ACTION_TYPES.SHARE) return;
+
+    setActionType(action);
+    setOpened(true);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -230,9 +212,29 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <Dialog open={opened} onOpenChange={(open) => !open && closeDialog()}>
+        <DialogContent
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          }}
+          showCloseButton={false}
+        >
+          <DialogHeader>
+            <DialogTitle>{modalTitle}</DialogTitle>
+          </DialogHeader>
+          <ProductModal
+            type={actionType}
+            close={closeDialog}
+          />
+        </DialogContent>
+      </Dialog>
+
       <SelectionMenu 
         products={products} 
-        handleAction={() => {}}
+        handleAction={handleAction}
         customToggleSelecting={handleToggleSelecting}  
       />
 

@@ -1,9 +1,7 @@
-import { ACTION_TYPES } from "./constants";
 import { toastContext } from "@/contexts";
 import { ActionResponse } from "@/types";
 
 interface ConfirmActionParams<T, TArgs = unknown> {
-  actionType: string;
   productToAction: T | null;
   handleProductAction: (args: TArgs) => Promise<ActionResponse>;
   args: TArgs;
@@ -11,7 +9,6 @@ interface ConfirmActionParams<T, TArgs = unknown> {
 }
 
 export async function confirmAction<T, TArgs = unknown>({ 
-  actionType,
   productToAction, 
   handleProductAction, 
   args, 
@@ -28,7 +25,7 @@ export async function confirmAction<T, TArgs = unknown>({
       return { errorMessage: result.errorMessage };
     }
     
-    showToast(`Producto ${actionType === ACTION_TYPES.DISABLE ? "desactivado" : "eliminado"}`, "success");
+    showToast(`Producto eliminado`, "success");
     close();
     return { successMessage: result.successMessage };
   } else {

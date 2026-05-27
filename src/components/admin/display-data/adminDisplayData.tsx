@@ -24,7 +24,6 @@ interface TableData<T> {
   map: string[];
   withEditButton?: boolean;
   editLink?: string | undefined;
-  withDisableButton?: boolean;
   withDeleteButton?: boolean;
   sortConfig?: Record<string, { enabled?: boolean; type: 'string' | 'number' | 'date'; default?: boolean }>;
   filterConfig?: Record<string, { enabled: boolean; options: Array<{ value: string | boolean; label: string }> }>;
@@ -60,7 +59,6 @@ export function AdminDisplayData<T extends Record<string, unknown> & { id: numbe
     map, 
     withEditButton, 
     editLink, 
-    withDisableButton,
     withDeleteButton,
     sortConfig = {},
     filterConfig = {}
@@ -111,7 +109,6 @@ export function AdminDisplayData<T extends Record<string, unknown> & { id: numbe
             map={map}
             withEditButton={withEditButton}
             editLink={editLink}
-            withDisableButton={withDisableButton}
             withDeleteButton={withDeleteButton}
             handleAction={handleAction}
             sortConfig={sortConfig}

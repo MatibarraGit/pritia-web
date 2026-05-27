@@ -49,7 +49,7 @@ function AdminProducts() {
     fetchFunction: getFilterConfig 
   });
   
-  const columns = ['Stock', 'Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Creación', 'Actualizado', 'Categoría', 'Subcategoría', 'Ver/Editar', 'Desactivar', 'Eliminar'];
+  const columns = ['Stock', 'Imagen', 'Nombre', 'Proveedor', 'P/Compra', 'P/Venta', 'P/Revendedores', 'Descuento', 'Creación', 'Actualizado', 'Categoría', 'Subcategoría', 'Ver/Editar', 'Eliminar'];
   const map = ['inStock', 'images', 'name', 'provider', 'purchasePrice', 'price', 'resellersPrice', 'discountPercent', 'createdAt', 'updatedAt', 'category', 'subcategory'];
   
   const [opened, setOpened] = useState(false);
@@ -86,7 +86,6 @@ function AdminProducts() {
     const productAction = deleteProduct;
     
     const result = await confirmAction({ 
-      actionType: actionType,
       productToAction: productToAction, 
       handleProductAction: productAction, 
       args: productToAction.id,
@@ -133,7 +132,6 @@ function AdminProducts() {
           map: map,
           withEditButton: false,
           editLink: '/admin/products/edit',
-          withDisableButton: true,
           // sortConfig: sortConfig,
           filterConfig: filterConfig || {}
         }}
