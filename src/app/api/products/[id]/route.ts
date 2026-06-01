@@ -499,61 +499,8 @@ export async function PATCH(
         );
       }
     }
-    console.log(error);
     return NextResponse.json(
       { message: 'Error interno del servidor al actualizar producto' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const session = await auth.api.getSession({ 
-    headers: await headers()
-  })
-
-  if (!session?.user || !session?.session) {
-    return NextResponse.json(
-      { message: 'No se ha podido autenticar el usuario' },
-      { status: 401 }
-    );
-  }
-  
-  const { id } = await params;
-
-  try {
-    // Eliminar el producto
-    const product = await prisma.products.delete({
-      where: {
-        product_id: parseInt(id),
-      },
-      select: {
-        images: true,
-      },
-    });
-
-    // Eliminar imágenes de Cloudinary antes de eliminar el producto
-    if (product.images && product.images.length > 0) {
-      for (const image of product.images) {
-        const publicId = await getPublicIdFromUrl(image);
-        if (!publicId) continue;
-
-        try {
-          await cloudinary.uploader.destroy(publicId);
-        } catch {
-          throw new Error('Error al eliminar imagen de Cloudinary');
-        }
-      }
-    }
-
-    return NextResponse.json({ message: "Producto eliminado con éxito", success: true });
-  } catch (error) {
-    console.log(error); // Error por foreing key en purchase-order-items
-    return NextResponse.json(
-      { message: 'Error interno del servidor al eliminar producto' },
       { status: 500 }
     );
   }

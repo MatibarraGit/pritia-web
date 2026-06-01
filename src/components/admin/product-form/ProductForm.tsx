@@ -22,7 +22,7 @@ import {
 import { ProductModal, DragImage } from "@/components";
 import { productDataContext } from "@/contexts";
 import { useAsyncData } from "@/hooks";
-import { ACTION_TYPES, formatPrice } from "@/utils";
+import { ACTION_TYPES, EMPTY_PRODUCT_TABLE_OPTIONS, fetchProductTableOptions, formatPrice } from "@/utils";
 import { handleSubmit } from "./handleSubmit";
 
 interface ProductImage {
@@ -33,7 +33,12 @@ interface ProductImage {
 
 export function ProductForm() {
   const { productData, handleChange, handleDeleteImage } = productDataContext();
-  const { providers, categories } = useAsyncData();
+  const { data: options } = useAsyncData({
+    cacheKey: "product-table-options",
+    fetchFunction: fetchProductTableOptions,
+    initialData: EMPTY_PRODUCT_TABLE_OPTIONS,
+  });
+  const { providers, categories } = options;
 
   const [opened, setOpened] = useState(false);
   const [error, setError] = useState("");
@@ -109,7 +114,7 @@ export function ProductForm() {
               error={error}
               message={message}
               slug={productData.slug}
-              close={() => setOpened(false)}
+              closeModal={() => setOpened(false)}
             />
           </DialogContent>
         </Dialog>

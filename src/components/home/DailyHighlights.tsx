@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui";
 import { ProductCard } from "@/components";
 import { ProductType } from "@/types";
+import { TOPICS } from "@/utils";
 
 export const DailyHighlights = ({ products }: { products: ProductType[] }) => {
 
@@ -22,7 +23,10 @@ export const DailyHighlights = ({ products }: { products: ProductType[] }) => {
                 Ofertas especiales por tiempo limitado
               </p>
             </div>
-            <Button className="bg-white hover:bg-white/80 text-black w-fit shadow-md">
+            <Button 
+              className="bg-white hover:bg-white/80 text-black w-fit shadow-md"
+              href={`/productos?seccion=${encodeURIComponent(TOPICS.HIGHLIGHTS)}`}
+            >
               CONOCELOS
             </Button>
           </div>

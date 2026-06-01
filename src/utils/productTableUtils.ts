@@ -1,6 +1,14 @@
-import type { BatchedChanges } from "@/hooks";
+import type { BatchedChanges } from "@/hooks/admin-products-table/use-batched-changes";
+import type { SortConfig } from "@/hooks/use-order-context";
 import type { EditableProductField, OptionsCache, ProductColumnKey, ProductInlinePatchPayload, ProductType } from "@/types";
-import { formatDate, formatPrice } from "@/utils";
+import { ACTION_TYPES } from "./constants";
+import { formatDate } from "./formatDate";
+import { formatPrice } from "./formatPrice";
+
+export const EMPTY_PRODUCT_TABLE_OPTIONS: OptionsCache = {
+  providers: [],
+  categories: [],
+};
 
 export function applyProductChange(product: ProductType, field: EditableProductField, value: string | number | boolean | string[], options: OptionsCache) {
   const nextProduct = { ...product, [field]: value } as ProductType;
@@ -90,6 +98,36 @@ export async function fetchProductTableOptions(): Promise<OptionsCache> {
   }
 
   return optionsPromise;
+}
+
+export function getProductTableActionTitle(actionType: string) {
+  if (actionType === ACTION_TYPES.DELETE) return "Eliminar productos seleccionados";
+  if (actionType === ACTION_TYPES.SHARE) return "Compartir productos";
+
+  return "";
+}
+
+export const PRODUCT_TABLE_SORT_CONFIG = {
+  inStock: { type: "string" },
+  name: { type: "string" },
+  description: { type: "string" },
+  providers: { type: "string" },
+  purchasePrice: { type: "number" },
+  price: { type: "number" },
+  originalPrice: { type: "number" },
+  resellersPrice: { type: "number" },
+  discountPercent: { type: "number" },
+  createdAt: { type: "date" },
+  updatedAt: { type: "date" },
+  stock: { type: "number" },
+  category: { type: "string" },
+  subcategory: { type: "string" },
+} satisfies SortConfig;
+
+export function getProductTableSortColumn(property?: string | null): ProductColumnKey | null {
+  if (!property || !(property in PRODUCT_TABLE_SORT_CONFIG)) return null;
+
+  return property as ProductColumnKey;
 }
 
 export function formatCellValue(product: ProductType, key: ProductColumnKey) {

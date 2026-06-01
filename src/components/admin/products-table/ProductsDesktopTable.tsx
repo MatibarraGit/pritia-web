@@ -2,9 +2,10 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 import { ProductTableCell } from "@/components";
 import { selectItemsContext } from "@/contexts";
+import { useOrderContext } from "@/hooks";
 import { cn } from "@/libs/utils";
 import type { EditableCellValue, EditableProductField, OptionsCache, ProductColumnKey, ProductType } from "@/types";
-import { COLUMNS } from "@/utils";
+import { COLUMNS, getProductTableSortColumn } from "@/utils";
 
 interface ProductsDesktopTableProps {
   products: ProductType[];
@@ -12,9 +13,6 @@ interface ProductsDesktopTableProps {
   pendingChanges: Partial<Record<number, Partial<Record<EditableProductField, unknown>>>>;
   activeCell: { productId: number; field: ProductColumnKey } | null;
   isEditMode: boolean;
-  sortColumn: ProductColumnKey | null;
-  sortDirection: "asc" | "desc";
-  onSort: (column: ProductColumnKey) => void;
   onActivateCell: (productId: number, field: ProductColumnKey) => void;
   onCancelCell: () => void;
   onCellChange: (productId: number, field: EditableProductField, value: EditableCellValue) => void;
@@ -26,14 +24,15 @@ export function ProductsDesktopTable({
   pendingChanges,
   activeCell,
   isEditMode,
-  sortColumn,
-  sortDirection,
-  onSort,
   onActivateCell,
   onCancelCell,
   onCellChange,
 }: ProductsDesktopTableProps) {
   const { isSelecting, selectedIds, toggleItemSelection } = selectItemsContext(); 
+
+  const { sortObject, handleSort } = useOrderContext("admin-products-table");
+  const sortColumn = getProductTableSortColumn(sortObject?.property);
+  const sortDirection = sortObject?.direction || "asc";
 
   // Función para seleccionar/deseleccionar un item 
   const handleClickItem = (product: ProductType) => {
@@ -67,7 +66,7 @@ export function ProductsDesktopTable({
             <button
               type="button"
               key={column.key}
-              onClick={() => column.type !== "image" && onSort(column.key)}
+              onClick={() => column.type !== "image" && handleSort(column.key)}
               className={cn(
                 "sticky top-0 z-10 flex min-w-0 items-center justify-center gap-1 border-b border-gray-200 bg-gray-50 px-3 py-3 text-center text-xs font-semibold uppercase text-gray-600",
                 column.key === "images" && "sticky left-0 z-50",
@@ -124,9 +123,7 @@ export function ProductsDesktopTable({
                         onCancelCell();
                       }
                     }}
-                    onLiveChange={(value) => {
-                      onCellChange(product.id, column.key as EditableProductField, value);
-                    }}
+                    onLiveChange={(value) => onCellChange(product.id, column.key as EditableProductField, value)}
                   />
                 </div>
               </div>

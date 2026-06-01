@@ -28,6 +28,23 @@ export async function GET(
     let total = 0;
 
     switch (topic) {
+      case TOPICS.HIGHLIGHTS:
+        productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
+          ${BASE_QUERY}
+          AND p.stock > 0
+          ORDER BY p.stock DESC, p.updated_at DESC, p.sell_price DESC
+          LIMIT ${PRODUCTS_PER_PAGE} 
+          OFFSET ${offset}
+        `)
+
+        const highlightsTotalResult = await prisma.$queryRaw<[{ count: number }]>`
+          SELECT COUNT(*)::INTEGER
+          FROM products p
+          WHERE p.stock > 0
+        `;
+        total = highlightsTotalResult[0]?.count ?? 0;
+        break;
+
       case TOPICS.NEW_ENTRIES:
         productsRaw = await prisma.$queryRaw<Array<ProductResponseType>>(Prisma.sql`
           ${BASE_QUERY}

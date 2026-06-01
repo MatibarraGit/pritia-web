@@ -7,11 +7,10 @@ import { useSearchParams } from "next/navigation";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { menuMobileContext } from "@/contexts";
-import { useCategoriesMenu, useFetchData, useFiltersContext } from "@/hooks";
+import { useCategoriesMenu, useFetchData } from "@/hooks";
 import { CategoryType } from "@/types";
 import { cn } from "@/libs/utils";
 import { fetchAllCategories } from "@/services";
-import Link from "next/link";
 
 interface CategoriesAccordionProps {
   isMenuMobile?: boolean;

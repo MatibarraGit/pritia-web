@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState, useMemo, useRef, startTransition } from 'react'
 import { usePathname } from 'next/navigation'
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { orderContext } from "@/contexts";
 import { compareValues } from "@/utils/compareValues";
 import { ProductType } from "@/types";
@@ -5,28 +7,31 @@ import { ProductType } from "@/types";
 export interface SortConfig {
   [key: string]: {
     type: 'number' | 'date' | 'string';
-    enabled?: boolean;
     default?: boolean;
   };
 }
 
-export const useOrderContext = () => {
+export const useOrderContext = (scope?: string) => {
   const {
     sortObject,
     setSortObject,
     resetOrderObject
   } = orderContext();
+  const scopedSortObject =
+    scope
+      ? sortObject?.scope === scope ? sortObject : null
+      : sortObject?.scope ? null : sortObject;
 
   // Aplicar ordenamiento
   const orderProducts = (products: ProductType[] | null): ProductType[] | null => {
     if (!products) return null;
 
-    if (sortObject) {
+    if (scopedSortObject) {
       return [...products].sort((a, b) => {
-        const aValue = a[sortObject.property as keyof ProductType];
-        const bValue = b[sortObject.property as keyof ProductType];
+        const aValue = a[scopedSortObject.property as keyof ProductType];
+        const bValue = b[scopedSortObject.property as keyof ProductType];
         const comparison = compareValues(aValue, bValue, 'number');
-        return sortObject.direction === 'asc' ? comparison : -comparison;
+        return scopedSortObject.direction === 'asc' ? comparison : -comparison;
       });
     }
 
@@ -40,16 +45,16 @@ export const useOrderContext = () => {
   ): T[] | null => {
     if (!items) return null;
 
-    if (sortObject && sortConfig[sortObject.property]) {
+    if (scopedSortObject && sortConfig[scopedSortObject.property]) {
       return [...items].sort((a, b) => {
-        const aValue = a[sortObject.property];
-        const bValue = b[sortObject.property];
+        const aValue = a[scopedSortObject.property];
+        const bValue = b[scopedSortObject.property];
         const comparison = compareValues(
           aValue,
           bValue,
-          sortConfig[sortObject.property].type
+          sortConfig[scopedSortObject.property].type
         );
-        return sortObject.direction === 'asc' ? comparison : -comparison;
+        return scopedSortObject.direction === 'asc' ? comparison : -comparison;
       });
     }
 
@@ -61,21 +66,22 @@ export const useOrderContext = () => {
     if (!property && direction === '') {
       resetOrderObject();
     } else if (direction !== '') {
-      setSortObject({ property, direction });
-    } else if (sortObject?.property === property) {
+      setSortObject({ property, direction, scope });
+    } else if (scopedSortObject?.property === property) {
       setSortObject({
-        property: sortObject.property,
-        direction: sortObject.direction === 'asc' ? 'desc' : 'asc'
+        property: scopedSortObject.property,
+        direction: scopedSortObject.direction === 'asc' ? 'desc' : 'asc',
+        scope,
       });
     } else {
-      setSortObject({ property, direction: 'asc' });
+      setSortObject({ property, direction: 'asc', scope });
     }
   }
 
   return {
     orderProducts,
     orderItems,
-    sortObject,
+    sortObject: scopedSortObject,
     handleSort,
     resetOrderObject
   };

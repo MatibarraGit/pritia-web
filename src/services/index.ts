@@ -6,8 +6,8 @@ export { fetchAllCategories } from "./categories";
 
 // Products
 export {
+  bulkDeleteProducts,
   createProduct,
-  deleteProduct,
   getAllProducts,
   getAvailableProducts,
   getHomeProducts,
@@ -27,6 +27,7 @@ export type {
   GetProductsByTopicParams,
   SearchProductsParams,
   SearchProductsResponse,
+  BulkDeleteProductsResponse,
 } from "./products";
 
 // Providers

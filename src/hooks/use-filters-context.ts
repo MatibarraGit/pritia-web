@@ -1,3 +1,5 @@
+"use client";
+
 import { normalizeText } from "@/utils";
 import { filtersContext } from "@/contexts/filters-context";
 import { ProductType } from "@/types";

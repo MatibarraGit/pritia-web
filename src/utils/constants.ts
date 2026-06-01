@@ -52,6 +52,7 @@ export const enum PAYMENT_STATUS {
 export const PRODUCTS_PER_PAGE = 60;
 
 export const enum TOPICS {
+  HIGHLIGHTS = 'destacados',
   NEW_ENTRIES = 'nuevos ingresos',
   OFFERS = 'ofertas',
   BEST_SELLERS = 'más vendidos',

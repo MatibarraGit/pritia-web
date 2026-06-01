@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export interface SortObject {
   property: string;
   direction: 'asc' | 'desc';
+  scope?: string;
 }
 
 interface OrderState {

@@ -9,7 +9,7 @@ import { getAllProducts } from "@/services";
 import { PRODUCTS_PER_PAGE } from "@/utils";
 import type { GetAllProductsResponse } from "@/services";
 
-function TestProducts() {
+function ProductsPageComponent() {
   const params = useSearchParams();
   const page = params.get("page") ? parseInt(params.get("page")!) : 1;
   const search = params.get("search") || "";
@@ -52,10 +52,10 @@ function TestProducts() {
   );
 }
 
-export default function TestProductsPage() {
+export default function ProductsPage() {
   return (
     <Suspense fallback={<PageLoader />}>
-      <TestProducts />
+      <ProductsPageComponent />
     </Suspense>
   );
 }

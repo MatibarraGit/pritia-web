@@ -1,9 +1,3 @@
-// Admin / Display Data
-export { AdminDisplayData } from './admin/display-data/adminDisplayData'
-export { TableLoader } from './admin/display-data/tableLoader'
-export { TableOfItems } from './admin/display-data/tableOfItems'
-export { TableToolBar } from './admin/display-data/tableToolBar'
-
 // Data Display
 export { ShippingInfo } from './data-display/ShippingInfo'
 
@@ -23,7 +17,9 @@ export { ProductPreview } from './admin/product-form/ProductPreview'
 export { CustomTable } from './admin/products-table/CustomTable'
 export { EditableCell } from './admin/products-table/EditableCell'
 export { MobileProductRow } from './admin/products-table/MobileProductRow'
+export { ProductsBulkActionDialog } from './admin/products-table/ProductsBulkActionDialog'
 export { ProductsDesktopTable } from './admin/products-table/ProductsDesktopTable'
+export { ProductsPendingChangesBanner } from './admin/products-table/ProductsPendingChangesBanner'
 export { ProductsTableToolbar } from './admin/products-table/ProductsTableToolbar'
 export { ProductTableCell } from './admin/products-table/ProductTableCell'
 

@@ -48,6 +48,21 @@ export interface SearchProductsResponse {
   type: 'exact' | 'tooInteresting';
 }
 
+export interface BulkDeleteProductsResponse extends ActionResponse {
+  deletedProductIds?: number[];
+  blockedProductIds?: number[];
+  missingProductIds?: number[];
+  failedImageCount?: number;
+}
+
+type BulkDeleteApiResponse = {
+  message?: string;
+  deletedProductIds?: number[];
+  blockedProductIds?: number[];
+  missingProductIds?: number[];
+  failedImageCount?: number;
+};
+
 // GET - Obtener todos los productos
 export async function getAllProducts({ page = 1, search = "" }: GetAllProductsParams = {}): Promise<GetAllProductsResponse> {
   try {
@@ -282,12 +297,34 @@ export async function patchProduct(id: number, changes: Partial<ProductInlinePat
   });
 }
 
-// DELETE - Eliminar producto
-export async function deleteProduct(id: number): Promise<ActionResponse> {
-  return apiRequest({
-    endpoint: `/api/products/${id}`,
-    method: 'DELETE',
-    successMessage: "Producto Eliminado",
-    errorMessage: 'Error al eliminar el producto',
-  });
+// DELETE - Eliminar productos en lote
+export async function bulkDeleteProducts(productIds: number[]): Promise<BulkDeleteProductsResponse> {
+  try {
+    const response = await fetch(`${baseUrl}/api/products/bulk-delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productIds }),
+    });
+    const data = (await response.json().catch(() => ({}))) as BulkDeleteApiResponse;
+
+    if (!response.ok) {
+      return {
+        errorMessage: data.message || 'Error al eliminar los productos',
+        blockedProductIds: data.blockedProductIds,
+        missingProductIds: data.missingProductIds,
+        failedImageCount: data.failedImageCount,
+      };
+    }
+
+    return {
+      successMessage: data.message || 'Productos eliminados',
+      deletedProductIds: data.deletedProductIds || productIds,
+    };
+  } catch (error) {
+    return {
+      errorMessage: error instanceof Error ? error.message : 'Error desconocido al eliminar los productos',
+    };
+  }
 }

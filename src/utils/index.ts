@@ -33,9 +33,13 @@ export { convertImageToBuffer, getPublicIdFromUrl } from "./processImage";
 export {
   applyProductChange,
   buildPatchPayload,
+  EMPTY_PRODUCT_TABLE_OPTIONS,
   fetchProductTableOptions,
   formatCellValue,
+  getProductTableActionTitle,
+  getProductTableSortColumn,
   getSelectOptions,
+  PRODUCT_TABLE_SORT_CONFIG,
   splitProviderNames, 
   toDateTimeInputValue
 } from "./productTableUtils"
