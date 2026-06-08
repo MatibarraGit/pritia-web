@@ -40,7 +40,7 @@ const services: ServiceType[] = [
 
 export const ServicesHighlight = () => {
   return (
-    <section className="w-11/12 max-w-content mx-auto py-12">
+    <section className="w-11/12 max-w-content mx-auto pt-8 pb-12">
       <div className="container mx-auto">
         <h2 className="mb-6 text-2xl font-subheading text-center md:text-3xl">Nuestros Servicios</h2>
         

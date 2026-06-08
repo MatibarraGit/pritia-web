@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { memo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/libs/utils";
-import { CheckoutButton, LikeButton } from "@/components";
+import { LikeButton } from "@/components";
 import { ProductType } from "@/types";
-import { EVENTS, formatPrice } from "@/utils";
+import { formatPrice } from "@/utils";
 
 type ProductCardProps = {
   product: ProductType;
@@ -19,22 +18,21 @@ export const ProductCard = memo(function ProductCard({
   classNames,
   imageSizes = "(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 250px",
 }: ProductCardProps) {
-  // TODO: Eliminar al finalizar HotSale
   const hasDiscount = product.discountPercent > 0 && product.originalPrice;
-  const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
+  // const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
   const savings = hasDiscount ? product.originalPrice! - product.price : 0;
 
   // Imagen - las imágenes vienen como array de strings con URLs de Cloudinary
   const image = product?.images?.[0] || "/img/image-icon.png";
 
-  const productToCheckout = !isHotSale ? undefined : {
-    id: product.id,
-    image: product.images[0] || "/img/image-icon.png",
-    name: product.name,
-    price: product.price,
-    quantity: 1,
-    slug: product.slug,
-  };
+  // const productToCheckout = !isHotSale ? undefined : {
+  //   id: product.id,
+  //   image: product.images[0] || "/img/image-icon.png",
+  //   name: product.name,
+  //   price: product.price,
+  //   quantity: 1,
+  //   slug: product.slug,
+  // };
 
   return (
     <Link
@@ -48,7 +46,6 @@ export const ProductCard = memo(function ProductCard({
           width={250}
           height={250}
           sizes={imageSizes}
-          // loading="lazy"
           quality={70}
           className="object-contain h-40 select-none"
           draggable={false}
@@ -60,26 +57,24 @@ export const ProductCard = memo(function ProductCard({
           width={250}
           height={250}
           sizes={imageSizes}
-          // loading="lazy"
-          // quality={70}
           className="object-contain h-40 select-none"
           draggable={false}
         />
 
         {/* Badge Hot Sale */}
-        {isHotSale && (
+        {/* {isHotSale && (
           <span className="absolute top-2 left-2 flex items-center gap-1 bg-orange-500 text-white text-xs font-medium px-2 py-0.5 rounded">
             🔥 Hot Sale
           </span>
-        )}
+        )} */}
       </div>
 
       <div className={cn(
-        "p-4 border-t flex flex-col h-auto",
-        // isHotSale ? "h-auto" : "h-52"
+        "p-4 border-t flex flex-col h-60",
+        // hasDiscount ? "h-auto" : "h-52"
         )}>
-        <h3 className="font-medium text-lg mb-1 line-clamp-2 overflow-hidden">{product.name}</h3>
-        <p className="text-sm text-gray-600 mb-3">{product.category}</p>
+        <h3 className="font-medium text-lg line-clamp-2 overflow-hidden">{product.name}</h3>
+        <p className="text-sm text-gray-600 mt-1 mb-2">{product.category}</p>
 
         {/* TODO: Implementar cuotas */}
         {/* {installmentQuantity !== 0 && (
@@ -107,10 +102,8 @@ export const ProductCard = memo(function ProductCard({
             </span>
 
             <span
-              className={cn(
-                "w-fit text-xs font-subheading text-white px-1.5 py-0.5 rounded",
-                isHotSale ? "bg-orange-500" : "bg-primary"
-              )}
+              className="w-fit text-xs font-subheading text-white px-1.5 py-0.5 rounded bg-primary"
+              // isHotSale ? "bg-orange-500" : "bg-primary"
               >
               {product.discountPercent}% OFF
             </span>
@@ -147,13 +140,13 @@ export const ProductCard = memo(function ProductCard({
         </div>
 
         {/* Envío gratis + CTA Hot Sale */}
-        {isHotSale && (
+        {/* {isHotSale && (
           <CheckoutButton 
             items={productToCheckout!}
             text="Aprovechar oferta"
             classname="w-full bg-orange-500 hover:bg-orange-600 transition-colors text-white text-sm font-medium py-2 rounded-lg"
           />
-        )}
+        )} */}
       </div>
     </Link>
   );

@@ -1,7 +1,7 @@
 ### Post Release
 * [] Mejorar UI:
   * Página de producto
-    [] Agregar información de las cuotas con tarjetas de crédito desde la API de Mercado Pago
+    [Now] Agregar información de las cuotas con tarjetas de crédito desde la API de Mercado Pago
     [] Trasladar elementos del diseño de la página de MD Directo a esta página
     [] Cambiar la disposición de las imágenes a partir de 768px en adelante, basarme en Mercado Libre o plataforSmas líderes
   
@@ -12,7 +12,7 @@
     Basarme en castillo.com.ar para 
       [] Cambiar la sección "Comprá por categoría"
       [] Agregar sección con imágenes por categoría
-      [] Agregar información de los medios de pago
+      [] Agregar información de los medios<> de pago
       [] Modificar las productCards
       [] Agregar sección para comprar por marca
 

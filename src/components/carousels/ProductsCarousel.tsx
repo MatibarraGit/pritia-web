@@ -130,7 +130,7 @@ export const ProductsCarousel = memo(
     }
 
     return (
-      <section className="w-11/12 max-w-content mx-auto py-8 relative">
+      <section className="w-11/12 max-w-content mx-auto py-4 relative">
         {title && (
           <div className="flex items-center justify-between">
             <h2 className="w-full mb-4">
