@@ -1,6 +1,15 @@
 import type { BatchedChanges } from "@/hooks/admin-products-table/use-batched-changes";
 import type { SortConfig } from "@/hooks/use-order-context";
-import type { EditableProductField, OptionsCache, ProductColumnKey, ProductInlinePatchPayload, ProductType } from "@/types";
+import type {
+  EditableCellValue,
+  EditableProductField,
+  EditableProductImage,
+  EditableProductImageFile,
+  OptionsCache,
+  ProductColumnKey,
+  ProductInlinePatchPayload,
+  ProductType,
+} from "@/types";
 import { ACTION_TYPES } from "./constants";
 import { formatDate } from "./formatDate";
 import { formatPrice } from "./formatPrice";
@@ -10,7 +19,47 @@ export const EMPTY_PRODUCT_TABLE_OPTIONS: OptionsCache = {
   categories: [],
 };
 
-export function applyProductChange(product: ProductType, field: EditableProductField, value: string | number | boolean | string[], options: OptionsCache) {
+export const PRODUCT_IMAGE_MAX_FILE_SIZE = 5 * 1024 * 1024;
+export const PRODUCT_IMAGE_ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+export function isEditableProductImageFile(value: unknown): value is EditableProductImageFile {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "kind" in value &&
+    (value as { kind?: unknown }).kind === "file" &&
+    "file" in value &&
+    typeof File !== "undefined" &&
+    (value as { file?: unknown }).file instanceof File
+  );
+}
+
+export function getEditableProductImageSrc(image: EditableProductImage) {
+  return typeof image === "string" ? image : image.previewUrl;
+}
+
+export function isOwnCloudinaryImageUrl(value: string, cloudName?: string | null) {
+  if (!cloudName) return false;
+
+  try {
+    const url = new URL(value);
+    const expectedPrefix = `/${cloudName}/image/upload/`;
+
+    return url.protocol === "https:" && url.hostname === "res.cloudinary.com" && url.pathname.startsWith(expectedPrefix);
+  } catch {
+    return false;
+  }
+}
+
+function normalizeEditableImages(value: unknown): EditableProductImage[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.filter((image): image is EditableProductImage => (
+    typeof image === "string" || isEditableProductImageFile(image)
+  ));
+}
+
+export function applyProductChange(product: ProductType, field: EditableProductField, value: EditableCellValue, options: OptionsCache) {
   const nextProduct = { ...product, [field]: value } as ProductType;
 
   if (field === "category") {
@@ -28,11 +77,15 @@ export function buildPatchPayload(
   product: ProductType,
   fields: BatchedChanges<EditableProductField>[number],
   options: OptionsCache
-): Partial<ProductInlinePatchPayload> {
+): Partial<ProductInlinePatchPayload> | FormData {
   const payload: Partial<ProductInlinePatchPayload> = {};
+  let imageItems: EditableProductImage[] | null = null;
 
   for (const [field, change] of Object.entries(fields) as Array<[EditableProductField, { value: unknown }]>) {
     switch (field) {
+      case "images":
+        imageItems = normalizeEditableImages(change.value);
+        break;
       case "providers": {
         const providerNames = Array.isArray(change.value) ? change.value : splitProviderNames(String(change.value || ""));
         payload.providerIds = options.providers
@@ -74,6 +127,22 @@ export function buildPatchPayload(
         payload[field] = Number(change.value);
         break;
     }
+  }
+
+  if (imageItems) {
+    const formData = new FormData();
+    formData.append("patch", JSON.stringify(payload));
+
+    imageItems.forEach((image) => {
+      if (typeof image === "string") {
+        formData.append("images", image);
+        return;
+      }
+
+      formData.append("images", image.file, image.name || image.file.name);
+    });
+
+    return formData;
   }
 
   return payload;

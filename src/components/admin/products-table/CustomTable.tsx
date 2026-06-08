@@ -17,6 +17,7 @@ import {
   useAsyncData,
   useProductTableSearch,
   useOrderContext,
+  useFiltersContext,
 } from "@/hooks";
 import { toastContext } from "@/contexts";
 import type { ProductType } from "@/types";
@@ -29,6 +30,8 @@ interface CustomTableProps {
 
 export function CustomTable({ products, isLoading }: CustomTableProps) {
   const { search, handleSearch, clearSearch } = useProductTableSearch();
+  const { adminFilters, filterItems } = useFiltersContext();
+  const clientSearch = typeof adminFilters.productsClientSearch === "string" ? adminFilters.productsClientSearch : "";
   const showToast = toastContext((state) => state.showToast);
   const fetchOptions = useCallback(async () => {
     try {
@@ -67,8 +70,9 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
   } = useProductTableEditing({ products, options });
 
   // Lógica de ordenamiento
+  const filteredProducts = filterItems(localProducts);
   const { orderItems } = useOrderContext("admin-products-table");
-  const sortedProducts = orderItems(localProducts, PRODUCT_TABLE_SORT_CONFIG) || [];
+  const sortedProducts = orderItems(filteredProducts, PRODUCT_TABLE_SORT_CONFIG) || [];
 
   // Lógica de acciones
   const {
@@ -115,6 +119,7 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
 
       <ProductsTableToolbar
         search={search}
+        clientSearch={clientSearch}
         isEditMode={isEditMode}
         hasPendingChanges={hasPendingChanges}
         isFlushing={isFlushing}

@@ -4,8 +4,8 @@ import { ProductTableCell } from "@/components";
 import { selectItemsContext } from "@/contexts";
 import { useOrderContext } from "@/hooks";
 import { cn } from "@/libs/utils";
-import type { EditableCellValue, EditableProductField, OptionsCache, ProductColumnKey, ProductType } from "@/types";
-import { COLUMNS, getProductTableSortColumn } from "@/utils";
+import type { EditableCellValue, EditableProductField, EditableProductImage, OptionsCache, ProductColumnKey, ProductType } from "@/types";
+import { COLUMNS, getEditableProductImageSrc, getProductTableSortColumn } from "@/utils";
 
 interface ProductsDesktopTableProps {
   products: ProductType[];
@@ -37,7 +37,7 @@ export function ProductsDesktopTable({
   // Función para seleccionar/deseleccionar un item 
   const handleClickItem = (product: ProductType) => {
     if (!isSelecting) return;
-    const images = (product.images as string[] | undefined) || [];
+    const images = ((product.images || []) as EditableProductImage[]).map(getEditableProductImageSrc);
     // const image = images.length > 0 ? images[0] : '';
     const name = (product.name as string | undefined) || '';
     const description = (product.description as string | undefined) || '';
@@ -56,7 +56,7 @@ export function ProductsDesktopTable({
   }
 
   return (
-    <div className="hidden max-h-[70dvh] overflow-auto rounded-lg border border-gray-200 lg:block">
+    <div className="hidden min-h-[50dvh] max-h-[70dvh] overflow-auto rounded-lg border border-gray-200 lg:block">
       <div
         className="grid min-w-max"
         style={{ gridTemplateColumns: COLUMNS.map((column) => column.width).join(" ") }}
@@ -108,7 +108,7 @@ export function ProductsDesktopTable({
                     isActive={isActive}
                     isEditMode={isEditMode}
                     onActivate={() => {
-                      if (isEditMode && column.editable && !isSelecting) {
+                      if (isEditMode && !isSelecting) {
                         onActivateCell(product.id, column.key);
                       }
                     }}
@@ -119,7 +119,7 @@ export function ProductsDesktopTable({
                       const columnProp = arbitraryColumn ?? column;
                       
                       onCellChange(product.id, columnProp.key as EditableProductField, value);
-                      if (columnProp.type !== "multiselect") {
+                      if (columnProp.type !== "multiselect" && columnProp.type !== "image") {
                         onCancelCell();
                       }
                     }}

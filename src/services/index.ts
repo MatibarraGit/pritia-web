@@ -4,6 +4,9 @@ export { apiRequest } from "./api-client";
 // Categories
 export { fetchAllCategories } from "./categories";
 
+// Images
+export { deleteProductImages } from "./images"
+
 // Products
 export {
   bulkDeleteProducts,
@@ -17,7 +20,7 @@ export {
   getProductsByTopic,
   patchProduct,
   searchProducts,
-  updateProduct,
+  updateProduct
 } from "./products";
 export type {
   GetAllProductsParams,

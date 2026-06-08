@@ -3,17 +3,11 @@ import { headers } from "next/headers";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { auth } from "@/libs/auth";
-import { cloudinary, prisma } from "@/libs";
-import { getPublicIdFromUrl } from "@/utils";
+import { prisma } from "@/libs";
+import { deleteProductImages } from "@/services";
 
 type BulkDeleteBody = {
   productIds?: unknown;
-};
-
-type ProductToDelete = {
-  product_id: number;
-  product_name: string;
-  images: string[];
 };
 
 export async function DELETE(req: Request) {
@@ -170,24 +164,4 @@ export async function DELETE(req: Request) {
       { status: 500 }
     );
   }
-}
-
-async function deleteProductImages(products: ProductToDelete[]) {
-  const deleteResults = await Promise.allSettled(
-    products.flatMap((product) =>
-      product.images.map(async (image) => {
-        const publicId = await getPublicIdFromUrl(image);
-        if (!publicId) return;
-
-        await cloudinary.uploader.destroy(publicId);
-      })
-    )
-  );
-
-  const failedImageCount = deleteResults.filter((result) => result.status === "rejected").length;
-
-  return {
-    success: failedImageCount === 0,
-    failedImageCount,
-  };
 }

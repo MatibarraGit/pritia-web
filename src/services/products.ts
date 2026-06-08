@@ -286,7 +286,7 @@ export async function updateProduct(id: number, formData: FormData): Promise<Act
 }
 
 // PATCH - Actualizar campos parciales de producto
-export async function patchProduct(id: number, changes: Partial<ProductInlinePatchPayload>): Promise<ActionResponse & { product?: ProductType }> {
+export async function patchProduct(id: number, changes: Partial<ProductInlinePatchPayload> | FormData): Promise<ActionResponse & { product?: ProductType }> {
   return apiRequest<{ product?: ProductType }>({
     endpoint: `/api/products/${id}`,
     method: 'PATCH',

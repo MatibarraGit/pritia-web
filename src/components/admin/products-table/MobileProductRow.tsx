@@ -4,17 +4,23 @@ import { Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui";
 import { cn } from "@/libs/utils";
-import type { ProductType } from "@/types";
+import type { EditableProductImage, ProductType } from "@/types";
+import { getEditableProductImageSrc } from "@/utils";
 
 export function MobileProductRow({ product }: { product: ProductType }) {
-  const images = product.images || [];
+  const images: EditableProductImage[] = product.images || [];
 
   return (
     <article className="grid grid-cols-[76px_1fr_auto] items-center gap-3 bg-white p-3">
       <div className="h-16 w-16 overflow-hidden rounded-md border border-gray-100 bg-gray-50">
         {images.length > 0 ? (
-          images.slice(0, 4).map((image) => (
-            <img key={image} src={image} alt={product.name} className="h-full w-full object-contain" />
+          images.slice(0, 4).map((image, index) => (
+            <img
+              key={`${getEditableProductImageSrc(image)}-${index}`}
+              src={getEditableProductImageSrc(image)}
+              alt={product.name}
+              className="h-full w-full object-contain"
+            />
           ))
         ) : (
           <div className="col-span-2 flex h-full items-center justify-center text-xs text-gray-400">

@@ -8,20 +8,20 @@ export const enum ACTION_TYPES {
 };
 
 export const COLUMNS: ColumnConfig[] = [
-  { key: "inStock", label: "Stock", type: "boolean", editable: true, width: "minmax(120px, 0.7fr)" },
-  { key: "images", label: "Imagen", type: "image", editable: false, width: "minmax(120px, 0.8fr)" },
-  { key: "name", label: "Nombre", type: "text", editable: true, width: "minmax(240px, 2fr)" },
-  { key: "description", label: "Descripción", type: "textarea", editable: true, width: "minmax(280px, 320px)" },
-  { key: "providers", label: "Proveedores", type: "multiselect", editable: true, width: "minmax(220px, 320px)" },
-  { key: "purchasePrice", label: "P/Compra", type: "currency", editable: true, width: "minmax(130px, 0.8fr)" },
-  { key: "price", label: "P/Venta", type: "currency", editable: true, width: "minmax(130px, 0.8fr)" },
-  { key: "resellersPrice", label: "P/Revendedores", type: "currency", editable: true, width: "minmax(150px, 0.9fr)" },
-  { key: "discountPercent", label: "Descuento", type: "percentage", editable: true, width: "minmax(120px, 0.7fr)" },
-  { key: "createdAt", label: "Creación", type: "datetime", editable: true, width: "minmax(170px, 1fr)" },
-  { key: "updatedAt", label: "Actualizado", type: "datetime", editable: true, width: "minmax(170px, 1fr)" },
-  { key: "stock", label: "Inventario", type: "number", editable: true, width: "minmax(120px, 0.7fr)" },
-  { key: "category", label: "Categoría", type: "select", editable: true, width: "minmax(190px, 1fr)" },
-  { key: "subcategory", label: "Subcategoría", type: "select", editable: true, width: "minmax(220px, 1.2fr)" },
+  { key: "inStock", label: "Stock", type: "boolean", width: "minmax(120px, 0.7fr)" },
+  { key: "images", label: "Imagen", type: "image", width: "minmax(120px, 0.8fr)" },
+  { key: "name", label: "Nombre", type: "text", width: "minmax(240px, 2fr)" },
+  { key: "description", label: "Descripción", type: "textarea", width: "minmax(280px, 320px)" },
+  { key: "providers", label: "Proveedores", type: "multiselect", width: "minmax(220px, 320px)" },
+  { key: "purchasePrice", label: "P/Compra", type: "currency", width: "minmax(130px, 0.8fr)" },
+  { key: "price", label: "P/Venta", type: "currency", width: "minmax(130px, 0.8fr)" },
+  { key: "resellersPrice", label: "P/Revendedores", type: "currency", width: "minmax(150px, 0.9fr)" },
+  { key: "discountPercent", label: "Descuento", type: "percentage", width: "minmax(120px, 0.7fr)" },
+  { key: "createdAt", label: "Creación", type: "datetime", width: "minmax(170px, 1fr)" },
+  { key: "updatedAt", label: "Actualizado", type: "datetime", width: "minmax(170px, 1fr)" },
+  { key: "stock", label: "Inventario", type: "number", width: "minmax(120px, 0.7fr)" },
+  { key: "category", label: "Categoría", type: "select", width: "minmax(190px, 1fr)" },
+  { key: "subcategory", label: "Subcategoría", type: "select", width: "minmax(220px, 1.2fr)" },
 ];
 
 export const EVENTS = {

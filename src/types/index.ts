@@ -161,6 +161,7 @@ export type ProductInlinePatchPayload = {
   subcategoryId?: number | null;
   createdAt?: string;
   updatedAt?: string | null;
+  images?: string[];
 }
 
 // ---- Mercado Pago ----
@@ -204,13 +205,22 @@ export interface ColumnConfig {
   key: ProductColumnKey;
   label: string;
   type: ColumnType;
-  editable: boolean;
   width: string;
 }
 
-export type EditableCellValue = string | number | boolean | string[];
+export type EditableProductImageFile = {
+  kind: "file";
+  file: File;
+  previewUrl: string;
+  name: string;
+};
+
+export type EditableProductImage = string | EditableProductImageFile;
+
+export type EditableCellValue = string | number | boolean | string[] | EditableProductImage[];
 
 export type EditableProductField =
+  | "images"
   | "inStock"
   | "name"
   | "description"
@@ -226,7 +236,7 @@ export type EditableProductField =
   | "category"
   | "subcategory";
 
-export type ProductColumnKey = EditableProductField | "images";
+export type ProductColumnKey = EditableProductField;
 
 export interface OptionsCache {
   providers: Provider[];
