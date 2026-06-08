@@ -28,7 +28,7 @@ export {
   TOTAL_DURATION,
   pad
 } from "./hotSaleCountDown";
-export { normalizeText } from './normalize-text';
+export { normalizeText } from './normalizeText';
 export { convertImageToBuffer, getPublicIdFromUrl } from "./processImage";
 export {
   applyProductChange,

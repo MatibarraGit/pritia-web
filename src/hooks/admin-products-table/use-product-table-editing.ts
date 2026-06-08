@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { selectItemsContext, toastContext } from "@/contexts";
 import { bulkDeleteProducts, patchProduct } from "@/services";
@@ -19,6 +19,7 @@ export function useProductTableEditing({ products, options }: UseProductTableEdi
   const [activeCell, setActiveCell] = useState<{ productId: number; field: ProductColumnKey } | null>(null);
   const [isBulkDeletingProducts, setIsBulkProcessingProducts] = useState(false);
   const committedProductsRef = useRef<ProductType[]>(products);
+  const productsRef = useRef<ProductType[]>(products);
   const toggleSelecting = selectItemsContext((state) => state.toggleSelecting);
   const showToast = toastContext((state) => state.showToast);
 
@@ -72,6 +73,16 @@ export function useProductTableEditing({ products, options }: UseProductTableEdi
   } = useBatchedChanges<EditableProductField>({
     onFlush: handleFlush,
   });
+
+  useEffect(() => {
+    if (productsRef.current === products) return;
+
+    productsRef.current = products;
+    committedProductsRef.current = products;
+    setLocalProducts(products);
+    setActiveCell(null);
+    discardChanges();
+  }, [discardChanges, products]);
 
   const handleBulkDeleteProducts = useCallback(
     async (productIds: number[]) => {

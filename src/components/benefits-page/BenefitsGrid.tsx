@@ -13,6 +13,9 @@ const mockPurchases: Record<number, string> = {
   6: "Claudia",
   7: "Claudia",
   8: "Claudia",
+  9: "Reina",
+  10: "Reina",
+  11: "Martín",
 };
 
 const BenefitsGrid = () => {

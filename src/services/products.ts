@@ -81,6 +81,24 @@ export async function getAllProducts({ page = 1, search = "" }: GetAllProductsPa
   }
 }
 
+// GET - Obtener productos en inventario
+export async function getInventoryProducts({ page = 1, search = "" }: GetAllProductsParams = {}): Promise<GetAllProductsResponse> {
+  try {
+    const params = new URLSearchParams();
+    if (page) params.set('page', page.toString());
+    if (search) params.set('search', search);
+
+    const response = await fetch(`${baseUrl}/api/products/inventory?${params.toString()}`, {
+      cache: 'no-store'
+    });
+    const json: { products: ProductType[], total: number } = await response.json();
+
+    return { products: json.products || [], total: json.total ?? 0 };
+  } catch {
+    return { products: [], total: 0 }
+  }
+}
+
 // GET - Obtener producto por ID
 export async function getProductById(id: number): Promise<ProductType | null> {
   try {

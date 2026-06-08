@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 
 import {
   MobileProductRow,
+  MyLoader,
   ProductsBulkActionDialog,
   ProductsDesktopTable,
   ProductsPendingChangesBanner,
@@ -84,10 +85,6 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
     handleAction,
   } = useProductTableActions();
 
-  if (isLoading) {
-    return <span>Cargando...</span>;
-  }
-
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <ProductsBulkActionDialog
@@ -133,28 +130,34 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
 
       {hasPendingChanges && <ProductsPendingChangesBanner pendingChangeCount={pendingChangeCount} />}
 
-      {sortedProducts.length === 0 ? (
-        <p className="py-8 text-center text-gray-500">No hay productos para mostrar.</p>
-      ) : (
-        <>
-          <div className="flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-200 lg:hidden">
-            {sortedProducts.map((product) => (
-              <MobileProductRow key={product.id} product={product} />
-            ))}
-          </div>
+      <div className="relative min-h-[50dvh]" aria-busy={isLoading}>
+        {isLoading && (
+          <MyLoader className="absolute inset-0 z-30 flex items-center justify-center rounded-lg bg-white/70" />
+        )}
 
-          <ProductsDesktopTable
-            products={sortedProducts}
-            options={options}
-            pendingChanges={pendingChanges}
-            activeCell={activeCell}
-            isEditMode={isEditMode}
-            onActivateCell={activateCell}
-            onCancelCell={cancelCell}
-            onCellChange={handleCellChange}
-          />
-        </>
-      )}
+        {sortedProducts.length === 0 ? (
+          <p className="py-8 text-center text-gray-500">No hay productos para mostrar.</p>
+        ) : (
+          <>
+            <div className="flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-200 lg:hidden">
+              {sortedProducts.map((product) => (
+                <MobileProductRow key={product.id} product={product} />
+              ))}
+            </div>
+
+            <ProductsDesktopTable
+              products={sortedProducts}
+              options={options}
+              pendingChanges={pendingChanges}
+              activeCell={activeCell}
+              isEditMode={isEditMode}
+              onActivateCell={activateCell}
+              onCancelCell={cancelCell}
+              onCellChange={handleCellChange}
+            />
+          </>
+        )}
+      </div>
     </section>
   );
 }
