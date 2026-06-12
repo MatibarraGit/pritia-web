@@ -168,7 +168,7 @@ export type ProductInlinePatchPayload = {
 export type MercadoPagoIssuer = {
   id: string | number;
   name: string;
-  secure_thumbnail: string;
+  secure_thumbnail?: string;
 };
 
 export type MercadoPagoPayerCost = {
@@ -177,6 +177,8 @@ export type MercadoPagoPayerCost = {
   total_amount: number;
   recommended_message: string;
   labels: string[];
+  installment_rate?: number;
+  discount_rate?: number;
   [key: string]: unknown;
 };
 
@@ -186,6 +188,47 @@ export type MercadoPagoInstallment = {
   issuer: MercadoPagoIssuer;
   payer_costs: MercadoPagoPayerCost[];
   [key: string]: unknown;
+};
+
+export type MercadoPagoPaymentMethod = {
+  id: string;
+  name: string;
+  status?: string;
+  secure_thumbnail?: string;
+  thumbnail?: string;
+  min_allowed_amount?: number;
+  max_allowed_amount?: number;
+  [key: string]: unknown;
+};
+
+export type CreditInstallmentQuote = {
+  paymentMethodId: string;
+  paymentMethodName: string;
+  paymentMethodThumbnail?: string;
+  issuerId: string;
+  issuerName: string;
+  issuerThumbnail?: string;
+  installments: number;
+  installmentAmount: number;
+  totalAmount: number;
+  recommendedMessage?: string;
+  labels: string[];
+  cft?: string;
+  tea?: string;
+  installmentRate?: number;
+  discountRate?: number;
+};
+
+export type CreditInstallmentSummaryItem = {
+  installments: number;
+  quote?: CreditInstallmentQuote;
+};
+
+export type CreditInstallmentCatalog = {
+  amount: number;
+  targetInstallments: number[];
+  paymentMethods: MercadoPagoPaymentMethod[];
+  quotes: CreditInstallmentQuote[];
 };
 
 // ---- Product Table ----

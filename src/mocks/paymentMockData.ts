@@ -1,6 +1,8 @@
 // Mock data modular - estructura exacta de la API
 // Reemplazar por llamada API real cuando esté disponible
 
+import { FINANCING_CONFIG } from "@/utils/constants";
+
 export interface InstallmentPlan {
   installments: number;
   installment_amount: number;
@@ -92,13 +94,8 @@ export const paymentMethods: PaymentMethodData[] = [
 
 // Helpers
 export const getPaymentMethodLabel = (id: string): string => {
-  const labels: Record<string, string> = {
-    visa: "Visa",
-    mastercard: "Mastercard",
-    amex: "American Express",
-    naranja_x: "Naranja X",
-  };
-  return labels[id] || id;
+  return FINANCING_CONFIG.displayCardMethods.find((method) => method.id === id)
+  ?.name ?? id;
 };
 
 export const getUniquePaymentMethodIds = (): string[] => {

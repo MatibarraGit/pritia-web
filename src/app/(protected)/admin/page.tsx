@@ -1,4 +1,4 @@
-import { getServerSession } from "@/libs";
+import { getServerSession } from "@/libs/get-session";
 import { LogOutButton } from "@/components";
 
 export default async function MainAdminPage() {

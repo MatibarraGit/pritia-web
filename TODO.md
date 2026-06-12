@@ -1,7 +1,7 @@
 ### Post Release
 * [] Mejorar UI:
-  * Página de producto
-    [Now] Agregar información de las cuotas con tarjetas de crédito desde la API de Mercado Pago
+    [] Agregar información de cuotas en la card: https://chatgpt.com/c/6a273a12-f2a4-83e9-bb04-b1b9893506e8
+
     [] Trasladar elementos del diseño de la página de MD Directo a esta página
     [] Cambiar la disposición de las imágenes a partir de 768px en adelante, basarme en Mercado Libre o plataforSmas líderes
   

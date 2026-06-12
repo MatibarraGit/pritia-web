@@ -7,7 +7,7 @@ import {
   ProductImages,
   ProductActions,
   ProductHeader,
-  ProductPricing,
+  CreditCardSection,
   ProductPurchaseInfo,
   ProductDescription,
   ProductsCarousel
@@ -145,7 +145,7 @@ export default async function ProductPage({ params }: Props) {
               <ProductHeader name={name} />
             </div>
 
-            <ProductPricing
+            <CreditCardSection
               price={price}
               originalPrice={originalPrice}
               discountPercent={discountPercent}

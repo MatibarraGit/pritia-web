@@ -28,6 +28,41 @@ export const EVENTS = {
   IS_HOT_SALE: false
 } as const;
 
+export const FINANCING_CONFIG = Object.freeze({
+  interestFreeInstallments: 3,
+  listPriceInterest: 1.2382, // Porcentaje adicional en precio de lista para "3 cuotas sin interés"
+  featuredInstallments: [1, 3, 6, 12],
+  defaultCardInstallments: 3,
+  displayCardMethods: [
+    {
+      id: "visa",
+      name: "Visa",
+      icon: "/icons/visa.svg"
+    },
+    {
+      id: "master",
+      name: "Mastercard",
+      icon: "/icons/mastercard.svg"
+    }, 
+    {
+      id: "naranja",
+      name: "Naranja X",
+      icon: "/icons/naranjax.svg"
+    },
+    {
+      id: "amex",
+      name: "American Express",
+      icon: "/icons/amex.svg"
+    },
+    {
+      id: "cabal",
+      name: "Cabal",
+      icon: "/icons/cabal.gif"
+    },
+  ],
+  defaultIssuerId: "316" // issuer.id del banco BBVA
+});
+
 export const enum PURCHASE_ORDER_STATUS {
   UNCONFIRMED = 'Sin confirmar',
   PURCHASE_PENDING = 'Pendiente de compra',
@@ -82,6 +117,8 @@ export const TO_OPTIONS = Object.freeze([
     type: 'reseller'
   }
 ] as const);
+
+export const ONE_DAY = 3600 * 24;
 
 export const ORDER_PARAMETERS = {
   "Relevancia": 'createdAt',

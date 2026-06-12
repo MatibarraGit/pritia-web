@@ -1,6 +1,6 @@
 "use server";
 
-import { cloudinary } from "@/libs";
+import { default as cloudinary } from "@/libs/cloudinary";
 import { getPublicIdFromUrl } from "@/utils";
 
 type ProductToDelete = {

@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { auth } from "@/libs/auth";
-import { prisma } from "@/libs";
+import { prisma } from "@/libs/prisma";
 import { deleteProductImages } from "@/services";
 
 type BulkDeleteBody = {

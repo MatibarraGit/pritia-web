@@ -72,8 +72,8 @@ export { ProductTabs } from "./product/ProductTabs";
 export { ProductDescription } from "./product/ProductDescription";
 
 // Product / intallaments section
-// export { CreditCardSection } from "./product/installments-section/CreditCardSection";
-  // export { CreditOptionsModal } from "./product/installments-section/CreditOptionsModal";
+export { CreditCardSection } from "./product/ProductInstallments/CreditCardSection";
+// export { CreditOptionsModal } from "./product/installments-section/CreditOptionsModal";
 // export { ProductInstallmentsSection } from "./product/installments-section/ProductInstallmentsSection";
 // export { TwoPayments } from "./product/installments-section/TwoPayments";
 // export { WeeklyInstallments } from "./product/installments-section/WeeklyInstallments";

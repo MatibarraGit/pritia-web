@@ -7,6 +7,16 @@ export { fetchAllCategories } from "./categories";
 // Images
 export { deleteProductImages } from "./images"
 
+// Mercado Pago
+export {
+  buildCreditInstallmentCatalogForSelection,
+  buildCreditInstallmentCatalogSummary,
+  fetchCreditPaymentMethods,
+  fetchFinancingByPriceAndCard,
+  fetchInstallments,
+  fetchIssuersIds
+} from "./mercado-pago"
+
 // Products
 export {
   bulkDeleteProducts,

@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 
 import { AdminHeader, AdminSidebar } from "@/layout";
 import { AdminMainWrapper, Toast } from "@/components";
-import { getServerSession } from "@/libs";
+import { getServerSession } from "@/libs/get-session";
 import ForbbidenPage from "./forbidden";
 
 export const metadata = {

@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
 import { auth } from "@/libs/auth";
-import { cloudinary, prisma } from "@/libs";
+import { default as cloudinary } from "@/libs/cloudinary";
+import { prisma } from '@/libs/prisma';
 
 import { PRODUCTS_PER_PAGE, convertImageToBuffer, formatProducts } from "@/utils";
 import type { ProductResponseType } from "@/types";

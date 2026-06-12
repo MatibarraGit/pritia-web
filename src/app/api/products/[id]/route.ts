@@ -3,7 +3,9 @@ import { headers } from "next/headers";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { auth } from "@/libs/auth";
-import { prisma, cloudinary } from "@/libs";
+import { default as cloudinary } from "@/libs/cloudinary";
+import { prisma } from '@/libs/prisma';
+
 import { deleteProductImages } from "@/services";
 import { convertImageToBuffer, getPublicIdFromUrl, formatProduct, formatDate } from "@/utils";
 import type { ProductInlinePatchPayload, ProductType } from "@/types";
