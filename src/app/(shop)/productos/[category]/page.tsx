@@ -9,6 +9,10 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   return {
     title,
     description: "",
+    keywords: [
+      // TODO: Completar keywords y descripción
+    ],
+    alternates: { canonical: `/${category}` },
   };
 }
 

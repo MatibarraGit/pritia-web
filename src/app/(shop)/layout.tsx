@@ -12,11 +12,85 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pritia.com.ar"),
   title: {
-    template: "%s | Pritia",
     default: "Pritia",
+    template: "%s | Pritia",
   },
-  description: "Vení a descrubrir los más de 600 productos que tenemos para vos!",
+  applicationName: "Pritia",
+  
+  verification: {
+    google: "vUwla3MNQCOpy4mbOR5N7D-vGK02_XvK1CQcgs-bq1s"
+  },
+
+  creator: "Matías Ibarra",
+  authors: [ { name: 'Matías Ibarra', url: 'https://pritia.com.ar' } ], 
+
+  icons: {
+    icon: "/icon.png", // 32x32 o 48x48
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png", // 180x180
+    other: [
+      { rel: 'manifest', url: '/site.webmanifest' }
+    ]
+  },
+
+  generator: "Next.js",
+  keywords: [
+    'electrodomésticos',
+    'electrodomesticos',
+    'tienda online',
+    'ofertas',
+    'herramientas',
+    'ventiladores',
+    'climatización',
+    'climatizacion',
+    'muebles',
+    'línea blanca',
+    'blanqueria',
+    'bazar',
+    'artículos varios',
+    'articulos varios',
+    'Pritia',
+    'comprar online',
+    'Argentina'
+  ],
+
+  openGraph: {
+    title: "Pritia",
+    description: "Tienda online de electrodomésticos, herramientas, blanquería, muebles y mucho más! Ofertas, envíos a todo el país y las mejores marcas.",
+    url: "https://pritia.com.ar",
+    siteName: "Pritia",
+    images: [
+      {
+        url: "https://res.cloudinary.com/db8b2c9gb/image/upload/v1781446054/Logo%20Pritia.png",
+        width: 1200,
+        height: 630,
+        alt: "Logo Pritia",
+        type: "image/png",
+      },
+    ],
+    locale: "es_AR",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Pritia",
+    description: "Tienda online de electrodomésticos, herramientas, blanquería, muebles y mucho más! Ofertas, envíos a todo el país y las mejores marcas.",
+    images: ["https://res.cloudinary.com/db8b2c9gb/image/upload/v1781446054/Logo%20Pritia.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+    }
+  }
 };
 
 export default function RootLayout({

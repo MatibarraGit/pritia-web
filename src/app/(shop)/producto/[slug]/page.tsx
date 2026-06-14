@@ -50,12 +50,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProduct(slug);
 
   if (!product) {
-    return { title: "Producto no encontrado" };
+    return {
+      title: { absolute: "Producto no encontrado" },
+      description: "No hay contenido para mostrar",
+    };
   }
 
+  const imageToShow = product?.images !== null ? product.images[0] : "/image-icon.png";
+
   return {
-    title: { absolute: product.name },
-    description: product.description || product.name,
+    title: product.name,
+    description: product.description,
+
+    keywords: [
+      // TODO: Completar keywords
+    ],
+    alternates: { canonical: '/producto' },
+    
+    openGraph: {
+      title: product.name,
+      description: product.description ?? "Descubrí productos únicos",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/producto/${product.slug}`,
+      siteName: "Pritia",
+      images: [
+        {
+          url: imageToShow,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        }
+      ]
+    },
+  
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.description ?? "Descubrí productos únicos",
+      images: imageToShow,
+    },
   };
 }
 

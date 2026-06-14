@@ -10,28 +10,28 @@ export default async function sitemap() {
   const productsSitemapData = products.map((product) => ({
     url: `${baseUrl}/producto/${product.slug}`,
     lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: 0.8
+    changeFrequency: "weekly",
+    priority: 0.6
   }))
 
   return [
     {
       url: `${baseUrl}/`,
       lastModified: new Date(),
-      changeFrequency: "daily",
+      changeFrequency: "weekly",
       priority: 1
     },
     {
       url: `${baseUrl}/productos`,
       lastModified: new Date(),
-      changeFrequency: "daily",
+      changeFrequency: "weekly",
       priority: 0.8
     },
     {
       url: `${baseUrl}/productos-favoritos`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.3
+      priority: 0.1
     },
     
     ...productsSitemapData

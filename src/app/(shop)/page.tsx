@@ -12,7 +12,8 @@ import { TOPICS } from "@/utils";
 
 export const metadata = { 
   title: "Pritia - Tienda Online" ,
-  description: "Vení a descrubrir los más de 600 productos que tenemos para vos!"
+  description: "Tienda online de electrodomésticos, herramientas, blanquería, muebles y mucho más! Ofertas, envíos a todo el país y las mejores marcas.",
+  alternates: { canonical: '/' },
 };
 
 export default async function HomePage() {

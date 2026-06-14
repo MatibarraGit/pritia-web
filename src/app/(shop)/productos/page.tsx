@@ -4,9 +4,11 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const params = await searchParams;
   const section = params.seccion;
   let title = '';
+  let canonical = '/productos'
 
   if (!!section) {
     title = section;
+    canonical += '?seccion=' + section 
   } else {
     title = 'Todos los productos';
   }
@@ -15,8 +17,11 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
   return { 
     title: titleDecoded,
-    description: ""
-
+    description: "",
+    keywords: [
+      // TODO: Completar keywords y descripción
+    ],
+    alternates: { canonical },
   };
 }
 
