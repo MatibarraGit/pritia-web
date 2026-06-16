@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { requireAdminSession } from "@/libs/auth-guards";
+// TODO: Volver a agregar cuando implemente la lógica de roles
+// import { requireAdminSession } from "@/libs/auth-guards";
+import { requireAuthenticatedSession } from "@/libs/auth-guards";
 import { default as cloudinary } from "@/libs/cloudinary";
 import { prisma } from '@/libs/prisma';
 
@@ -90,7 +92,7 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const authResult = await requireAdminSession();
+  const authResult = await requireAuthenticatedSession();
 
   if (!authResult.success) {
     return authResult.response;
@@ -287,7 +289,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const authResult = await requireAdminSession();
+  // const authResult = await requireAdminSession();
+  const authResult = await requireAuthenticatedSession();
 
   if (!authResult.success) return authResult.response;
   const { id } = await params;

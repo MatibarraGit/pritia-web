@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { auth, type Session } from "./auth";
-import { userIsAdmin } from "./auth-roles";
+// import { userIsAdmin } from "./auth-roles";
 
 type AuthGuardResult =
   | {
@@ -35,22 +35,22 @@ export async function requireAuthenticatedSession(): Promise<AuthGuardResult> {
   };
 }
 
-export async function requireAdminSession(): Promise<AuthGuardResult> {
-  const authResult = await requireAuthenticatedSession();
+// export async function requireAdminSession(): Promise<AuthGuardResult> {
+//   const authResult = await requireAuthenticatedSession();
 
-  if (!authResult.success) {
-    return authResult;
-  }
+//   if (!authResult.success) {
+//     return authResult;
+//   }
 
-  if (!userIsAdmin(authResult.session.user)) {
-    return {
-      success: false,
-      response: NextResponse.json(
-        { message: "No tenes permisos para realizar esta accion" },
-        { status: 403 }
-      ),
-    };
-  }
+//   if (!userIsAdmin(authResult.session.user)) {
+//     return {
+//       success: false,
+//       response: NextResponse.json(
+//         { message: "No tenes permisos para realizar esta accion" },
+//         { status: 403 }
+//       ),
+//     };
+//   }
 
-  return authResult;
-}
+//   return authResult;
+// }
