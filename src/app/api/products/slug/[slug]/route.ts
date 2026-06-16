@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
+// import { attachReviewSummaries } from "@/libs/trust";
 import { formatProduct } from "@/utils";
 import type { ProductType } from "@/types";
 
@@ -36,8 +37,8 @@ export async function GET(
     // Formatear el producto al formato estándar
     const formattedProduct: ProductType = formatProduct({
       product_id: product.product_id,
-      product_name: product.product_name,
-      purchase_price: product.purchase_price,
+      product_name: product.product_name || '',
+      purchase_price: product.purchase_price ?? 0,
       sell_price: product.sell_price ?? 0,
       discount_percent: product.discount_percent ?? 0,
       category_name: product.categories?.category_name || '',
@@ -50,6 +51,8 @@ export async function GET(
       created_at: product.created_at,
       updated_at: product.updated_at,
     });
+
+    // const [productWithSummary] = await attachReviewSummaries([formattedProduct]);
 
     return NextResponse.json([formattedProduct], {
       headers: {
@@ -65,4 +68,3 @@ export async function GET(
     );
   }
 }
-

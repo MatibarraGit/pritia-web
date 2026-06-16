@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { auth } from "@/libs/auth";
+import { requireAdminSession } from "@/libs/auth-guards";
 import { default as cloudinary } from "@/libs/cloudinary";
 import { prisma } from '@/libs/prisma';
 
@@ -60,9 +59,9 @@ export async function GET(
 
     const formattedProduct: ProductType = formatProduct({
       product_id: product.product_id,
-      product_name: product.product_name,
+      product_name: product.product_name || '',
       provider_names: providers.map((provider) => provider.provider_name),
-      purchase_price: product.purchase_price,
+      purchase_price: product.purchase_price ?? 0,
       sell_price: product.sell_price ?? 0,
       resellers_price: product.resellers_price ?? 0,
       discount_percent: product.discount_percent ?? 0,
@@ -73,7 +72,7 @@ export async function GET(
       product_description: product.product_description || '',
       product_slug: product.product_slug || '',
       images: product.images,
-      created_at: formatDate(product.created_at).fechaMostrar,
+      created_at: product.created_at ? formatDate(product.created_at).fechaMostrar : null,
       updated_at: product.updated_at ? product.updated_at.toISOString() : null,
     });
 
@@ -91,15 +90,10 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth.api.getSession({ 
-    headers: await headers()
-  })
+  const authResult = await requireAdminSession();
 
-  if (!session?.user || !session?.session) {
-    return NextResponse.json(
-      { message: 'No se ha podido autenticar el usuario' },
-      { status: 401 }
-    );
+  if (!authResult.success) {
+    return authResult.response;
   }
 
   const { id } = await params;
@@ -293,16 +287,9 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth.api.getSession({ 
-    headers: await headers()
-  })
+  const authResult = await requireAdminSession();
 
-  if (!session?.user || !session?.session) {
-    return NextResponse.json(
-      { message: 'No se ha podido autenticar el usuario' },
-      { status: 401 }
-    );
-  }
+  if (!authResult.success) return authResult.response;
   const { id } = await params;
 
   // TODO: Que siempre sea multipart/form-data??
@@ -475,7 +462,7 @@ export async function PATCH(
       }
 
       const nextImages: string[] = [];
-      const uploadName = body.name?.trim() || existingProduct.product_name;
+      const uploadName = body.name?.trim() || existingProduct.product_name || String(existingProduct.product_id);
 
       for (const imageEntry of imageEntries) {
         if (typeof imageEntry === "string") {
@@ -505,7 +492,7 @@ export async function PATCH(
         ? [
             {
               product_id: existingProduct.product_id,
-              product_name: existingProduct.product_name,
+              product_name: uploadName,
               images: removedImages,
             },
           ]
@@ -567,9 +554,9 @@ export async function PATCH(
 
     const formattedProduct: ProductType = formatProduct({
       product_id: product.product_id,
-      product_name: product.product_name,
+      product_name: product.product_name || '',
       provider_names: providers.map((provider) => provider.provider_name),
-      purchase_price: product.purchase_price,
+      purchase_price: product.purchase_price ?? 0,
       sell_price: product.sell_price ?? 0,
       resellers_price: product.resellers_price ?? 0,
       discount_percent: product.discount_percent ?? 0,
