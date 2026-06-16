@@ -29,8 +29,8 @@ model newsletter_emails {
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model products {
   product_id          Int                 @id @default(autoincrement())
-  product_name        String?             @unique(map: "unique_products_name") @db.VarChar(255)
-  purchase_price      Int?
+  product_name        String              @unique(map: "unique_products_name") @db.VarChar(255)
+  purchase_price      Int
   sell_price          Int?
   resellers_price     Int?
   discount_percent    Int                 @default(0) @db.SmallInt
@@ -42,7 +42,7 @@ model products {
   product_description String?
   images              String[]
   product_slug        String?
-  created_at          DateTime?           @default(now()) @db.Timestamp(6)
+  created_at          DateTime            @default(now()) @db.Timestamp(6)
   updated_at          DateTime?           @db.Timestamp(6)
   deleted_at          DateTime?           @db.Timestamp(6)
 
