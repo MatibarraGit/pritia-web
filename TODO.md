@@ -12,7 +12,17 @@
 [] Avisar que si elimino un producto, se eliminará su referencia a la tabla purchase_order_items
 
 ###### Frontend
-* [] Mejorar UI:
+* Mejorar UI:
+  [] Eliminar la página de HotSale y adaptar como template para próximos eventos
+
+  * Home
+    Basarme en castillo.com.ar para 
+      [] Cambiar la sección "Comprá por categoría"
+      [] Agregar sección con imágenes por categoría
+      [] Agregar información de los medios de pago
+      [] Modificar las productCards
+      [] Agregar sección para comprar por marca
+      
     [] Agregar información de cuotas en la card: https://chatgpt.com/c/6a273a12-f2a4-83e9-bb04-b1b9893506e8
 
     [] Trasladar elementos del diseño de la página de MD Directo a esta página
@@ -21,17 +31,7 @@
   * Página de resultados de búsqueda
     [] Cambiar el botón amarillo de "Limpiar filtros"
 
-  * Home
-    Basarme en castillo.com.ar para 
-      [] Cambiar la sección "Comprá por categoría"
-      [] Agregar sección con imágenes por categoría
-      [] Agregar información de los medios<> de pago
-      [] Modificar las productCards
-      [] Agregar sección para comprar por marca
-
-[] Traer metadata de MD Directo para que se vea mejor al compartir url's
-
-[] Crear el objeto CONTACT_METHODS como en MD Directo
+[] Usar el objeto CONTACT_METHODS para la información de contacto en toda la página
 
 [] Terminar el menú mobile:
   [] Agregar los enlaces del NavigationMenu

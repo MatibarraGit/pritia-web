@@ -14,6 +14,7 @@ const BLOCKED_BOT_USER_AGENTS = [
   "GPTBot",
   "ClaudeBot",
   "PerplexityBot",
+  "HeadlessChrome",
 ] as const;
 
 export default function robots(): MetadataRoute.Robots {

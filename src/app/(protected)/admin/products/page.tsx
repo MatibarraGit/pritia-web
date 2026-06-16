@@ -1,31 +1,82 @@
 "use client";
 
 import { Suspense, useCallback, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { Boxes, List } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Boxes, History, List, type LucideIcon } from "lucide-react";
 
 import { CustomTable, PageLoader, Pagination } from "@/components";
 import { Button } from "@/components/ui";
-import { useFetchData } from "@/hooks";
-import { getAllProducts, getInventoryProducts } from "@/services";
+import { useFetchData, useFiltersContext } from "@/hooks";
+import { getAllProducts, getInventoryProducts, getOutdatedProducts } from "@/services";
 import { PRODUCTS_PER_PAGE } from "@/utils";
 import type { GetAllProductsParams, GetAllProductsResponse } from "@/services";
 
+const PRODUCT_ADMIN_VIEWS = ["all", "inventory", "outdated"] as const;
+type ProductAdminView = typeof PRODUCT_ADMIN_VIEWS[number];
+
+type ProductAdminViewOption = {
+  id: ProductAdminView;
+  label: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+const PRODUCT_ADMIN_VIEW_OPTIONS: ProductAdminViewOption[] = [
+  {
+    id: "all",
+    label: "Todos",
+    href: "/admin/products?page=1",
+    icon: List,
+  },
+  {
+    id: "inventory",
+    label: "Inventario",
+    href: "/admin/products?view=inventory&page=1",
+    icon: Boxes,
+  },
+  {
+    id: "outdated",
+    label: "Productos desactualizados",
+    href: "/admin/products?view=outdated&page=1",
+    icon: History,
+  },
+];
+
+const PRODUCT_ADMIN_FETCHERS: Record<
+  ProductAdminView,
+  (args?: GetAllProductsParams) => Promise<GetAllProductsResponse>
+> = {
+  all: getAllProducts,
+  inventory: getInventoryProducts,
+  outdated: getOutdatedProducts,
+};
+
+function getProductAdminView(view: string | null): ProductAdminView {
+  return PRODUCT_ADMIN_VIEWS.includes(view as ProductAdminView) ? (view as ProductAdminView) : "all";
+}
+
 function ProductsPageComponent() {
   const params = useSearchParams();
+  const router = useRouter();
+  const { clearFilter } = useFiltersContext();
   const page = params.get("page") ? parseInt(params.get("page")!) : 1;
   const search = params.get("search") || "";
-  const isInventoryView = params.get("view") === "inventory";
-  const productsModeHref = isInventoryView
-    ? "/admin/products?page=1"
-    : "/admin/products?view=inventory&page=1";
+  const currentView = getProductAdminView(params.get("view"));
 
   const fetchProducts = useCallback(
     (args?: GetAllProductsParams) => {
       const fetchParams = args || { page: 1, search: "" };
-      return isInventoryView ? getInventoryProducts(fetchParams) : getAllProducts(fetchParams);
+      return PRODUCT_ADMIN_FETCHERS[currentView](fetchParams);
     },
-    [isInventoryView]
+    [currentView]
+  );
+
+  const handleViewChange = useCallback(
+    (href: string) => {
+      clearFilter("productsClientSearch");
+      router.push(href);
+    },
+    [clearFilter, router]
   );
 
   const {
@@ -43,21 +94,41 @@ function ProductsPageComponent() {
 
   useEffect(() => {
     fetchData({ page, search });
-  }, [fetchData, isInventoryView, page, search]);
+  }, [fetchData, currentView, page, search]);
 
   return (
     <>
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col gap-1">
-          <h3 className="text-3xl font-bold text-gray-900">Productos</h3>
-          <p className="text-sm text-gray-500">Gestiona tu catalogo de productos</p>
-        </div>
-
-        <Button href={productsModeHref} variant="outline" size="sm" className="w-fit">
-          {isInventoryView ? <List size={16} /> : <Boxes size={16} />}
-          {isInventoryView ? "Ir a Todos los Productos" : "Ir a Inventario"}
-        </Button>
+      <div className="mb-4 flex flex-col gap-1">
+        <h3 className="text-3xl font-bold text-gray-900">Productos</h3>
+        <p className="text-sm text-gray-500">Gestiona tu catalogo de productos</p>
       </div>
+
+      <nav className="mb-6 rounded-xl border border-gray-200 bg-white p-3 shadow-sm" aria-label="Vistas de productos">
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-subheading text-gray-700">Vistas rápidas</span>
+          <ul className="flex flex-wrap gap-2">
+            {PRODUCT_ADMIN_VIEW_OPTIONS.map((option) => {
+              const Icon = option.icon;
+              const isActive = currentView === option.id;
+
+              return (
+                <li key={option.id}>
+                  <Button
+                    type="button"
+                    variant={isActive ? "secondary" : "ghost"}
+                    size="sm"
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={() => handleViewChange(option.href)}
+                  >
+                    <Icon size={16} />
+                    {option.label}
+                  </Button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
 
       <CustomTable products={products} isLoading={isLoading} />
 

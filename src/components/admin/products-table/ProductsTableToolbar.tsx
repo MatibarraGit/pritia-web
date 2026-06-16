@@ -2,7 +2,7 @@ import { Check, Loader2, Pencil, RotateCcw, Save, Search, X } from "lucide-react
 import type { FormEvent } from "react";
 
 import { Button, Input } from "@/components/ui";
-import { useFiltersContext } from "@/hooks";
+import { useFiltersContext, useOrderContext } from "@/hooks";
 
 interface ProductsTableToolbarProps {
   search: string;
@@ -32,6 +32,7 @@ export function ProductsTableToolbar({
   onToggleEditMode,
 }: ProductsTableToolbarProps) {
   const { handleAdminFilterChange, clearFilter } = useFiltersContext();
+  const { sortObject, resetOrderObject } = useOrderContext("admin-products-table")
 
   return (
     <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -77,6 +78,12 @@ export function ProductsTableToolbar({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
+        {sortObject !== null && (
+          <Button type="button" variant="outline" size="sm" onClick={resetOrderObject}>
+            <X size={16} />
+            Eliminar Orden
+          </Button>
+        )}
         {search && (
           <Button type="button" variant="outline" size="sm" onClick={onClearSearch}>
             <X size={16} />
@@ -100,7 +107,7 @@ export function ProductsTableToolbar({
         <div className="hidden lg:inline-flex">
           <Button
             type="button"
-            variant={isEditMode ? "secondary" : "outline"}
+            variant={isEditMode ? "secondary" : "primary"}
             size="sm"
             onClick={onToggleEditMode}
             disabled={isFlushing || isLoadingOptions}
