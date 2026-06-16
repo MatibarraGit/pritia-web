@@ -45,12 +45,15 @@ export function ProductPreview({ productData }: ProductPreviewProps) {
 
   return (
     <div className="w-full bg-gray-50 rounded-lg border p-4 md:p-6">
-      <h3 className="text-xl font-semibold mb-6">Vista Previa</h3>
+      <h3 className="text-xl font-subheading mb-6">Vista Previa</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {/* Imágenes del Producto */}
         {images.length > 0 ? (
-          <ProductImages images={images} name={productName} />
+          <ProductImages
+            images={images}
+            name={productName}
+          />
         ) : (
           <div className="bg-white rounded-lg border flex items-center justify-center h-64">
             <p className="text-muted-foreground">Sin imágenes</p>
@@ -90,4 +93,3 @@ export function ProductPreview({ productData }: ProductPreviewProps) {
     </div>
   );
 }
-

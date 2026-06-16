@@ -59,7 +59,7 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
             "flex items-center text-base hover:text-primary rounded-md transition-colors hover:no-underline",
             isMenuMobile 
               ? "py-3 px-1 hover:bg-gray-50 font-body" 
-              : "p-0 font-semibold text-black font-subheading"
+              : "p-0 font-subheading text-black"
           )}
         >
           <div className="flex items-center gap-2">
@@ -86,7 +86,7 @@ export const CategoriesAccordion = ({ isMenuMobile = false, closeMenuOnClick = t
                         key={subcategoryItem.id}
                         className={cn(
                           "w-fit py-2 flex flex-col justify-start text-sm hover:text-primary text-start",
-                          subcategory === subcategoryItem.name && "text-primary font-semibold"
+                          subcategory === subcategoryItem.name && "text-primary font-subheading"
                         )}
                         onClick={() => handleCategoryClick(categoryItem.category_name, subcategoryItem.name)}
                       >

@@ -68,7 +68,7 @@ export function ProductsDesktopTable({
               key={column.key}
               onClick={() => column.type !== "image" && handleSort(column.key)}
               className={cn(
-                "sticky top-0 z-10 flex min-w-0 items-center justify-center gap-1 border-b border-gray-200 bg-gray-50 px-3 py-3 text-center text-xs font-semibold uppercase text-gray-600",
+                "sticky top-0 z-10 flex min-w-0 items-center justify-center gap-1 border-b border-gray-200 bg-gray-50 px-3 py-3 text-center text-xs font-subheading uppercase text-gray-600",
                 column.key === "images" && "sticky left-0 z-50",
                 column.key === "name" && "sticky left-40 z-50 shadow-[6px_0_12px_-10px_rgba(0,0,0,0.25)]",
                 column.type !== "text" && "transition hover:bg-gray-100"

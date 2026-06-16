@@ -75,7 +75,7 @@ export const ProductModal = ({
             <AlertTriangle size={32} className="text-red-600" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">Error</h2>
+            <h2 className="text-xl font-subheading">Error</h2>
             <p className="text-gray-600">{error}</p>
           </div>
         </div>
@@ -96,7 +96,7 @@ export const ProductModal = ({
             <CheckCircle size={32} className="text-green-600" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">¡Producto publicado!</h2>
+            <h2 className="text-xl font-subheading">¡Producto publicado!</h2>
             <p className="text-gray-600">
               {message || "Has modificado el producto exitosamente. ¿Qué te gustaría hacer ahora?"}
             </p>
@@ -194,7 +194,7 @@ export const ProductModal = ({
         />
 
         <div className="mt-8 flex flex-col gap-4">
-          <h3 className="w-full text-base font-semibold leading-none">
+          <h3 className="w-full text-base font-subheading leading-none">
             Compartir a
           </h3>
 
@@ -306,7 +306,7 @@ export const ProductModal = ({
             <AlertTriangle size={32} className="text-red-600" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">Confirmar eliminación permanente</h2>
+            <h2 className="text-xl font-subheading">Confirmar eliminación permanente</h2>
             <p className="text-gray-600">
               Esta acción eliminará {selectedItems.length} producto{selectedItems.length !== 1 ? "s" : ""} por completo del sistema.
             </p>

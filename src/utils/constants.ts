@@ -24,6 +24,15 @@ export const COLUMNS: ColumnConfig[] = [
   { key: "subcategory", label: "Subcategoría", type: "select", width: "minmax(220px, 1.2fr)" },
 ];
 
+export const CONTACT_METHODS = Object.freeze({
+  WHATSAPP: '+54 9 11 3173-8925',
+  WHATSAPP_URL: 'https://wa.me/+5491131738925',
+  // FACEBOOK_URL: 'https://www.facebook.com/pritia',
+  INSTAGRAM_URL: 'https://www.instagram.com/_pritia_',
+  EMAIL: 'matileonardo.2013@gmail.com',
+  EMAIL_URL: 'mailto:matileonardo.2013@gmail.com',
+})
+
 export const EVENTS = {
   IS_HOT_SALE: false
 } as const;
@@ -67,8 +76,11 @@ export const enum PURCHASE_ORDER_STATUS {
   UNCONFIRMED = 'Sin confirmar',
   PURCHASE_PENDING = 'Pendiente de compra',
   READY_TO_SHIP = 'Lista para enviar',
-  SOLD ='Vendida'
+  DELIVERED = 'Entregada',
+  CANCELLED = 'Cancelada'
 };
+
+export const REVIEW_WAIT_DAYS = 3;
 
 export const enum PAYMENT_METHODS {
   UNSPECIFIED = 'No especificado',
@@ -85,6 +97,7 @@ export const enum PAYMENT_STATUS {
 }
 
 export const PRODUCTS_PER_PAGE = 60;
+export const OUTDATED_PRODUCTS_DAYS = 30;
 
 export const enum TOPICS {
   HIGHLIGHTS = 'destacados',

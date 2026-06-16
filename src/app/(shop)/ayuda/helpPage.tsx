@@ -67,7 +67,7 @@ export default function HelpPage() {
                 <div className="w-12 h-12 mx-auto bg-green-100 rounded-full flex items-center justify-center shrink-0">
                   <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={24} height={24} />
                 </div>
-                <h3 className="font-semibold text-lg my-1">WhatsApp</h3>
+                <h3 className="font-subheading text-lg my-1">WhatsApp</h3>
                 <p className="text-sm text-gray-600 mb-1">Atención inmediata</p>
                 <p className="text-gray-800 font-medium">+54 9 11 3173-8925</p>
                 <p className="text-sm text-green-600 mt-2">Respuesta rápida garantizada</p>
@@ -81,7 +81,7 @@ export default function HelpPage() {
                 <div className="w-12 h-12 mx-auto bg-blue-100 rounded-full flex items-center justify-center shrink-0">
                   <Clock className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-lg my-1">Horarios</h3>
+                <h3 className="font-subheading text-lg my-1">Horarios</h3>
                 <p className="text-sm text-gray-600 mb-1">Atención al Cliente</p>
                 <p className="text-gray-800 font-medium">Lunes a Sábados</p>
                 <p className="text-sm text-blue-600 mt-2">09:00hs a 18:00hs</p>
@@ -100,7 +100,7 @@ export default function HelpPage() {
                 <div className="w-12 h-12 mx-auto bg-orange-100 rounded-full flex items-center justify-center shrink-0">
                   <Image src="/icons/gmail.svg" alt="Email" width={20} height={20} />
                 </div>
-                <h3 className="font-semibold text-lg my-1">Email</h3>
+                <h3 className="font-subheading text-lg my-1">Email</h3>
                 <p className="text-sm text-gray-600 mb-1">Consultas generales</p>
                 <p className="text-gray-800 font-medium break-all">matileonardo.2013@gmail.com</p>
                 <p className="text-sm text-orange-600 mt-2">Respondemos en 24hs</p>

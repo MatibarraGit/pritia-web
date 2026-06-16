@@ -369,7 +369,7 @@ function ProductImagesTableCell({
         )}
 
         {images.length > 1 && (
-          <div className="pointer-events-none absolute bottom-1 right-0 rounded-full bg-gray-900 px-2 py-0.5 text-xs font-semibold leading-none text-white shadow-sm transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">
+          <div className="pointer-events-none absolute bottom-1 right-0 rounded-full bg-gray-900 px-2 py-0.5 text-xs font-subheading leading-none text-white shadow-sm transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">
             {images.length}
           </div>
         )}
@@ -402,7 +402,7 @@ function ProductImagesTableCell({
           onClick={(event) => event.stopPropagation()}
         >
           <div className="mb-3 flex items-center justify-between gap-2">
-            <span className="text-xs font-semibold uppercase text-gray-500">Imagenes</span>
+            <span className="text-xs font-subheading uppercase text-gray-500">Imagenes</span>
             <Button type="button" variant="ghost" size="xs" onClick={onCancel} aria-label="Cerrar editor de imagenes">
               <X size={14} />
             </Button>

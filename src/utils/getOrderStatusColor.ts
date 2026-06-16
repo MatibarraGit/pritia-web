@@ -7,7 +7,9 @@ export function getOrderStatusColor(status: string) {
     return "#f39c12";
   } else if (status === PURCHASE_ORDER_STATUS.READY_TO_SHIP) {
     return "#f5d34b";
-  } else if (status === PURCHASE_ORDER_STATUS.SOLD) {
+  } else if (status === PURCHASE_ORDER_STATUS.CANCELLED) {
+    return "#e74c3c";
+  } else if (status === PURCHASE_ORDER_STATUS.DELIVERED) {
     return "#2ecc71";
   }
 }

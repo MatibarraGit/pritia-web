@@ -282,11 +282,11 @@ export function ProductForm() {
               </div>
               <div className="space-y-1">
                 <span className="text-sm text-muted-foreground">Valor</span>
-                <div className="text-lg font-semibold">{formatPrice(discountValue)}</div>
+                <div className="text-lg font-subheading">{formatPrice(discountValue)}</div>
               </div>
               <div className="space-y-1">
                 <span className="text-sm text-muted-foreground">Precio Final</span>
-                <div className="text-lg font-semibold">{formatPrice(totalValue)}</div>
+                <div className="text-lg font-subheading">{formatPrice(totalValue)}</div>
               </div>
             </div>
           </div>

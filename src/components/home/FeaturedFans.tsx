@@ -20,7 +20,7 @@ export const FeaturedFans = () => {
                   className="w-40 h-40 object-contain mx-auto"
                 />
               </div>
-              <h3 className="text-lg font-semibold mb-1">{fan.title}</h3>
+              <h3 className="text-lg font-subheading mb-1">{fan.title}</h3>
               <p className="text-sm text-gray-600 mb-4">{fan.description}</p>
               <Button 
                 variant="outline" 

@@ -52,25 +52,25 @@ export const ShowProducts = ({
             {/* Si hay categoría, muestra breadcrumbs */}
             {category ? (
               <div className="h-fit text-wrap">
-                <Link href="/productos" className="w-fit pr-2.5 inline font-semibold text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
+                <Link href="/productos" className="w-fit pr-2.5 inline font-subheading text-[15px] text-wrap underline md:ml-0 md:no-underline hover:underline">Todos los productos</Link>
                 {/* Si hay subcategoría, muestra categoría y subcategoría */}
                 {!!subcategory ? (
                   <>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
                     <Link href={`/productos/${toSlug(category)}`} className="w-fit pr-2.5 inline text-wrap text-[15px] underline md:no-underline hover:underline">{category}</Link>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
-                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{subcategory}</h2>
+                    <h2 className="w-fit inline relative top-0 capitalize font-subheading text-wrap text-[15px]">{subcategory}</h2>
                   </>
                 ) : (
                   // Si no hay subcategoría, muestra solo la categoría
                   <>
                     <div className="w-fit pr-2.5 inline text-wrap text-[15px]">/</div>
-                    <h2 className="w-fit inline relative top-0 capitalize font-semibold text-wrap text-[15px]">{category}</h2>
+                    <h2 className="w-fit inline relative top-0 capitalize font-subheading text-wrap text-[15px]">{category}</h2>
                   </>
                 )}
               </div>
             ) : (
-              <h2 className="w-fit ml-[4%] inline relative top-0 capitalize font-semibold text-wrap text-xl md:ml-0">{decodeURIComponent(search)}</h2>
+              <h2 className="w-fit ml-[4%] inline relative top-0 capitalize font-subheading text-wrap text-xl md:ml-0">{decodeURIComponent(search)}</h2>
             )}
           </div>
 

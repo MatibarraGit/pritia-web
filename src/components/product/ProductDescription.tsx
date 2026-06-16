@@ -13,7 +13,7 @@ export const ProductDescription = ({ description }: ProductDescriptionProps) => 
 
   return (
     <section className="bg-white px-6 py-4 rounded-lg border">
-      <h2 className="text-lg font-semibold mb-4">Descripción</h2>
+      <h2 className="text-lg font-subheading mb-4">Descripción</h2>
 
       {hasSpecs ? (
         <ul className="list-disc space-y-1 pl-5 text-gray-700 text-sm md:text-base">

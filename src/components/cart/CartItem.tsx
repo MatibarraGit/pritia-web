@@ -47,11 +47,11 @@ export const CartItem = ({
           <div className="flex items-center gap-2 text-sm">
             {originalPrice && originalPrice > price ? (
               <>
-                <span className="font-semibold text-primary">{formatPrice(price)}</span>
+                <span className="font-subheading text-primary">{formatPrice(price)}</span>
                 <span className="text-gray-500 line-through">{formatPrice(originalPrice)}</span>
               </>
             ) : (
-              <span className="font-semibold text-primary">{formatPrice(price)}</span>
+              <span className="font-subheading text-primary">{formatPrice(price)}</span>
             )}
           </div>
         </Link>

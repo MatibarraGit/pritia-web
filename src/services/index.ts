@@ -25,6 +25,7 @@ export {
   getAvailableProducts,
   getHomeProducts,
   getInventoryProducts,
+  getOutdatedProducts,
   getProductById,
   getProductsByCategory,
   getProductsBySubcategory,

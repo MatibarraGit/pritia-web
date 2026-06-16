@@ -100,7 +100,7 @@ export const CategoriesDropdown = () => {
                       </div>
                       <Link
                         href={`/productos/${toSlug(category.category_name)}`}
-                        className="w-full px-4 py-2.5 text-primary font-semibold no-underline border-t border-gray-200 transition-all duration-200 hover:bg-gray-50 shrink-0"
+                        className="w-full px-4 py-2.5 text-primary font-subheading no-underline border-t border-gray-200 transition-all duration-200 hover:bg-gray-50 shrink-0"
                       >
                         <span className="inline-block transition-transform duration-200 hover:translate-x-1">
                           Ver todo
