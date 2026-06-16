@@ -35,9 +35,11 @@ export async function GET(request: Request) {
       return NextResponse.json([]);
     }
 
-    const productsName = products.map((product: { product_name: string; }) => product.product_name);
+    const productsNames = products
+      .map((product) => product.product_name)
+      .filter((productName): productName is string => Boolean(productName));
 
-    return NextResponse.json(productsName);
+    return NextResponse.json(productsNames);
   } catch {
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener productos para el buscador' },
@@ -45,6 +47,5 @@ export async function GET(request: Request) {
     );
   }
 }
-
 
 
