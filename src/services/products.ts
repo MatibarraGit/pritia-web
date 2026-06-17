@@ -162,8 +162,6 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
       cache: 'no-store'
     });
 
-    console.log('response.json(): ', await response.json())
-
     if (!response.ok) {
       return {
         dailyHighlightsProducts: [],
@@ -176,6 +174,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
     }
 
     const data: HomeProductsResponse = await response.json();
+    console.log('data de getHomeProducts: ', data)
     return data;
   } catch (e) {
     console.error('Error del service getHomeProducts: ', e)

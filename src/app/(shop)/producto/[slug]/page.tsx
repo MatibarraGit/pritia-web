@@ -33,13 +33,12 @@ async function getProduct(slug: string): Promise<ProductType | null> {
       headers: { "Content-Type": "application/json" },
     });
 
-    console.log('Response de getProduct: ', await response.json())
-
     if (!response.ok) {
       return null;
     }
 
     const data = await response.json();
+    console.log('data de getProduct: ', data)
     return Array.isArray(data) && data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Error de getProduct:", error);
