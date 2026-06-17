@@ -32,6 +32,9 @@ async function getProduct(slug: string): Promise<ProductType | null> {
       cache: "no-store",
       headers: { "Content-Type": "application/json" },
     });
+    const text = await response.text();
+    console.log("status:", response.status);
+    console.log("response:", text.slice(0, 300));
     const data = await response.json();
     console.log('data de getProduct: ', data)
 
@@ -41,6 +44,7 @@ async function getProduct(slug: string): Promise<ProductType | null> {
 
     return Array.isArray(data) && data.length > 0 ? data[0] : null;
   } catch (error) {
+
     console.error("Error de getProduct:", error);
     return null;
   }

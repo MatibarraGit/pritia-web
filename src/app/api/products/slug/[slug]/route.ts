@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
-// import { attachReviewSummaries } from "@/libs/trust";
 import { formatProduct } from "@/utils";
 import type { ProductType } from "@/types";
 
@@ -31,9 +30,10 @@ export async function GET(
       },
     });
 
-    console.log('Product en la bbdd: ', product)
+    console.log('Product en la api: ', product)
 
     if (!product) {
+      console.log('!product en api: ', product)
       return NextResponse.json([]);
     }
 
@@ -56,8 +56,6 @@ export async function GET(
     });
 
     console.log('formattedProduct en la bbdd: ', formattedProduct)
-
-    // const [productWithSummary] = await attachReviewSummaries([formattedProduct]);
 
     return NextResponse.json([formattedProduct], {
       headers: {
