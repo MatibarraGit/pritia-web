@@ -32,13 +32,13 @@ async function getProduct(slug: string): Promise<ProductType | null> {
       cache: "no-store",
       headers: { "Content-Type": "application/json" },
     });
+    const data = await response.json();
+    console.log('data de getProduct: ', data)
 
     if (!response.ok) {
       return null;
     }
 
-    const data = await response.json();
-    console.log('data de getProduct: ', data)
     return Array.isArray(data) && data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Error de getProduct:", error);
@@ -49,6 +49,8 @@ async function getProduct(slug: string): Promise<ProductType | null> {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
+
+  console.log('Product en la metadata de productPage: ', product)
 
   if (!product) {
     return {

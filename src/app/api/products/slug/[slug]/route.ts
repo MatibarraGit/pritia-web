@@ -9,6 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  console.log('slug de params: ', slug)
 
   try {
     const product = await prisma.products.findFirst({
