@@ -33,6 +33,8 @@ async function getProduct(slug: string): Promise<ProductType | null> {
       headers: { "Content-Type": "application/json" },
     });
 
+    console.log('Response de getProduct: ', await response.json())
+
     if (!response.ok) {
       return null;
     }
@@ -40,7 +42,7 @@ async function getProduct(slug: string): Promise<ProductType | null> {
     const data = await response.json();
     return Array.isArray(data) && data.length > 0 ? data[0] : null;
   } catch (error) {
-    console.error("Error fetching product:", error);
+    console.error("Error de getProduct:", error);
     return null;
   }
 }
@@ -94,6 +96,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = await getProduct(slug);
+
+  console.log('Product en la productPage: ', product)
 
   if (!product) return notFound();
 

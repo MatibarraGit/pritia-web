@@ -44,6 +44,12 @@ export default async function HomePage() {
     isLoading = false;
   }
 
+  console.log('Home: DailyHighlightsProducts ->', DailyHighlightsProducts)
+  console.log('Home: NewEntriesProducts ->', NewEntriesProducts)
+  console.log('Home: ProductsOnOffer ->', ProductsOnOffer)
+  console.log('Home: ReEntriesProducts ->', ReEntriesProducts)
+  console.log('Home: NewsProducts ->', NewsProducts)
+
   const newProductsUrl = `/productos?seccion=${encodeURIComponent(TOPICS.NEW_ENTRIES)}`;
   const offersUrl = `/productos?seccion=${encodeURIComponent(TOPICS.OFFERS)}`;
   // const bestSellersUrl = `/productos?seccion=${encodeURIComponent(TOPICS.BEST_SELLERS)}`;

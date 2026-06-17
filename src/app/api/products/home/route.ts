@@ -70,6 +70,8 @@ export async function GET() {
     const reEntriesProducts = formatProducts(reEntriesProductsRaw);
     const newsProducts = formatProducts(newsProductsRaws);
 
+    console.log('newEntriesProductsRaw bbdd: ', newEntriesProductsRaw)
+
     return NextResponse.json(
       {
         dailyHighlightsProducts,
@@ -88,7 +90,7 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error(error);
+    console.error('Error desde la api de la home: ', error);
     return NextResponse.json(
       { message: "Error interno del servidor al obtener productos para la página de inicio" },
       { status: 500 }

@@ -30,6 +30,8 @@ export async function GET(
       },
     });
 
+    console.log('Product en la bbdd: ', product)
+
     if (!product) {
       return NextResponse.json([]);
     }
@@ -37,8 +39,8 @@ export async function GET(
     // Formatear el producto al formato estándar
     const formattedProduct: ProductType = formatProduct({
       product_id: product.product_id,
-      product_name: product.product_name || '',
-      purchase_price: product.purchase_price ?? 0,
+      product_name: product.product_name,
+      purchase_price: product.purchase_price,
       sell_price: product.sell_price ?? 0,
       discount_percent: product.discount_percent ?? 0,
       category_name: product.categories?.category_name || '',
@@ -52,6 +54,8 @@ export async function GET(
       updated_at: product.updated_at,
     });
 
+    console.log('formattedProduct en la bbdd: ', formattedProduct)
+
     // const [productWithSummary] = await attachReviewSummaries([formattedProduct]);
 
     return NextResponse.json([formattedProduct], {
@@ -61,7 +65,8 @@ export async function GET(
         'Expires': '0',
       },
     });
-  } catch {
+  } catch (e) {
+    console.error('Error de el endpoint [slug]: ', e)
     return NextResponse.json(
       { message: 'Error interno del servidor al obtener producto' },
       { status: 500 }
