@@ -8,7 +8,6 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  console.log('slug de params: ', slug)
 
   try {
     const product = await prisma.products.findFirst({
@@ -30,10 +29,7 @@ export async function GET(
       },
     });
 
-    console.log('Product en la api: ', product)
-
     if (!product) {
-      console.log('!product en api: ', product)
       return NextResponse.json([]);
     }
 
@@ -54,8 +50,6 @@ export async function GET(
       created_at: product.created_at,
       updated_at: product.updated_at,
     });
-
-    console.log('formattedProduct en la bbdd: ', formattedProduct)
 
     return NextResponse.json([formattedProduct], {
       headers: {
