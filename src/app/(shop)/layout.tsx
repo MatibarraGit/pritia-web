@@ -81,16 +81,7 @@ export const metadata: Metadata = {
     images: ["https://res.cloudinary.com/db8b2c9gb/image/upload/v1781446054/Logo%20Pritia.png"],
   },
 
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-    }
-  }
+
 };
 
 export default function RootLayout({
