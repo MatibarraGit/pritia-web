@@ -238,6 +238,23 @@ export async function getProductsByTopic({ section, page = 1 }: GetProductsByTop
   }
 }
 
+// GET - Obtener productos por tópico
+export async function getProductsOnOffer({ page = 1 }: GetAllProductsParams = {}): Promise<GetAllProductsResponse> {
+  try {
+    const params = new URLSearchParams();
+    if (page) params.set('page', page.toString());
+
+    const response = await fetch(`${baseUrl}/api/products/onOffer?${params.toString()}`, {
+      cache: 'no-store'
+    });
+    const json: { products: ProductType[], total: number } = await response.json();
+
+    return { products: json.products || [], total: json.total ?? json.products?.length ?? 0 };
+  } catch {
+    return { products: [], total: 0 };
+  }
+}
+
 // GET - Buscar productos
 export async function searchProducts({ search }: SearchProductsParams): Promise<SearchProductsResponse> {
   try {

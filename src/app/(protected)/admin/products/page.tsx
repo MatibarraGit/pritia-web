@@ -2,16 +2,16 @@
 
 import { Suspense, useCallback, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Boxes, History, List, type LucideIcon } from "lucide-react";
+import { BadgePercent, Boxes, History, List, type LucideIcon } from "lucide-react";
 
 import { CustomTable, PageLoader, Pagination } from "@/components";
 import { Button } from "@/components/ui";
 import { useFetchData, useFiltersContext } from "@/hooks";
-import { getAllProducts, getInventoryProducts, getOutdatedProducts } from "@/services";
+import { getAllProducts, getInventoryProducts, getOutdatedProducts, getProductsOnOffer } from "@/services";
 import { PRODUCTS_PER_PAGE } from "@/utils";
 import type { GetAllProductsParams, GetAllProductsResponse } from "@/services";
 
-const PRODUCT_ADMIN_VIEWS = ["all", "inventory", "outdated"] as const;
+const PRODUCT_ADMIN_VIEWS = ["all", "inventory", "outdated", "offers"] as const;
 type ProductAdminView = typeof PRODUCT_ADMIN_VIEWS[number];
 
 type ProductAdminViewOption = {
@@ -40,6 +40,12 @@ const PRODUCT_ADMIN_VIEW_OPTIONS: ProductAdminViewOption[] = [
     href: "/admin/products?view=outdated&page=1",
     icon: History,
   },
+    {
+    id: "offers",
+    label: "Ofertas",
+    href: "/admin/products?view=offers&page=1",
+    icon: BadgePercent,
+  },
 ];
 
 const PRODUCT_ADMIN_FETCHERS: Record<
@@ -49,6 +55,7 @@ const PRODUCT_ADMIN_FETCHERS: Record<
   all: getAllProducts,
   inventory: getInventoryProducts,
   outdated: getOutdatedProducts,
+  offers: getProductsOnOffer,
 };
 
 function getProductAdminView(view: string | null): ProductAdminView {

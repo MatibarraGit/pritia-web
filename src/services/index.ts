@@ -30,6 +30,7 @@ export {
   getProductsByCategory,
   getProductsBySubcategory,
   getProductsByTopic,
+  getProductsOnOffer,
   patchProduct,
   searchProducts,
   updateProduct
