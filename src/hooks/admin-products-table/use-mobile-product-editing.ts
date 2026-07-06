@@ -4,16 +4,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { toastContext } from "@/contexts";
 import { patchProduct } from "@/services";
-import type { EditableCellValue, EditableProductField, OptionsCache, ProductType } from "@/types";
+import type { EditableCellValue, EditableProductField, ProductType } from "@/types";
 import { applyProductChange, buildPatchPayload } from "@/utils/productTableUtils";
 import { useBatchedChanges, type BatchedChanges } from "./use-batched-changes";
 
 interface UseMobileProductEditingOptions {
   products: ProductType[];
-  options: OptionsCache;
 }
 
-export function useMobileProductEditing({ products, options }: UseMobileProductEditingOptions) {
+export function useMobileProductEditing({ products }: UseMobileProductEditingOptions) {
   const [localProducts, setLocalProducts] = useState<ProductType[]>(products);
   const committedProductsRef = useRef<ProductType[]>(products);
   const productsRef = useRef<ProductType[]>(products);
@@ -29,7 +28,7 @@ export function useMobileProductEditing({ products, options }: UseMobileProductE
         const currentProduct = localProducts.find((product) => product.id === numericProductId);
         if (!currentProduct) continue;
 
-        const payload = buildPatchPayload(currentProduct, fields, options);
+        const payload = buildPatchPayload(currentProduct, fields);
         const result = await patchProduct(numericProductId, payload);
 
         if (result.errorMessage || !result.product) {
@@ -55,7 +54,7 @@ export function useMobileProductEditing({ products, options }: UseMobileProductE
 
       showToast("Cambios guardados", "success");
     },
-    [localProducts, options, showToast]
+    [localProducts, showToast]
   );
 
   const {
@@ -91,12 +90,12 @@ export function useMobileProductEditing({ products, options }: UseMobileProductE
       if (!product) return;
 
       const previousValue = product[field];
-      const nextProduct = applyProductChange(product, field, value, options);
+      const nextProduct = applyProductChange(product, field, value);
 
       setLocalProducts((current) => current.map((item) => (item.id === productId ? nextProduct : item)));
       trackChange({ productId, field, value: nextProduct[field], previousValue });
     },
-    [localProducts, options, trackChange]
+    [localProducts, trackChange]
   );
 
   const getPendingChangesForProduct = useCallback(

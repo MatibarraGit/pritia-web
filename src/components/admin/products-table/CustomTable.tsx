@@ -70,7 +70,7 @@ export function CustomTable({ products, isLoading }: CustomTableProps) {
     handleToggleSelecting,
   } = useProductTableEditing({ products, options });
 
-  // Lógica de ordenamiento
+  // Lógica de filtrado y ordenamiento
   const filteredProducts = filterItems(localProducts);
   const { orderItems } = useOrderContext("admin-products-table");
   const sortedProducts = orderItems(filteredProducts, PRODUCT_TABLE_SORT_CONFIG) || [];

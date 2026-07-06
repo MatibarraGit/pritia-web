@@ -1,28 +1,20 @@
 import { Loader2 } from "lucide-react";
 import { ProductCard } from "./ProductCard";
-import type { ProductType, EditableProductField, EditableCellValue } from "@/types";
+import { useMobileProductEditing } from "@/hooks";
+import type { ProductType } from "@/types";
 
-type Props = {
-  products: ProductType[];
-  pendingChanges: Record<number, Record<string, { value: unknown; previousValue: unknown }>>;
-  hasPendingChanges: boolean;
-  pendingChangeCount: number;
-  isFlushing: boolean;
-  onFieldChange: (productId: number, field: EditableProductField, value: EditableCellValue) => void;
-  onFlushNow: () => void;
-  onDiscardChanges: () => void;
-};
+export function MobileProductPanel({ products }: { products: ProductType[] }) {
+  const {
+    localProducts,
+    pendingChanges,
+    hasPendingChanges,
+    pendingChangeCount,
+    isFlushing,
+    flushNow,
+    handleFieldChange,
+    handleDiscardChanges,
+  } = useMobileProductEditing({ products: products });
 
-export function MobileProductPanel({
-  products,
-  pendingChanges,
-  hasPendingChanges,
-  pendingChangeCount,
-  isFlushing,
-  onFieldChange,
-  onFlushNow,
-  onDiscardChanges,
-}: Props) {
   return (
     <div className="flex flex-col gap-4">
       {/* Banner de cambios pendientes */}
@@ -35,12 +27,12 @@ export function MobileProductPanel({
 
       {/* Lista de productos */}
       <div className="grid grid-cols-1 gap-4 xs:grid-cols-2 md:grid-cols-3">
-        {products.map((product) => (
+        {localProducts.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
             pending={pendingChanges[product.id] || {}}
-            onChange={(field, value) => onFieldChange(product.id, field, value)}
+            onChange={(field, value) => handleFieldChange(product.id, field, value)}
           />
         ))}
       </div>
@@ -50,7 +42,7 @@ export function MobileProductPanel({
         <div className="sticky bottom-0 flex gap-2 bg-background p-4 shadow-lg">
           <button
             type="button"
-            onClick={onDiscardChanges}
+            onClick={handleDiscardChanges}
             disabled={isFlushing}
             className="flex-1 rounded-md border border-input bg-background px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -58,9 +50,9 @@ export function MobileProductPanel({
           </button>
           <button
             type="button"
-            onClick={onFlushNow}
+            onClick={flushNow}
             disabled={isFlushing}
-            className="flex-1 rounded-md bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 rounded-md bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-white"
           >
             {isFlushing ? (
               <>

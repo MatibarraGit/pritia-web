@@ -2,9 +2,10 @@
 "use client";
 import { useRef } from "react";
 import { ImageIcon, Camera } from "lucide-react";
-import { EditableField } from "./EditableField";
+import { EditableCell } from "../products-table/EditableCell";
 import type { ProductType, EditableProductField, EditableCellValue } from "@/types";
 import { cn } from "@/libs/utils";
+import { PRODUCT_IMAGE_ACCEPTED_TYPES } from "@/utils";
 
 type Props = {
   product: ProductType;
@@ -35,7 +36,7 @@ export function ProductCard({ product, pending, onChange }: Props) {
   return (
     <article
       className={cn(
-        "rounded-2xl border border-border bg-card p-4 shadow-sm transition-all",
+        "rounded-2xl border border-border bg-card p-4 shadow-sm transition-all bg-white",
         hasChanges && "border-amber-400 ring-1 ring-amber-400/50",
       )}
     >
@@ -73,56 +74,83 @@ export function ProductCard({ product, pending, onChange }: Props) {
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
-          capture="environment"
+          accept={PRODUCT_IMAGE_ACCEPTED_TYPES.join(",")}
+          multiple
           className="hidden"
           onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
         />
       </button>
 
       <div className="space-y-3">
-        <EditableField
-          kind="text"
+        <EditableCell
+          type="text"
           label="Nombre"
           value={view.name}
+          displayValue={view.name || ""}
           isDirty={isDirty("name")}
-          onCommit={(v) => onChange("name", v)}
+          onChange={(v) => onChange("name", v)}
+          mobileMode
         />
-        <EditableField
-          kind="textarea"
+        <EditableCell
+          type="textarea"
           label="Descripción"
           value={view.description}
+          displayValue={view.description || ""}
           isDirty={isDirty("description")}
-          onCommit={(v) => onChange("description", v)}
+          onChange={(v) => onChange("description", v)}
+          mobileMode
         />
 
         <div className="grid grid-cols-2 gap-3">
-          <EditableField
-            kind="number"
+          <EditableCell
+            type="number"
             label="P/Compra"
             value={view.purchasePrice}
+            displayValue={String(view.purchasePrice || 0)}
             isDirty={isDirty("purchasePrice")}
-            onCommit={(v) => onChange("purchasePrice", v)}
+            onChange={(v) => onChange("purchasePrice", v)}
+            mobileMode
           />
-          <EditableField
-            kind="number"
+          <EditableCell
+            type="number"
             label="P/Venta"
             value={view.price}
+            displayValue={String(view.price || 0)}
             isDirty={isDirty("price")}
-            onCommit={(v) => onChange("price", v)}
+            onChange={(v) => onChange("price", v)}
+            mobileMode
           />
-          <EditableField
-            kind="number"
+          <EditableCell
+            type="number"
             label="P/Revendedores"
             value={view.resellersPrice || 0}
+            displayValue={String(view.resellersPrice || 0)}
             isDirty={isDirty("resellersPrice")}
-            onCommit={(v) => onChange("resellersPrice", v)}
+            onChange={(v) => onChange("resellersPrice", v)}
             className="col-span-2"
+            mobileMode
           />
         </div>
 
-        <div className="pt-1 text-[10px] text-muted-foreground">
-          Actualizado: {view.updatedAt ? new Intl.DateTimeFormat("es-AR").format(new Date(view.updatedAt)) : "N/A"}
+        <div className="h-20 pt-1 text-[10px] text-muted-foreground">
+          <EditableCell
+            type="datetime"
+            label="Actualizado"
+            value={view.updatedAt instanceof Date ? view.updatedAt.toISOString() : view.updatedAt}
+            displayValue={view.updatedAt
+              ? new Intl.DateTimeFormat("es-AR", {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                }).format(new Date(view.updatedAt))
+              : ""}
+            isDirty={isDirty("updatedAt")}
+            onChange={(v) => onChange("updatedAt", v)}
+            className="flex-1 h-full"
+            mobileMode
+          />
         </div>
       </div>
     </article>

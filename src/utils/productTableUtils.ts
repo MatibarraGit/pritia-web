@@ -59,10 +59,10 @@ function normalizeEditableImages(value: unknown): EditableProductImage[] {
   ));
 }
 
-export function applyProductChange(product: ProductType, field: EditableProductField, value: EditableCellValue, options: OptionsCache) {
+export function applyProductChange(product: ProductType, field: EditableProductField, value: EditableCellValue, options?: OptionsCache) {
   const nextProduct = { ...product, [field]: value } as ProductType;
 
-  if (field === "category") {
+  if (field === "category" && options) {
     const category = options.categories.find((item) => item.category_name === value);
     const subcategoryIsValid = category?.subcategories.some((subcategory) => subcategory.name === product.subcategory);
     if (!subcategoryIsValid) {
@@ -76,7 +76,7 @@ export function applyProductChange(product: ProductType, field: EditableProductF
 export function buildPatchPayload(
   product: ProductType,
   fields: BatchedChanges<EditableProductField>[number],
-  options: OptionsCache
+  options?: OptionsCache
 ): Partial<ProductInlinePatchPayload> | FormData {
   const payload: Partial<ProductInlinePatchPayload> = {};
   let imageItems: EditableProductImage[] | null = null;
@@ -88,18 +88,18 @@ export function buildPatchPayload(
         break;
       case "providers": {
         const providerNames = Array.isArray(change.value) ? change.value : splitProviderNames(String(change.value || ""));
-        payload.providerIds = options.providers
+        payload.providerIds = options?.providers
           .filter((item) => providerNames.includes(item.provider_name))
           .map((item) => item.provider_id);
         break;
       }
       case "category": {
-        const category = options.categories.find((item) => item.category_name === change.value);
+        const category = options?.categories.find((item) => item.category_name === change.value);
         if (category) payload.categoryId = category.category_id;
         break;
       }
       case "subcategory": {
-        const category = options.categories.find((item) => item.category_name === product.category);
+        const category = options?.categories.find((item) => item.category_name === product.category);
         const subcategory = category?.subcategories.find((item) => item.name === change.value);
         payload.subcategoryId = subcategory?.id || null;
         break;

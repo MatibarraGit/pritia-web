@@ -51,6 +51,7 @@ export function ProductTableCell({
       ? product.originalPrice * (1 - product.discountPercent / 100)
       : undefined;
 
+  // Verifica si es la columna de imágenes
   if (column.key === "images") {
     return (
       <ProductImagesTableCell
@@ -63,6 +64,7 @@ export function ProductTableCell({
     );
   }
 
+  // Verifica si es la columna de precio de compra
   if (column.key === "purchasePrice") {
     const isDisabled = !isEditMode;
     const changePurchasePrice = onLiveChange ?? onChange;
@@ -94,11 +96,6 @@ export function ProductTableCell({
       setPurchaseSurcharge(0);
     }
 
-    function onActivateLocal() {
-      onChange(originalPrice);
-      onActivate();
-    }
-
     return (
       <Popover open={currencyPopoverOpen} onOpenChange={setCurrencyPopoverOpen}>
         <PopoverTrigger asChild>
@@ -118,7 +115,7 @@ export function ProductTableCell({
                 type={column.type}
                 value={product.purchasePrice}
                 options={getSelectOptions(product, column.key, options)}
-                onActivate={onActivateLocal}
+                onActivate={onActivate}
                 onCancel={onCancel}
                 onChange={onChangeLocal}
               />

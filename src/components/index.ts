@@ -25,7 +25,6 @@ export { ProductTableCell } from './admin/products-table/ProductTableCell'
 
 // Admin / Mobile Panel
 export { MobileProductPanel } from './admin/mobile-panel/MobileProductPanel'
-export { EditableField } from './admin/mobile-panel/EditableField'
 export { ProductCard as MobileProductCard } from './admin/mobile-panel/ProductCard'
 
 // Admin

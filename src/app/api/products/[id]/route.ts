@@ -436,7 +436,10 @@ export async function PATCH(
       if (body.updatedAt === null || body.updatedAt === "") {
         data.updated_at = null;
       } else {
+        console.log("body.updatedAt:", body.updatedAt);
         const updatedAtDate = new Date(body.updatedAt as string);
+        console.log("body.updatedAt:", body.updatedAt);
+        console.log("body.updatedAt toISOString:", updatedAtDate.toISOString());
         if (isNaN(updatedAtDate.getTime())) {
           return NextResponse.json({ message: "La fecha de actualización no es válida" }, { status: 400 });
         }
