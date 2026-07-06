@@ -71,6 +71,9 @@
   --font-body: "Montserrat", "Mulish", sans-serif; 
   --font-subheading: "MontserratMedium", "MulishBold", sans-serif;
   --font-heading: "MontserratSemiBold", "MulishExtraBold", sans-serif;
+
+  /* Media Querys */
+  --breakpoint-xs: 420px;
 }
 
 /* ============================================

@@ -23,6 +23,11 @@ export { ProductsPendingChangesBanner } from './admin/products-table/ProductsPen
 export { ProductsTableToolbar } from './admin/products-table/ProductsTableToolbar'
 export { ProductTableCell } from './admin/products-table/ProductTableCell'
 
+// Admin / Mobile Panel
+export { MobileProductPanel } from './admin/mobile-panel/MobileProductPanel'
+export { EditableField } from './admin/mobile-panel/EditableField'
+export { ProductCard as MobileProductCard } from './admin/mobile-panel/ProductCard'
+
 // Admin
 export { AdminReturnButton, AdminSidebarLink } from './admin/adminButtons'
 export { AdminMainWrapper } from './admin/AdminMainWrapper'

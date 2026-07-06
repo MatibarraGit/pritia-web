@@ -3,6 +3,7 @@ export { useBatchedChanges } from './admin-products-table/use-batched-changes'
 export { useProductTableActions } from './admin-products-table/use-product-table-actions'
 export { useProductTableEditing } from './admin-products-table/use-product-table-editing'
 export { useProductTableSearch } from './admin-products-table/use-product-table-search'
+export { useMobileProductEditing } from './admin-products-table/use-mobile-product-editing'
 export type { BatchedChanges, ProductChange } from './admin-products-table/use-batched-changes'
 
 // Hooks globales

@@ -28,7 +28,15 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
         className="font-body bg-[#F2F7FB] antialiased"
         suppressHydrationWarning
       >
-        {user && sessionUser ? (
+                  <>
+            <AdminHeader />
+            <AdminSidebar />
+            <AdminMainWrapper>
+              {children}
+            </AdminMainWrapper>
+            <Toast />
+          </>
+        {/* {user && sessionUser ? (
           <>
             <AdminHeader />
             <AdminSidebar />
@@ -39,7 +47,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
           </>
         ) : (
           <ForbbidenPage />
-        )}
+        )} */}
       </body>
     </html>
   );
