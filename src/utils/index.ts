@@ -1,3 +1,4 @@
+export { cldSrcSet, cldUrl, cloudinaryLoader } from './cloudinaryUrl';
 export { compareValues } from './compareValues';
 
 export {

@@ -14,7 +14,7 @@ export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {
   return (
     <main className="w-full mx-auto flex flex-col relative bg-white items-center min-h-content">
       <Image
-        src={'/img/no-results.png'}
+        src={'/img/no-results.webp'}
         alt="No se encontraron resultados"
         width={250}
         height={250}

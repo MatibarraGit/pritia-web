@@ -59,7 +59,7 @@ export const FavouritesMenu = () => {
                     src={
                       product.images && product.images.length >= 1
                         ? product.images[0]
-                        : "/img/image-icon.png"
+                        : "/img/image-icon.webp"
                     }
                     alt={product.name}
                     width={60}

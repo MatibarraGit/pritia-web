@@ -44,7 +44,7 @@ const ListRow = memo(({ product, handleAddToCart }: ListRowProps) => {
 
   const image = product.images && product.images.length > 0 
     ? product.images[0] 
-    : "/img/image-icon.png";
+    : "/img/image-icon.webp";
 
   return (
     <div

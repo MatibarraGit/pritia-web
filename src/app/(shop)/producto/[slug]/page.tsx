@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const imageToShow = product?.images !== null ? product.images[0] : "/image-icon.png";
+  const imageToShow = product?.images !== null ? product.images[0] : "/image-icon.webp";
 
   return {
     title: product.name,

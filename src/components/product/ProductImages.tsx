@@ -10,7 +10,7 @@ interface ProductImagesProps {
   name: string;
 }
 
-const FALLBACK_IMAGE = "/img/image-icon.png";
+const FALLBACK_IMAGE = "/img/image-icon.webp";
 
 export function ProductImages({
   images,

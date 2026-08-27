@@ -4,39 +4,59 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ============================================
+   FUENTES VARIABLES
+   Dos archivos (uno por tipografía) sirven todos los cortes.
+   El descriptor font-weight fija el eje "wght" de cada alias.
+   ============================================ */
+
+/* Montserrat — eje wght 100..900 */
 @font-face {
   font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  src: url("/fonts/montserrat-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MontserratMedium";
-  src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+  src: url("/fonts/montserrat-latin-wght-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MontserratSemiBold";
-  src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+  src: url("/fonts/montserrat-latin-wght-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
+/* Mulish — eje wght 200..1000 */
 @font-face {
   font-family: "Mulish";
-  src: url("/fonts/Mulish-Regular.woff2") format("woff2");
+  src: url("/fonts/mulish-latin-wght-normal.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MulishBold";
-  src: url("/fonts/Mulish-Bold.woff2") format("woff2");
+  src: url("/fonts/mulish-latin-wght-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MulishExtraBold";
-  src: url("/fonts/Mulish-ExtraBold.woff2") format("woff2");
+  src: url("/fonts/mulish-latin-wght-normal.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -68,9 +88,9 @@
   --color-discount-bronze: #e88c30;
 
   /* Fonts */
-  --font-body: "Montserrat", "Mulish", sans-serif; 
-  --font-subheading: "MontserratMedium", "MulishBold", sans-serif;
-  --font-heading: "MontserratSemiBold", "MulishExtraBold", sans-serif;
+  --font-body: "Mulish", "Montserrat",  sans-serif; 
+  --font-subheading: "MulishBold", "MontserratMedium",  sans-serif;
+  --font-heading: "MulishExtraBold", "MontserratSemiBold", sans-serif;
 
   /* Media Querys */
   --breakpoint-xs: 420px;
@@ -80,7 +100,7 @@
    CONFIGURACIÓN DE SHADCN UI
    ============================================ */
 @theme inline { 
-  --color-background: #fafafa; 
+  --color-background: lab(98.257% -.443965 -1.43217); 
   --color-background-hover: color-mix(in oklab, var(--color-black) 5%, transparent);
   --color-foreground: var(--foreground); 
   --color-accent: #0002;

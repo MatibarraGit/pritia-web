@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
+import ReactDOM from "react-dom";
 import { Analytics } from "@vercel/analytics/next"
 import Link from "next/link";
-import { Geist } from "next/font/google";
 import "./globals.css";
 import { Header, NavigationMenu, Footer } from "@/layout";
 import { Toast } from "@/components";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://pritia.com.ar"),
@@ -98,9 +93,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Precarga de las fuentes variables: el navegador las pide en paralelo al CSS
+  // en vez de descubrirlas recien después de parsearlo.
+  ReactDOM.preload("/fonts/montserrat-latin-wght-normal.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+  ReactDOM.preload("/fonts/mulish-latin-wght-normal.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased font-body`} suppressHydrationWarning>
+      <body className="antialiased font-body" suppressHydrationWarning>
         <Analytics />
 
         {/* Aviso de Beneficios por compra */}

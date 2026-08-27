@@ -5,29 +5,37 @@ import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { LikeButton } from "@/components";
 import { ProductType } from "@/types";
-import { formatPrice } from "@/utils";
+import { cldSrcSet, cldUrl, formatPrice } from "@/utils";
 
 type ProductCardProps = {
   product: ProductType;
   classNames?: string;
   imageSizes?: string;
+  /** true sólo para las tarjetas visibles al cargar (above the fold) */
+  priority?: boolean;
 };
+
+/** Ancho real que ocupa la imagen en la tarjeta (h-40 / ~250px de ancho) */
+const CARD_IMAGE_WIDTH = 300;
 
 export const ProductCard = memo(function ProductCard({
   product,
   classNames,
   imageSizes = "(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 250px",
+  priority = false,
 }: ProductCardProps) {
   const hasDiscount = product.discountPercent > 0 && product.originalPrice;
   // const isHotSale = EVENTS.IS_HOT_SALE && hasDiscount;
   const savings = hasDiscount ? product.originalPrice! - product.price : 0;
 
   // Imagen - las imágenes vienen como array de strings con URLs de Cloudinary
-  const image = product?.images?.[0] || "/img/image-icon.png";
+  const rawImage = product?.images?.[0] || "/img/image-icon.webp";
+  const image = cldUrl(rawImage, { width: CARD_IMAGE_WIDTH, quality: "auto:eco" });
+  const imageSrcSet = cldSrcSet(rawImage, CARD_IMAGE_WIDTH, "auto:eco");
 
   // const productToCheckout = !isHotSale ? undefined : {
   //   id: product.id,
-  //   image: product.images[0] || "/img/image-icon.png",
+  //   image: product.images[0] || "/img/image-icon.webp",
   //   name: product.name,
   //   price: product.price,
   //   quantity: 1,
@@ -53,10 +61,14 @@ export const ProductCard = memo(function ProductCard({
 
         <img
           src={image}
+          srcSet={imageSrcSet}
           alt={product.name}
           width={250}
           height={250}
           sizes={imageSizes}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
           className="object-contain h-40 select-none"
           draggable={false}
         />

@@ -5,7 +5,7 @@ export const NoProductsResults = ({ category }: { category?: string }) => {
   return (
     <div className="w-full mx-auto flex items-center flex-col relative bg-white min-h-content text-center">
       <Image
-        src={"/img/product-not-found.png"}
+        src={"/img/product-not-found.webp"}
         alt="No se encontraron resultados"
         width={400}
         height={250}

@@ -32,8 +32,9 @@ export const DailyHighlights = ({ products }: { products: ProductType[] }) => {
           </div>
         </div>
 
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {products.map((product, index) => (
+          // Las primeras tarjetas entran en el viewport inicial: se cargan con prioridad
+          <ProductCard key={product.id} product={product} priority={index < 4} />
         ))}
       </div>
     </section>

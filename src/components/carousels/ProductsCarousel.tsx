@@ -173,7 +173,7 @@ export const ProductsCarousel = memo(
             <CarouselContent
               className="will-change-transform transform-gpu"
             >
-              {products.map((product) => (
+              {products.map((product, index) => (
                 <CarouselItem
                   key={product.id}
                   className="product-carousel-item"
@@ -183,6 +183,7 @@ export const ProductsCarousel = memo(
                       product={product}
                       classNames="border-none"
                       imageSizes="(max-width: 374px) 92vw, (max-width: 619px) 46vw, (max-width: 767px) 30vw, (max-width: 1023px) 23vw, 18vw"
+                      priority={index < 4}
                     />
                   </div>
                 </CarouselItem>

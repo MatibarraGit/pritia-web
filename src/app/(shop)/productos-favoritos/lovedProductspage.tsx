@@ -19,7 +19,7 @@ export default function LovedProductsPage() {
   const handleAddToCart = (product: LovedProductType) => {
     const cartItem = {
       id: product.id,
-      image: product.images[0] || "/img/image-icon.png",
+      image: product.images[0] || "/img/image-icon.webp",
       name: product.name,
       price: product.price,
       originalPrice: product.originalPrice,
@@ -35,7 +35,7 @@ export default function LovedProductsPage() {
     lovedProducts.forEach((product) => {
       const cartItem = {
         id: product.id,
-        image: product.images[0] || "/img/image-icon.png",
+        image: product.images[0] || "/img/image-icon.webp",
         name: product.name,
         price: product.price,
         originalPrice: product.originalPrice,

@@ -20,7 +20,7 @@ export function ProductActions({ product }: ProductActionsProps) {
 
   const cartItemProduct = {
     id: product.id,
-    image: product.images[0] || "/img/image-icon.png",
+    image: product.images[0] || "/img/image-icon.webp",
     name: product.name,
     price: product.price,
     quantity: quantity,

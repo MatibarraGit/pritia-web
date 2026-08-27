@@ -32,7 +32,7 @@ const slides: Slide[] = [
     description: "Participá con tu compra mediante la web",
     buttonHref: "/beneficios",
     buttonText: "VER MÁS",
-    image: "/img/slide-benefits.png",
+    image: "/img/slide-benefits.webp",
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ const slides: Slide[] = [
     description: "Entregas rápidas y seguras",
     buttonHref: "/ayuda",
     buttonText: "VER MÁS",
-    image: "/img/slide-shipping.png",
+    image: "/img/slide-shipping.webp",
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const slides: Slide[] = [
     description: "HASTA 35% OFF",
     buttonHref: "/productos?seccion=ofertas",
     buttonText: "VER OFERTAS",
-    image: "/img/slide-offers.png",
+    image: "/img/slide-offers.webp",
   },
   {
     id: 4,
@@ -59,7 +59,7 @@ const slides: Slide[] = [
     description: "Electrodomésticos, muebles, decoración y más",
     buttonHref: "/productos",
     buttonText: "VER PRODUCTOS",
-    image: "/img/slide-home-products.png",
+    image: "/img/slide-home-products.webp",
   },
 ];
 

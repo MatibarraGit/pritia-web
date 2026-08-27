@@ -60,7 +60,7 @@ export function CartSidebar() {
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <Image
-                src="/img/empty-cart.png"
+                src="/img/empty-cart.webp"
                 alt="Carrito vacío"
                 width={300}
                 height={300}
