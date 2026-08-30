@@ -13,7 +13,7 @@ function MobilePanelComponent() {
   const params = useSearchParams();
   const page = params.get("page") ? parseInt(params.get("page")!) : 1;
 
-  const { search, handleSearch, clearSearch } = useProductTableSearch();
+  const { search } = useProductTableSearch();
   const { adminFilters, filterItems } = useFiltersContext();
   const clientSearch = typeof adminFilters.productsClientSearch === "string" ? adminFilters.productsClientSearch : "";
 

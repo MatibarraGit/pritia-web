@@ -13,7 +13,6 @@ export {
   OUTDATED_PRODUCTS_DAYS,
   REVIEW_WAIT_DAYS,
   TOPICS,
-  TO_OPTIONS,
   ONE_DAY,
   ORDER_PARAMETERS,
   ACCENT_CATEGORIES,
@@ -65,6 +64,8 @@ export {
   splitProviderNames, 
   toDateTimeInputValue
 } from "./productTableUtils"
+
+export { TO_OPTIONS } from "./toOptions"
 
 export { toSlug } from './toSlug';
 export { validateAuthForm } from './validateAuthForm';

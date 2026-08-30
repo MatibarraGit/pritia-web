@@ -32,23 +32,10 @@ function getSyntheticPaymentMethod(paymentMethodId: string): MercadoPagoPaymentM
 
   return {
     id: paymentMethodId,
-    name: getPaymentMethodDisplayName(paymentMethodId),
+    name: getPaymentMethodLabel(paymentMethodId),
     payment_type_id: "credit_card",
     status: "active",
   };
-}
-
-/**
- * Obtiene el nombre visible de la tarjeta.
- * Si Mercado Pago trae un nombre legible, se usa ese valor; si no, se cae al
- * label local del mock o a casos conocidos.
- */
-// TODO: Lo necesito??
-function getPaymentMethodDisplayName(paymentMethodId: string, fallback?: string) {
-
-  if (fallback && fallback !== paymentMethodId) return fallback;
-
-  return getPaymentMethodLabel(paymentMethodId);
 }
 
 /**
@@ -99,7 +86,7 @@ function dedupeQuotesByInstallments(quotes: CreditInstallmentQuote[]) {
  * Para cada cantidad objetivo (1, 3, 6 y 12), elige la cotización con menor
  * total. Si no hay una opción disponible, deja esa cuota sin quote.
  */
-// TODO: Elige la cotización con menor total? En el cartel del producto muestro como referencia las cuotas del BBVA
+// TODO: ¿Esto elige la cotización con menor total? Porque en el cartel del producto muestro como referencia las cuotas del BBVA
 function buildSummary(quotes: CreditInstallmentQuote[]) {
   return FINANCING_CONFIG.featuredInstallments.map((installments) => {
     const quote = quotes
@@ -151,10 +138,9 @@ function normalizeMercadoPagoInstallments({
 }) {
   return installments.flatMap((item) => {
     const paymentMethodId = item.payment_method_id || paymentMethod?.id || "";
-    const paymentMethodName = getPaymentMethodDisplayName(paymentMethodId, paymentMethod?.name);
+    const paymentMethodName = paymentMethod?.name && paymentMethodId !== paymentMethod?.name ? paymentMethod.name : getPaymentMethodLabel(paymentMethodId);
     const issuerId = item.issuer?.id != null ? String(item.issuer.id) : FINANCING_CONFIG.defaultIssuerId;
     const issuerName = item.issuer?.name || "Todos los bancos";
-    // console.log("issuerName", issuerName)
 
     return item.payer_costs.map((payerCost) => {
       const labels = Array.isArray(payerCost.labels) ? payerCost.labels : [];
@@ -207,10 +193,7 @@ export async function fetchCreditPaymentMethods(): Promise<MercadoPagoPaymentMet
     if (!response.ok) return [];
 
     const paymentMethods = (await response.json()) as MercadoPagoPaymentMethod[];
-    console.log('Payment Methods', paymentMethods)
 
-    // TODO: Eliminar después de despliegue
-    console.log("[MP payment_methods] fetch resuelto en", Math.round(performance.now() - startedAt), "ms");
     return paymentMethods.filter(
       (method) => method.payment_type_id === "credit_card" && method.status === "active",
     );

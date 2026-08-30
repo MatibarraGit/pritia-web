@@ -108,29 +108,6 @@ export const enum TOPICS {
   NEWS = 'novedades'
 }
 
-export const TO_OPTIONS = Object.freeze([
-  {
-    name: 'Número secundario',
-    number: 5491130069853,
-    type: 'seller'
-  },
-  {
-    name: 'Morty',
-    number: 5491155256122,
-    type: 'seller'
-  },
-  {
-    name: 'Adri',
-    number: 5491130806126,
-    type: 'seller'
-  },
-  {
-    name: 'Jana',
-    number: 5491131134516,
-    type: 'reseller'
-  }
-] as const);
-
 export const ONE_DAY = 3600 * 24;
 
 export const ORDER_PARAMETERS = {
