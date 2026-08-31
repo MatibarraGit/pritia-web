@@ -286,3 +286,10 @@ export interface OptionsCache {
   categories: CategoryType[];
 }
 
+
+/** Destinatario predeterminado para compartir productos por WhatsApp. */
+export interface ShareTargetType {
+  name: string;
+  number: number;
+  type: string;
+}

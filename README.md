@@ -120,6 +120,10 @@ CLODUINARY_API_SECRET="..."
 
 # Mercado Pago
 MERCADOPAGO_ACCESS_TOKEN="..."
+
+# Destinatarios para compartir productos desde el panel (JSON en una linea).
+# type admite "seller" o "reseller".
+TO_OPTIONS='[{"name":"Jhon Doe","number":549123456789,"type":"seller"}]'
 ```
 
 Aplicá el schema y levantá el server:

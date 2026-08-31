@@ -45,6 +45,5 @@ TODO.md
 TODO.code-search
 ngrok.exe
 /src/.claude
-/src/utils/toOptions.ts
 # Logs de debug de Cursor
 .cursor/debug-*.log

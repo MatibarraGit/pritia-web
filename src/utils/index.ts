@@ -65,7 +65,5 @@ export {
   toDateTimeInputValue
 } from "./productTableUtils"
 
-export { TO_OPTIONS } from "./toOptions"
-
 export { toSlug } from './toSlug';
 export { validateAuthForm } from './validateAuthForm';

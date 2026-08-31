@@ -48,3 +48,6 @@ export type {
 
 // Providers
 export { fetchAllProviders } from "./providers";
+
+// Share targets
+export { fetchShareTargets, EMPTY_SHARE_TARGETS } from "./share-targets";

@@ -20,8 +20,10 @@ import {
   TabsTrigger,
 } from "@/components/ui";
 import { shareProducts } from "@/services/products";
+import { EMPTY_SHARE_TARGETS, fetchShareTargets } from "@/services";
+import { useAsyncData } from "@/hooks";
 import { cn } from "@/libs/utils";
-import { ACTION_TYPES, TO_OPTIONS } from "@/utils";
+import { ACTION_TYPES } from "@/utils";
 import type { SelectedItemsType } from "@/types";
 
 interface ProductModalProps {
@@ -56,6 +58,13 @@ export const ProductModal = ({
 }: ProductModalProps) => {
   /** Tipo de destinatario en el formulario manual (Select controlado). */
   const [shareRecipientType, setShareRecipientType] = useState("seller");
+
+  const { data: shareTargets } = useAsyncData({
+    cacheKey: "share-targets",
+    fetchFunction: fetchShareTargets,
+    initialData: EMPTY_SHARE_TARGETS,
+  });
+
   const { selectedItems, deleteItemToSelection } = selectItemsContext();
   const showToast = toastContext((state) => state.showToast);
 
@@ -210,7 +219,7 @@ export const ProductModal = ({
 
             <TabsContent value="presets" className="mt-0 flex flex-col gap-4">
               <div className="flex flex-wrap items-center gap-4">
-                {TO_OPTIONS.map((to) => (
+                {shareTargets.map((to) => (
                   <Button
                     key={to.number}
                     variant={to.type === "seller" ? "primary" : "outline"}
