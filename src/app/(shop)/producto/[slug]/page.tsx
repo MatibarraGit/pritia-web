@@ -15,14 +15,14 @@ import {
 import { getProductsBySubcategory } from "@/services";
 
 import type { Metadata } from "next";
-import type { ProductType } from "@/types";
+import type { PublicProductType } from "@/types";
 import { formatDate, toSlug } from "@/utils";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-async function getProduct(slug: string): Promise<ProductType | null> {
+async function getProduct(slug: string): Promise<PublicProductType | null> {
   try {
     // En Server Components, usar URL absoluta o relativa según el entorno
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: Props) {
   const relatedProducts =
     (await getProductsBySubcategory({ subcategorySlug: toSlug(subcategory) })) ?? [];
   const filteredRelatedProducts = relatedProducts?.products?.filter(
-    (p: ProductType) => String(p.id) !== String(id),
+    (p: PublicProductType) => String(p.id) !== String(id),
   );
 
   return (
@@ -183,14 +183,6 @@ export default async function ProductPage({ params }: Props) {
             />
 
             <ProductActions product={product} />
-
-            {/* TODO: Implementar nuevamente cuando reactive los créditos personales */}
-            {/* {price >= 40000 && (
-              <ProductInstallmentsSection
-              price={price}
-              purchasePrice={purchasePrice}
-              />
-            )} */}
 
             <ProductPurchaseInfo />
             <span className=" text-gray-500">  

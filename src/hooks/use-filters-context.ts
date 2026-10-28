@@ -2,7 +2,7 @@
 
 import { normalizeText } from "@/utils";
 import { filtersContext } from "@/contexts/filters-context";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 export const useFiltersContext = () => {
   const {
@@ -17,7 +17,7 @@ export const useFiltersContext = () => {
     clearAllFilters
   } = filtersContext();
 
-  const filterProducts = (products: ProductType[]): ProductType[] => {
+  const filterProducts = (products: PublicProductType[]): PublicProductType[] => {
     if (!products || products.length === 0) return [];
 
     const filteredProducts = [...products];

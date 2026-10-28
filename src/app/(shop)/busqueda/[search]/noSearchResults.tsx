@@ -2,12 +2,12 @@
 import Image from "next/image";
 
 import { ProductsCarousel } from "@/components";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { Button } from "@/components/ui";
 
 interface NoSearchResultsProps {
   search: string;
-  products: ProductType[];
+  products: PublicProductType[];
 }
 
 export const NoSearchResults = ({ search, products }: NoSearchResultsProps) => {

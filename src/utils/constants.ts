@@ -28,7 +28,7 @@ export const CONTACT_METHODS = Object.freeze({
   WHATSAPP: '+54 9 11 3173-8925',
   WHATSAPP_URL: 'https://wa.me/+5491131738925',
   // FACEBOOK_URL: 'https://www.facebook.com/pritia',
-  INSTAGRAM_URL: 'https://www.instagram.com/_pritia_',
+  // INSTAGRAM_URL: 'https://www.instagram.com/_pritia_',
   EMAIL: 'matileonardo.2013@gmail.com',
   EMAIL_URL: 'mailto:matileonardo.2013@gmail.com',
 })

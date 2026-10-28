@@ -7,7 +7,7 @@ import { NoProductsResults } from "./noProductsResults";
 import { PageLoader, ShowProducts } from "@/components";
 import { useOrderContext } from "@/hooks";
 import { TOPICS } from "@/utils";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { getAvailableProducts, getProductsByCategory, getProductsBySubcategory, getProductsByTopic } from "@/services/products";
 
 // TODO: Eliminar lógica de hotsale al finalizar HotSale
@@ -19,7 +19,7 @@ interface ProductsPageProps {
 }
 
 function ProductsPageContent({ categorySlug, subcategorySlug, isHotSale }: ProductsPageProps) {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [products, setProducts] = useState<PublicProductType[]>([]);
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const title = useRef<string>("");
@@ -41,7 +41,7 @@ function ProductsPageContent({ categorySlug, subcategorySlug, isHotSale }: Produ
     setProducts([]);
     setIsLoading(true);
     try {
-      let productsResponse: ProductType[];
+      let productsResponse: PublicProductType[];
       let total = 0;
 
       switch (true) {

@@ -7,7 +7,7 @@ import {
   ServicesHighlight,
 } from "@/components";
 import { getHomeProducts } from "@/services";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { TOPICS } from "@/utils";
 
 export const metadata = { 
@@ -17,12 +17,12 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  let DailyHighlightsProducts: ProductType[] = [];
-  let NewEntriesProducts: ProductType[] = [];
-  let ProductsOnOffer: ProductType[] = [];
-  let ReEntriesProducts: ProductType[] = [];
-  // let BestSellersProducts: ProductType[] = [];
-  let NewsProducts: ProductType[] = [];
+  let DailyHighlightsProducts: PublicProductType[] = [];
+  let NewEntriesProducts: PublicProductType[] = [];
+  let ProductsOnOffer: PublicProductType[] = [];
+  let ReEntriesProducts: PublicProductType[] = [];
+  // let BestSellersProducts: PublicProductType[] = [];
+  let NewsProducts: PublicProductType[] = [];
   let isLoading = true;
 
   try {

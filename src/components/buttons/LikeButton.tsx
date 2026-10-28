@@ -2,10 +2,10 @@
 
 import { Heart } from "lucide-react";
 import { toastContext, lovedProductsContext } from "@/contexts";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { cn } from "@/libs/utils";
 
-export const LikeButton = ({ product, classNames }: { product: ProductType, classNames?: string }) => {
+export const LikeButton = ({ product, classNames }: { product: PublicProductType, classNames?: string }) => {
   const addLovedProduct = lovedProductsContext((state) => state.addLovedProduct);
   const removeLovedProduct = lovedProductsContext((state) => state.removeLovedProduct);
   const isLoved = lovedProductsContext((state) =>

@@ -14,7 +14,7 @@ import { type CarouselApi } from "@/components/ui/carousel";
 
 import { CarouselIndicators, ProductCard } from "@/components";
 import { useMediaQuery } from "@/hooks";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ interface ProductsCarouselProps {
   title?: string;
   href?: string;
   isLoading?: boolean;
-  products: ProductType[];
+  products: PublicProductType[];
   isAutoplay?: boolean;
   withIndicators?: boolean;
   loop: boolean;

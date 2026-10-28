@@ -1,4 +1,4 @@
-import type { ProductResponseType, ProductType } from "@/types";
+import type { ProductResponseType, ProductType, PublicProductType } from "@/types";
 
 /**
  * Formatea un ProductResponseType a ProductType
@@ -29,10 +29,34 @@ export function formatProduct(p: ProductResponseType): ProductType {
   };
 }
 
-/**
- * Formatea un array de ProductResponseType a ProductType[]
- */
+// Formatea un array de ProductResponseType a ProductType[]
 export function formatProducts(products: ProductResponseType[]): ProductType[] {
   return products.map(formatProduct);
 }
 
+export function formatToPublicProduct(p: ProductResponseType): PublicProductType {
+  const price = p.discount_percent > 0 ? p.sell_price * (1 - p.discount_percent / 100) : p.sell_price
+  const originalPrice = p.discount_percent > 0 ? p.sell_price : undefined
+
+  return {
+    id: p.product_id,
+    name: p.product_name,
+    providers: p.provider_names || [],
+    price,
+    originalPrice,
+    discountPercent: p.discount_percent,
+    category: p.category_name,
+    subcategory: p.subcategory_name,
+    inStock: p.in_stock,
+    stock: p.stock,
+    description: p.product_description,
+    images: p.images,
+    slug: p.product_slug,
+    updatedAt: p.updated_at,
+    createdAt: p.created_at,
+  };
+}
+
+export function formatToPublicProducts(products: ProductResponseType[]): PublicProductType[] {
+  return products.map(formatToPublicProduct);
+}

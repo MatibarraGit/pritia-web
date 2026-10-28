@@ -4,11 +4,11 @@ import Link from "next/link";
 
 import { cn } from "@/libs/utils";
 import { LikeButton } from "@/components";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { cldSrcSet, cldUrl, formatPrice } from "@/utils";
 
 type ProductCardProps = {
-  product: ProductType;
+  product: PublicProductType;
   classNames?: string;
   imageSizes?: string;
   /** true sólo para las tarjetas visibles al cargar (above the fold) */
@@ -88,18 +88,6 @@ export const ProductCard = memo(function ProductCard({
         <h3 className="font-medium text-lg line-clamp-2 overflow-hidden">{product.name}</h3>
         <p className="text-sm text-gray-600 mt-1 mb-2">{product.category}</p>
 
-        {/* TODO: Implementar cuotas */}
-        {/* {installmentQuantity !== 0 && (
-          <div className={cn("mt-auto flex items-center gap-1 
-          text-sm text-secondary", discountPercent === 0 ? 
-          "mb-1.5" : "mb-3")}> 
-            {installmentQuantity} CUOTAS DE
-            <span className="font-subheading">
-              {formatPrice(installmentPrice)}
-            </span>
-          </div>
-        )} */}
-
         {/* Stock */}
         {(product.stock > 0 && product.stock < 10) && (
           <div className="flex items-center gap-1.5 text-xs font-medium px-2 py-1 rounded mb-4 w-fit bg-orange-100 text-orange-700">
@@ -125,7 +113,6 @@ export const ProductCard = memo(function ProductCard({
         <div className={cn(
           "flex items-center justify-between relative",
           (product.discountPercent === 0 || !product.category) && "mt-auto",
-          // installmentQuantity === 0 &&
         )}>
           <div className="flex flex-col">
             <span className="text-xl font-subheading">

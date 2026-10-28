@@ -8,8 +8,8 @@ import { default as cloudinary } from "@/libs/cloudinary";
 import { prisma } from '@/libs/prisma';
 
 import { deleteProductImages } from "@/services";
-import { convertImageToBuffer, getPublicIdFromUrl, formatProduct, formatDate } from "@/utils";
-import type { ProductInlinePatchPayload, ProductType } from "@/types";
+import { convertImageToBuffer, getPublicIdFromUrl, formatProduct, formatToPublicProduct, formatDate } from "@/utils";
+import type { ProductInlinePatchPayload, ProductType, PublicProductType } from "@/types";
 
 export async function GET(
   req: Request,
@@ -59,7 +59,7 @@ export async function GET(
       },
     });
 
-    const formattedProduct: ProductType = formatProduct({
+    const formattedProduct: PublicProductType = formatToPublicProduct({
       product_id: product.product_id,
       product_name: product.product_name || '',
       provider_names: providers.map((provider) => provider.provider_name),
@@ -436,10 +436,7 @@ export async function PATCH(
       if (body.updatedAt === null || body.updatedAt === "") {
         data.updated_at = null;
       } else {
-        console.log("body.updatedAt:", body.updatedAt);
         const updatedAtDate = new Date(body.updatedAt as string);
-        console.log("body.updatedAt:", body.updatedAt);
-        console.log("body.updatedAt toISOString:", updatedAtDate.toISOString());
         if (isNaN(updatedAtDate.getTime())) {
           return NextResponse.json({ message: "La fecha de actualización no es válida" }, { status: 400 });
         }

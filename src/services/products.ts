@@ -1,5 +1,5 @@
 import { apiRequest } from "./api-client";
-import type { ProductType, ActionResponse, SelectedItemsType, ProductInlinePatchPayload } from "@/types";
+import type { ProductType, PublicProductType, ActionResponse, SelectedItemsType, ProductInlinePatchPayload } from "@/types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -10,17 +10,17 @@ export interface GetAllProductsParams {
 }
 
 export interface GetAllProductsResponse {
-  products: ProductType[];
+  products: PublicProductType[];
   total: number;
 }
 
 export interface HomeProductsResponse {
-  dailyHighlightsProducts: ProductType[];
-  newEntriesProducts: ProductType[];
-  productsOnOffer: ProductType[];
-  reEntriesProducts: ProductType[];
-  // bestSellersProducts: ProductType[];
-  newsProducts: ProductType[];
+  dailyHighlightsProducts: PublicProductType[];
+  newEntriesProducts: PublicProductType[];
+  productsOnOffer: PublicProductType[];
+  reEntriesProducts: PublicProductType[];
+  // bestSellersProducts: PublicProductType[];
+  newsProducts: PublicProductType[];
 }
 
 export interface GetProductsByCategoryParams {
@@ -43,7 +43,7 @@ export interface SearchProductsParams {
 }
 
 export interface SearchProductsResponse {
-  products: ProductType[];
+  products: PublicProductType[];
   total: number;
   type: 'exact' | 'tooInteresting';
 }
@@ -147,7 +147,7 @@ export async function getAvailableProducts({ page = 1, search = "" }: GetAllProd
     const response = await fetch(`${baseUrl}/api/products/available?${params.toString()}`, {
       cache: 'no-store'
     });
-    const json: { products: ProductType[], total: number } = await response.json();
+    const json: { products: PublicProductType[], total: number } = await response.json();
 
     return { products: json.products, total: json.total };
   } catch {
@@ -196,7 +196,7 @@ export async function getProductsByCategory({ categorySlug, page = 1 }: GetProdu
     const response = await fetch(`${baseUrl}/api/products/byCategory/${encodeURIComponent(categorySlug)}?${params.toString()}`, {
       cache: 'no-store'
     });
-    const json: { products: ProductType[], total: number } = await response.json();
+    const json: { products: PublicProductType[], total: number } = await response.json();
 
     return { products: json.products || [], total: json.total ?? json.products?.length ?? 0 };
   } catch {
@@ -213,7 +213,7 @@ export async function getProductsBySubcategory({ subcategorySlug, page }: GetPro
     const response = await fetch(`${baseUrl}/api/products/bySubcategory/${encodeURIComponent(subcategorySlug)}?${params.toString()}`, 
       { cache: 'no-store' }
     );
-    const json: { products: ProductType[], total: number } = await response.json();
+    const json: { products: PublicProductType[], total: number } = await response.json();
 
     return { products: json.products || [], total: json.total };
   } catch {
@@ -230,7 +230,7 @@ export async function getProductsByTopic({ section, page = 1 }: GetProductsByTop
     const response = await fetch(`${baseUrl}/api/products/byTopic/${encodeURIComponent(section)}?${params.toString()}`, {
       cache: 'no-store'
     });
-    const json: { products: ProductType[], total: number } = await response.json();
+    const json: { products: PublicProductType[], total: number } = await response.json();
 
     return { products: json.products || [], total: json.total ?? json.products?.length ?? 0 };
   } catch {
@@ -247,7 +247,7 @@ export async function getProductsOnOffer({ page = 1 }: GetAllProductsParams = {}
     const response = await fetch(`${baseUrl}/api/products/onOffer?${params.toString()}`, {
       cache: 'no-store'
     });
-    const json: { products: ProductType[], total: number } = await response.json();
+    const json: { products: PublicProductType[], total: number } = await response.json();
 
     return { products: json.products || [], total: json.total ?? json.products?.length ?? 0 };
   } catch {

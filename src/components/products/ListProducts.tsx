@@ -1,8 +1,8 @@
 import { ProductCard, Pagination } from "@/components";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 interface ListProductsProps {
-  products: ProductType[];
+  products: PublicProductType[];
   totalPages?: number;
 }
 

@@ -2,9 +2,9 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
-export type LovedProductType = ProductType & {
+export type LovedProductType = PublicProductType & {
   dateAdded?: string;
 };
 

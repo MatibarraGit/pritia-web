@@ -7,10 +7,10 @@ import { Minus, Plus } from "lucide-react";
 // import { Button } from "@/components/ui";
 import { CheckoutButton } from "@/components"
 // import { cartContext, toastContext } from "@/contexts";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 interface ProductActionsProps {
-  product: ProductType;
+  product: PublicProductType;
 }
 
 export function ProductActions({ product }: ProductActionsProps) {

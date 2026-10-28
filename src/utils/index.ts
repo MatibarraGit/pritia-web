@@ -20,11 +20,10 @@ export {
 } from "./constants";
 
 export { confirmAction } from './confirmAction';
-export { countProducts } from './countProducts';
 export { filterFinancingByBank } from './filterFinancingByBank';
 export { formatDate } from './formatDate';
 export { formatPrice } from './formatPrice';
-export { formatProduct, formatProducts } from './formatProduct';
+export { formatProduct, formatProducts, formatToPublicProduct, formatToPublicProducts } from './formatProduct';
 export { formatSlugTitle } from './formatSlugTitle';
 export { getErrorMessage } from './authErrors';
 export { getFilterName } from './getFilterName';

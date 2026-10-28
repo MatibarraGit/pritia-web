@@ -9,10 +9,10 @@ import { ListProducts } from "./ListProducts";
 import { FiltersComponent, OrderComponent } from "@/components";
 import { useFiltersContext, useOrderContext } from "@/hooks";
 import { PRODUCTS_PER_PAGE, toSlug } from "@/utils";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 interface ShowProductsProps {
-  products: ProductType[];
+  products: PublicProductType[];
   totalProducts?: number | null;
   search?: string;
   category?: string;

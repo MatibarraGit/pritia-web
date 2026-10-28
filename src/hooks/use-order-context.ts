@@ -2,7 +2,7 @@
 
 import { orderContext } from "@/contexts";
 import { compareValues } from "@/utils/compareValues";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 
 export interface SortConfig {
   [key: string]: {
@@ -23,13 +23,13 @@ export const useOrderContext = (scope?: string) => {
       : sortObject?.scope ? null : sortObject;
 
   // Aplicar ordenamiento
-  const orderProducts = (products: ProductType[] | null): ProductType[] | null => {
+  const orderProducts = (products: PublicProductType[] | null): PublicProductType[] | null => {
     if (!products) return null;
 
     if (scopedSortObject) {
       return [...products].sort((a, b) => {
-        const aValue = a[scopedSortObject.property as keyof ProductType];
-        const bValue = b[scopedSortObject.property as keyof ProductType];
+        const aValue = a[scopedSortObject.property as keyof PublicProductType];
+        const bValue = b[scopedSortObject.property as keyof PublicProductType];
         const comparison = compareValues(aValue, bValue, 'number');
         return scopedSortObject.direction === 'asc' ? comparison : -comparison;
       });

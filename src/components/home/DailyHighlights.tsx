@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui";
 import { ProductCard } from "@/components";
-import { ProductType } from "@/types";
+import { PublicProductType } from "@/types";
 import { TOPICS } from "@/utils";
 
-export const DailyHighlights = ({ products }: { products: ProductType[] }) => {
+export const DailyHighlights = ({ products }: { products: PublicProductType[] }) => {
 
   return (
     <section className="w-11/12 max-w-content mx-auto py-8 md:py-12">

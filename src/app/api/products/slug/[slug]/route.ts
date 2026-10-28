@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
-import { formatProduct } from "@/utils";
-import type { ProductType } from "@/types";
+import { formatToPublicProduct } from "@/utils";
+import type { PublicProductType } from "@/types";
 
 export async function GET(
   req: Request,
@@ -33,8 +33,8 @@ export async function GET(
       return NextResponse.json([]);
     }
 
-    // Formatear el producto al formato estándar
-    const formattedProduct: ProductType = formatProduct({
+    // Formatear el producto al formato público estándar
+    const formattedProduct: PublicProductType = formatToPublicProduct({
       product_id: product.product_id,
       product_name: product.product_name,
       purchase_price: product.purchase_price,

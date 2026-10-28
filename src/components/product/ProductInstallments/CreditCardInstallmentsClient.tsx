@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { CreditCard } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui";
@@ -11,12 +10,12 @@ import { formatPrice, FINANCING_CONFIG, getInstallmentAmount, getInstallmentLabe
 import { ProductPricing } from "../ProductPricing";
 
 
-const cardIconByMethod: Record<string, string> = {
-  amex: "/icons/amex.svg",
-  master: "/icons/mastercard.svg",
-  naranja: "/icons/naranjax.svg",
-  visa: "/icons/visa.svg",
-};
+// const cardIconByMethod: Record<string, string> = {
+//   amex: "/icons/amex.svg",
+//   master: "/icons/mastercard.svg",
+//   naranja: "/icons/naranjax.svg",
+//   visa: "/icons/visa.svg",
+// };
 
 type CreditCardInstallmentsClientProps = {
   catalog: CreditInstallmentSummaryItem[];

@@ -9,6 +9,26 @@ export type AuthFormData = {
   confirmPassword?: string;
 } 
 
+export type ProductResponseType = {
+  product_id: number;
+  images: string[];
+  product_name: string;
+  provider_names?: string[];
+  purchase_price: number;
+  sell_price: number;
+  resellers_price?: number;
+  discount_percent: number;
+  category_name: string;
+  subcategory_name: string;
+  in_stock: boolean;
+  stock: number;
+  product_description: string;
+  product_slug: string;
+  updated_at: string | Date | null;
+  created_at: string | Date | null;
+  total_quantity_sold?: number;
+}
+
 export type ProductType = {
   id: number;
   images: string[];
@@ -30,25 +50,7 @@ export type ProductType = {
   totalQuantitySold?: number;
 }
 
-export type ProductResponseType = {
-  product_id: number;
-  images: string[];
-  product_name: string;
-  provider_names?: string[];
-  purchase_price: number;
-  sell_price: number;
-  resellers_price?: number;
-  discount_percent: number;
-  category_name: string;
-  subcategory_name: string;
-  in_stock: boolean;
-  stock: number;
-  product_description: string;
-  product_slug: string;
-  updated_at: string | Date | null;
-  created_at: string | Date | null;
-  total_quantity_sold?: number;
-}
+export type PublicProductType = Omit<ProductType, "purchasePrice" | "resellersPrice">;
 
 export type CategoryType = {
   category_id: number;
@@ -58,12 +60,6 @@ export type CategoryType = {
     name: string;
   }[];
 }
-
-// export type CategoryType = {
-//   id: number;
-//   name: string;
-//   image?: string;
-// };
 
 export type CartItemType = {
   id: number;
@@ -292,4 +288,61 @@ export interface ShareTargetType {
   name: string;
   number: number;
   type: string;
+}
+
+// Tipos para la sincronización del catálogo con la web de Electroben
+export interface SourceProduct {
+  providerProductId: string;
+  name: string;
+  costCents: number;
+  inStock: boolean;
+}
+
+export interface ExistingProduct {
+  providerProductId: string;
+  costCents: number | null;
+  priceCents: number | null;
+  inStock: boolean;
+}
+
+export interface PlannedRow {
+  providerProductId: string;
+  name: string;
+  costCents: number;
+  priceCents: number;
+  inStock: boolean;
+}
+
+export interface PriceChange {
+  providerProductId: string;
+  oldPriceCents: number | null;
+  newPriceCents: number;
+}
+
+export interface SyncStats {
+  inserted: number;
+  updated: number;
+  unchanged: number;
+  reactivated: number;
+  markedOutOfStock: number; // presentes pero agotados
+  markedAbsent: number; // ausentes en la fuente
+  priceChanges: number;
+}
+
+export interface SyncPlan {
+  inserts: PlannedRow[];
+  updates: PlannedRow[];
+  markOutOfStockIds: string[];
+  priceChanges: PriceChange[];
+  skippedInserts: { providerProductId: string; reason: string }[];
+  stats: SyncStats;
+}
+
+export class SyncAbortError extends Error {
+  reasons: string[];
+  constructor(reasons: string[]) {
+    super(reasons.join(" | "));
+    this.name = "SyncAbortError";
+    this.reasons = reasons;
+  }
 }
