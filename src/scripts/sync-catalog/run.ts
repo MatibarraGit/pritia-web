@@ -45,7 +45,7 @@ async function main(): Promise<number> {
   const dryRun = args.has("--dry-run") || process.env.SYNC_DRY_RUN === "true";
   const allowManyInserts = args.has("--allow-many-inserts");
   const cfg = loadConfig();
-  const prisma = new PrismaClient({ datasourceUrl: cfg.directUrl });
+  const prisma = new PrismaClient({ datasourceUrl: cfg.syncDatabaseUrl });
   const t0 = Date.now();
   let runId: string | null = null;
   let received = 0;
