@@ -282,67 +282,9 @@ export interface OptionsCache {
   categories: CategoryType[];
 }
 
-
-/** Destinatario predeterminado para compartir productos por WhatsApp. */
+// Destinatario predeterminado para compartir productos por WhatsApp.
 export interface ShareTargetType {
   name: string;
   number: number;
   type: string;
-}
-
-// Tipos para la sincronización del catálogo con la web de Electroben
-export interface SourceProduct {
-  providerProductId: string;
-  name: string;
-  costCents: number;
-  inStock: boolean;
-}
-
-export interface ExistingProduct {
-  providerProductId: string;
-  costCents: number | null;
-  priceCents: number | null;
-  inStock: boolean;
-}
-
-export interface PlannedRow {
-  providerProductId: string;
-  name: string;
-  costCents: number;
-  priceCents: number;
-  inStock: boolean;
-}
-
-export interface PriceChange {
-  providerProductId: string;
-  oldPriceCents: number | null;
-  newPriceCents: number;
-}
-
-export interface SyncStats {
-  inserted: number;
-  updated: number;
-  unchanged: number;
-  reactivated: number;
-  markedOutOfStock: number; // presentes pero agotados
-  markedAbsent: number; // ausentes en la fuente
-  priceChanges: number;
-}
-
-export interface SyncPlan {
-  inserts: PlannedRow[];
-  updates: PlannedRow[];
-  markOutOfStockIds: string[];
-  priceChanges: PriceChange[];
-  skippedInserts: { providerProductId: string; reason: string }[];
-  stats: SyncStats;
-}
-
-export class SyncAbortError extends Error {
-  reasons: string[];
-  constructor(reasons: string[]) {
-    super(reasons.join(" | "));
-    this.name = "SyncAbortError";
-    this.reasons = reasons;
-  }
 }

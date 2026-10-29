@@ -1,0 +1,53 @@
+name: Sync catálogo del proveedor
+
+on:
+  schedule:
+    # 03:00 America/Argentina/Buenos_Aires = 06:00 UTC
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Simular sin escribir en la base"
+        type: boolean
+        default: true
+      allow_many_inserts:
+        description: "Permitir inserciones masivas (primera carga)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: catalog-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9 # ajustá a la versión con la que generaste pnpm-lock.yaml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Ejecutar sync
+        env:
+          SYNC_DATABASE_URL: ${{ secrets.SYNC_DATABASE_URL }}
+          SYNC_SOURCE_URL: ${{ secrets.SYNC_SOURCE_URL }}
+          SYNC_SOURCE_APIKEY: ${{ secrets.SYNC_SOURCE_APIKEY }}
+          SYNC_SOURCE_AUTHORIZATION: ${{ secrets.SYNC_SOURCE_AUTHORIZATION }}
+          SYNC_SOURCE_ACCEPT_PROFILE: ${{ secrets.SYNC_SOURCE_ACCEPT_PROFILE }}
+          SYNC_ALERT_WEBHOOK_URL: ${{ secrets.SYNC_ALERT_WEBHOOK_URL }}
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_ALLOW_MANY: ${{ inputs.allow_many_inserts }}
+        run: |
+          ARGS=""
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ "$INPUT_DRY_RUN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+            if [ "$INPUT_ALLOW_MANY" = "true" ]; then ARGS="$ARGS --allow-many-inserts"; fi
+          fi
+          pnpm sync:catalog $ARGS

@@ -10,6 +10,29 @@ datasource db {
   extensions = [pg_trgm, pgcrypto, unaccent]
 }
 
+// Modelo nuevo
+model catalog_sync_runs {
+  id                   BigInt    @id @default(autoincrement())
+  started_at           DateTime  @default(now()) @db.Timestamptz(6)
+  finished_at          DateTime? @db.Timestamptz(6)
+  duration_ms          Int?
+  status               String
+  dry_run              Boolean   @default(false)
+  received             Int       @default(0)
+  validated            Int       @default(0)
+  inserted             Int       @default(0)
+  updated              Int       @default(0)
+  reactivated          Int       @default(0)
+  marked_out_of_stock  Int       @default(0)
+  price_changes        Int       @default(0)
+  price_changes_detail Json      @default("[]")
+  warnings             Json      @default("[]")
+  errors               Json      @default("[]")
+  abort_reason         String?
+
+  @@index([status, dry_run, finished_at(sort: Desc)], map: "catalog_sync_runs_lookup_idx")
+}
+
 model categories {
   category_id   Int          @id @default(autoincrement())
   category_name String          @unique @db.VarChar(255)
@@ -19,12 +42,6 @@ model categories {
   subcategories subcategories[]
 
   @@index([category_slug])
-}
-
-model newsletter_emails {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique @db.VarChar(255)
-  created_at DateTime? @default(now()) @db.Timestamp(6)
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
@@ -173,6 +190,12 @@ model product_questions {
 
   @@index([product_id, status], map: "idx_product_questions_product_status")
   @@index([status, created_at], map: "idx_product_questions_status_created_at")
+}
+
+model newsletter_emails {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
 }
 
 model Session {

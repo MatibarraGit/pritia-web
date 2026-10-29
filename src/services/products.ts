@@ -10,6 +10,11 @@ export interface GetAllProductsParams {
 }
 
 export interface GetAllProductsResponse {
+  products: ProductType[];
+  total: number;
+}
+
+export interface GetAllPublicProductsResponse {
   products: PublicProductType[];
   total: number;
 }
@@ -138,7 +143,7 @@ export async function getProductById(id: number): Promise<ProductType | null> {
 }
 
 // GET - Obtener productos disponibles
-export async function getAvailableProducts({ page = 1, search = "" }: GetAllProductsParams = {}): Promise<GetAllProductsResponse> {
+export async function getAvailableProducts({ page = 1, search = "" }: GetAllProductsParams = {}): Promise<GetAllPublicProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
@@ -188,7 +193,7 @@ export async function getHomeProducts(): Promise<HomeProductsResponse> {
 }
 
 // GET - Obtener productos por categoría
-export async function getProductsByCategory({ categorySlug, page = 1 }: GetProductsByCategoryParams): Promise<GetAllProductsResponse> {
+export async function getProductsByCategory({ categorySlug, page = 1 }: GetProductsByCategoryParams): Promise<GetAllPublicProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
@@ -205,7 +210,7 @@ export async function getProductsByCategory({ categorySlug, page = 1 }: GetProdu
 }
 
 // GET - Obtener productos por subcategoría
-export async function getProductsBySubcategory({ subcategorySlug, page }: GetProductsBySubcategoryParams): Promise<GetAllProductsResponse> {
+export async function getProductsBySubcategory({ subcategorySlug, page }: GetProductsBySubcategoryParams): Promise<GetAllPublicProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
@@ -222,7 +227,7 @@ export async function getProductsBySubcategory({ subcategorySlug, page }: GetPro
 }
 
 // GET - Obtener productos por tópico
-export async function getProductsByTopic({ section, page = 1 }: GetProductsByTopicParams): Promise<GetAllProductsResponse> {
+export async function getProductsByTopic({ section, page = 1 }: GetProductsByTopicParams): Promise<GetAllPublicProductsResponse> {
   try {
     const params = new URLSearchParams();
     if (page) params.set('page', page.toString());
@@ -247,7 +252,7 @@ export async function getProductsOnOffer({ page = 1 }: GetAllProductsParams = {}
     const response = await fetch(`${baseUrl}/api/products/onOffer?${params.toString()}`, {
       cache: 'no-store'
     });
-    const json: { products: PublicProductType[], total: number } = await response.json();
+    const json: { products: ProductType[], total: number } = await response.json();
 
     return { products: json.products || [], total: json.total ?? json.products?.length ?? 0 };
   } catch {
