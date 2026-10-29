@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile && prisma generate
+      - run: pnpm install --frozen-lockfile
       - name: Ejecutar sync
         env:
           SYNC_DATABASE_URL: ${{ secrets.SYNC_DATABASE_URL }}
